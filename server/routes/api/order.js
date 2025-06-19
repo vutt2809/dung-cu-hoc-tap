@@ -18,19 +18,19 @@ router.get('/', auth, async (req, res) => {
           {
             model: User,
             as: 'user',
-            attributes: ['id', 'firstName', 'lastName', 'email']
+            attributes: ['id', 'first_name', 'last_name', 'email']
           }
         ],
         order: [['created', 'DESC']]
       });
     } else {
       orders = await Order.findAll({
-        where: { userId: req.user.id },
+        where: { user_id: req.user.id },
         include: [
           {
             model: User,
             as: 'user',
-            attributes: ['id', 'firstName', 'lastName', 'email']
+            attributes: ['id', 'first_name', 'last_name', 'email']
           }
         ],
         order: [['created', 'DESC']]
@@ -57,7 +57,7 @@ router.get('/:id', auth, async (req, res) => {
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName', 'email']
+          attributes: ['id', 'first_name', 'last_name', 'email']
         }
       ]
     });
@@ -81,19 +81,19 @@ router.get('/:id', auth, async (req, res) => {
 // create order api
 router.post('/add', auth, async (req, res) => {
   try {
-    const { total, shippingAddress, paymentMethod } = req.body;
+    const { total, shipping_address, payment_method } = req.body;
 
     if (!total) {
       return res.status(400).json({ error: 'You must enter a total.' });
     }
 
-    if (!shippingAddress) {
+    if (!shipping_address) {
       return res.status(400).json({ error: 'You must enter a shipping address.' });
     }
 
     // Get user's cart items
     const cartItems = await Cart.findAll({
-      where: { userId: req.user.id },
+      where: { user_id: req.user.id },
       include: [
         {
           model: Product,
@@ -118,13 +118,13 @@ router.post('/add', auth, async (req, res) => {
 
     // Create order
     const order = await Order.create({
-      orderNumber: `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      order_number: `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       total,
-      userId: req.user.id,
-      shippingAddress,
-      paymentMethod,
+      user_id: req.user.id,
+      shipping_address,
+      payment_method,
       status: 'pending',
-      paymentStatus: 'pending'
+      payment_status: 'pending'
     });
 
     // Update product quantities
@@ -135,7 +135,7 @@ router.post('/add', auth, async (req, res) => {
     }
 
     // Clear cart
-    await Cart.destroy({ where: { userId: req.user.id } });
+    await Cart.destroy({ where: { user_id: req.user.id } });
 
     res.status(200).json({
       success: true,
@@ -183,7 +183,7 @@ router.put('/:id/cancel', auth, async (req, res) => {
     const orderId = req.params.id;
 
     const order = await Order.findOne({
-      where: { id: orderId, userId: req.user.id }
+      where: { id: orderId, user_id: req.user.id }
     });
 
     if (!order) {

@@ -1,16 +1,16 @@
 module.exports = {
   app: {
-    name: 'Mern Ecommerce',
+    name: 'School Supplies',
     apiURL: `${process.env.BASE_API_URL}`,
     clientURL: process.env.CLIENT_URL
   },
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 5000,
   database: {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 3306,
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || 'password',
-    database: process.env.DB_NAME || 'mern_ecommerce',
+    database: process.env.DB_NAME || 'school_supplies',
     dialect: 'mysql'
   },
   jwt: {

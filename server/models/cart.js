@@ -7,7 +7,7 @@ const Cart = sequelize.define('Cart', {
     primaryKey: true,
     autoIncrement: true
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -15,7 +15,7 @@ const Cart = sequelize.define('Cart', {
       key: 'id'
     }
   },
-  productId: {
+  product_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -35,8 +35,8 @@ const Cart = sequelize.define('Cart', {
 }, {
   tableName: 'carts',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Cart;

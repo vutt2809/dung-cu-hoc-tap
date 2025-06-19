@@ -31,11 +31,7 @@ require('./config/passport')(app);
 app.use(routes);
 
 const server = app.listen(port, () => {
-  console.log(
-    `${chalk.green('✓')} ${chalk.blue(
-      `Listening on port ${port}. Visit http://localhost:${port}/ in your browser.`
-    )}`
-  );
+  console.log(`Server School Supplies is running on port ${port}`);
 });
 
 socket(server);

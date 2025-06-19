@@ -31,12 +31,6 @@ $danger-color: #dc3545;
 $danger-bg: #dc3545;
 $danger-hover-bg: #c3081a;
 
-$dark-bg: $theme-black;
-$dark-hover-bg: $black;
-
-$default-color: #758696;
-$default-bg: #758696;
-
 // standard colors
 $blue: #20a8d8;
 $indigo: #6610f2 !default;
@@ -51,6 +45,12 @@ $gray: #808081;
 $teal: #20c997 !default;
 $cyan: #67c2ef;
 $black: #000;
+
+$dark-bg: $theme-black;
+$dark-hover-bg: $black;
+
+$default-color: #758696;
+$default-bg: #758696;
 
 $font-family: 'Poppins';
 $font-family-heading: 'Poppins';

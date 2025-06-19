@@ -15,11 +15,11 @@ const Category = sequelize.define('Category', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
-  parentId: {
+  parent_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
@@ -30,8 +30,8 @@ const Category = sequelize.define('Category', {
 }, {
   tableName: 'categories',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Category;

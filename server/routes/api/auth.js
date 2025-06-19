@@ -67,8 +67,8 @@ router.post('/login', async (req, res) => {
       token: `Bearer ${token}`,
       user: {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
         role: user.role
       }
@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const { email, firstName, lastName, password, isSubscribed } = req.body;
+    const { email, first_name, last_name, password, isSubscribed } = req.body;
 
     if (!email) {
       return res
@@ -90,7 +90,7 @@ router.post('/register', async (req, res) => {
         .json({ error: 'You must enter an email address.' });
     }
 
-    if (!firstName || !lastName) {
+    if (!first_name || !last_name) {
       return res.status(400).json({ error: 'You must enter your full name.' });
     }
 
@@ -121,8 +121,8 @@ router.post('/register', async (req, res) => {
     const registeredUser = await User.create({
       email,
       password: hash,
-      firstName,
-      lastName
+      first_name,
+      last_name
     });
 
     const payload = {
@@ -144,8 +144,8 @@ router.post('/register', async (req, res) => {
       token: `Bearer ${token}`,
       user: {
         id: registeredUser.id,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
+        first_name: registeredUser.first_name,
+        last_name: registeredUser.last_name,
         email: registeredUser.email,
         role: registeredUser.role
       }
@@ -179,8 +179,8 @@ router.post('/forgot', async (req, res) => {
     const resetToken = buffer.toString('hex');
 
     await existingUser.update({
-      resetPasswordToken: resetToken,
-      resetPasswordExpires: Date.now() + 3600000
+      reset_password_token: resetToken,
+      reset_password_expires: Date.now() + 3600000
     });
 
     await mailgun.sendEmail(
@@ -210,8 +210,8 @@ router.post('/reset/:token', async (req, res) => {
     }
 
     const resetUser = await User.findOne({
-      resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() }
+      reset_password_token: req.params.token,
+      reset_password_expires: { $gt: Date.now() }
     });
 
     if (!resetUser) {
@@ -225,8 +225,8 @@ router.post('/reset/:token', async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
 
     resetUser.password = hash;
-    resetUser.resetPasswordToken = undefined;
-    resetUser.resetPasswordExpires = undefined;
+    resetUser.reset_password_token = undefined;
+    resetUser.reset_password_expires = undefined;
 
     resetUser.save();
 

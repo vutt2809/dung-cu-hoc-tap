@@ -21,7 +21,7 @@ services:
   #     - DB_PORT=3306
   #     - DB_USERNAME=root
   #     - DB_PASSWORD=password
-  #     - DB_NAME=mern_ecommerce
+  #     - DB_NAME=school_supplies
   #   ports:
   #     - '3000:3000'
   #   command: [
@@ -39,7 +39,7 @@ services:
     container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=mern_ecommerce
+      - MYSQL_DATABASE=school_supplies
     ports:
       - '3306:3306'
     volumes:

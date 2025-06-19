@@ -7,7 +7,7 @@ const Wishlist = sequelize.define('Wishlist', {
     primaryKey: true,
     autoIncrement: true
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -15,7 +15,7 @@ const Wishlist = sequelize.define('Wishlist', {
       key: 'id'
     }
   },
-  productId: {
+  product_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -26,8 +26,8 @@ const Wishlist = sequelize.define('Wishlist', {
 }, {
   tableName: 'wishlists',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Wishlist;

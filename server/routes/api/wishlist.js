@@ -9,12 +9,12 @@ const auth = require('../../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     const wishlistItems = await Wishlist.findAll({
-      where: { userId: req.user.id },
+      where: { user_id: req.user.id },
       include: [
         {
           model: Product,
           as: 'product',
-          attributes: ['id', 'name', 'imageUrl', 'price', 'quantity']
+          attributes: ['id', 'name', 'image_url', 'price', 'quantity']
         }
       ],
       order: [['created', 'DESC']]
@@ -33,20 +33,20 @@ router.get('/', auth, async (req, res) => {
 // add product to wishlist api
 router.post('/add', auth, async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { product_id } = req.body;
 
-    if (!productId) {
+    if (!product_id) {
       return res.status(400).json({ error: 'You must enter a product id.' });
     }
 
-    const product = await Product.findByPk(productId);
+    const product = await Product.findByPk(product_id);
 
     if (!product) {
       return res.status(404).json({ error: 'Product not found.' });
     }
 
     const existingWishlistItem = await Wishlist.findOne({
-      where: { userId: req.user.id, productId }
+      where: { user_id: req.user.id, product_id }
     });
 
     if (existingWishlistItem) {
@@ -54,8 +54,8 @@ router.post('/add', auth, async (req, res) => {
     }
 
     await Wishlist.create({
-      userId: req.user.id,
-      productId
+      user_id: req.user.id,
+      product_id
     });
 
     res.status(200).json({
@@ -75,7 +75,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
     const wishlistId = req.params.id;
 
     const wishlistItem = await Wishlist.findOne({
-      where: { id: wishlistId, userId: req.user.id }
+      where: { id: wishlistId, user_id: req.user.id }
     });
 
     if (!wishlistItem) {

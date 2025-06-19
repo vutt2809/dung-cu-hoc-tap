@@ -75,18 +75,18 @@ cd mern-ecommerce
 2. Install server dependencies:
 ```bash
 cd server
-npm install
+yarn install
 ```
 
 3. Install client dependencies:
 ```bash
 cd ../client
-npm install
+yarn install
 ```
 
 4. Set up MySQL database:
 ```sql
-CREATE DATABASE mern_ecommerce;
+CREATE DATABASE school_supplies;
 ```
 
 5. Configure environment variables:
@@ -100,19 +100,19 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
 DB_PASSWORD=your_password
-DB_NAME=mern_ecommerce
+DB_NAME=school_supplies
 ```
 
 6. Start the server:
 ```bash
 cd server
-npm run dev
+yarn dev
 ```
 
 7. Start the client:
 ```bash
 cd client
-npm start
+yarn start
 ```
 
 ## Database Migration
@@ -190,7 +190,7 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_USERNAME=root
 DB_PASSWORD=your_password
-DB_NAME=mern_ecommerce
+DB_NAME=school_supplies
 
 # AWS S3 (for image uploads)
 AWS_ACCESS_KEY_ID=your_aws_access_key

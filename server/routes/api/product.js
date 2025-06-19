@@ -20,18 +20,18 @@ router.get('/item/:slug', async (req, res) => {
     const slug = req.params.slug;
 
     const productDoc = await Product.findOne({
-      where: { slug, isActive: true },
+      where: { slug, is_active: true },
       include: [
         {
           model: Brand,
           as: 'brand',
-          attributes: ['name', 'isActive']
+          attributes: ['name', 'is_active']
         }
       ]
     });
 
     const hasNoBrand =
-      productDoc?.brand === null || productDoc?.brand?.isActive === false;
+      productDoc?.brand === null || productDoc?.brand?.is_active === false;
 
     if (!productDoc || hasNoBrand) {
       return res.status(404).json({
@@ -57,9 +57,9 @@ router.get('/list/search/:name', async (req, res) => {
     const productDoc = await Product.findAll({
       where: {
         name: { [Op.like]: `%${name}%` },
-        isActive: true
+        is_active: true
       },
-      attributes: ['name', 'slug', 'imageUrl', 'price']
+      attributes: ['name', 'slug', 'image_url', 'price']
     });
 
     if (productDoc.length < 0) {
@@ -91,9 +91,26 @@ router.get('/list', async (req, res) => {
       page = 1,
       limit = 10
     } = req.query;
-    sortOrder = JSON.parse(sortOrder);
 
-    const whereClause = { isActive: true };
+    // Parse sortOrder safely and convert to Sequelize format
+    let parsedSortOrder = [['id', 'DESC']]; // default sort
+    if (sortOrder) {
+      try {
+        const sortObj = JSON.parse(sortOrder);
+        // Convert MongoDB-style sort to Sequelize format
+        parsedSortOrder = Object.entries(sortObj).map(([field, direction]) => {
+          // Convert _id to id for Sequelize
+          const fieldName = field === '_id' ? 'id' : field;
+          const sortDirection = direction === -1 ? 'DESC' : 'ASC';
+          return [fieldName, sortDirection];
+        });
+      } catch (e) {
+        console.log('Invalid sortOrder:', sortOrder);
+        parsedSortOrder = [['id', 'DESC']];
+      }
+    }
+
+    const whereClause = { is_active: true };
 
     if (min || max) {
       whereClause.price = {};
@@ -105,23 +122,21 @@ router.get('/list', async (req, res) => {
       {
         model: Brand,
         as: 'brand',
-        where: brand ? { name: brand } : undefined,
-        required: !!brand
+        where: brand && brand !== 'all' ? { name: brand } : undefined,
+        required: !!brand && brand !== 'all'
       },
       {
         model: Category,
         as: 'category',
-        where: category ? { name: category } : undefined,
-        required: !!category
+        where: category && category !== 'undefined' && category !== 'all' ? { name: category } : undefined,
+        required: !!(category && category !== 'undefined' && category !== 'all')
       }
     ];
-
-    const userDoc = await checkAuth(req);
 
     const { count, rows: products } = await Product.findAndCountAll({
       where: whereClause,
       include: includeClause,
-      order: [sortOrder],
+      order: parsedSortOrder,
       limit: parseInt(limit),
       offset: (parseInt(page) - 1) * parseInt(limit)
     });
@@ -170,8 +185,8 @@ router.post(
       const quantity = req.body.quantity;
       const price = req.body.price;
       const taxable = req.body.taxable;
-      const isActive = req.body.isActive;
-      const brandId = req.body.brand;
+      const is_active = req.body.is_active;
+      const brand_id = req.body.brand;
       const image = req.file;
 
       if (!sku) {
@@ -196,13 +211,13 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      let imageUrl = '';
-      let imageKey = '';
+      let image_url = '';
+      let image_key = '';
 
       if (image) {
         const imageData = await s3Upload(image);
-        imageUrl = imageData.Location;
-        imageKey = imageData.Key;
+        image_url = imageData.Location;
+        image_key = imageData.Key;
       }
 
       const product = await Product.create({
@@ -212,10 +227,10 @@ router.post(
         quantity,
         price,
         taxable,
-        isActive,
-        brandId,
-        imageUrl,
-        imageKey,
+        is_active,
+        brand_id,
+        image_url,
+        image_key,
         slug: name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-')
       });
 
@@ -246,7 +261,7 @@ router.get(
           merchant: req.user.merchant
         }).populate('merchant', '_id');
 
-        const brandId = brands[0]?.['_id'];
+        const brand_id = brands[0]?.['_id'];
 
         products = await Product.find({})
           .populate({
@@ -256,7 +271,7 @@ router.get(
               model: 'Merchant'
             }
           })
-          .where('brand', brandId);
+          .where('brand', brand_id);
       } else {
         products = await Product.find({}).populate({
           path: 'brand',
@@ -285,7 +300,7 @@ router.get(
   role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
-      const productId = req.params.id;
+      const product_id = req.params.id;
 
       let productDoc = null;
 
@@ -294,16 +309,16 @@ router.get(
           merchant: req.user.merchant
         }).populate('merchant', '_id');
 
-        const brandId = brands[0]['_id'];
+        const brand_id = brands[0]['_id'];
 
-        productDoc = await Product.findOne({ _id: productId })
+        productDoc = await Product.findOne({ _id: product_id })
           .populate({
             path: 'brand',
             select: 'name'
           })
-          .where('brand', brandId);
+          .where('brand', brand_id);
       } else {
-        productDoc = await Product.findOne({ _id: productId }).populate({
+        productDoc = await Product.findOne({ _id: product_id }).populate({
           path: 'brand',
           select: 'name'
         });
@@ -332,16 +347,16 @@ router.put(
   role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
-      const productId = req.params.id;
+      const product_id = req.params.id;
       const update = req.body.product;
-      const query = { _id: productId };
+      const query = { _id: product_id };
       const { sku, slug } = req.body.product;
 
       const foundProduct = await Product.findOne({
         $or: [{ slug }, { sku }]
       });
 
-      if (foundProduct && foundProduct._id != productId) {
+      if (foundProduct && foundProduct._id != product_id) {
         return res
           .status(400)
           .json({ error: 'Sku or slug is already in use.' });
@@ -369,9 +384,9 @@ router.put(
   role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
-      const productId = req.params.id;
+      const product_id = req.params.id;
       const update = req.body.product;
-      const query = { _id: productId };
+      const query = { _id: product_id };
 
       await Product.findOneAndUpdate(query, update, {
         new: true

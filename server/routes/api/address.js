@@ -9,12 +9,12 @@ const auth = require('../../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     const addresses = await Address.findAll({
-      where: { userId: req.user.id },
+      where: { user_id: req.user.id },
       include: [
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'first_name', 'last_name']
         }
       ],
       order: [['created', 'DESC']]
@@ -36,12 +36,12 @@ router.get('/:id', auth, async (req, res) => {
     const addressId = req.params.id;
 
     const addressDoc = await Address.findOne({
-      where: { id: addressId, userId: req.user.id },
+      where: { id: addressId, user_id: req.user.id },
       include: [
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'first_name', 'last_name']
         }
       ]
     });
@@ -65,7 +65,7 @@ router.get('/:id', auth, async (req, res) => {
 // add address api
 router.post('/add', auth, async (req, res) => {
   try {
-    const { address, city, state, zipCode, country, phoneNumber, isDefault } = req.body;
+    const { address, city, state, zip_code, country, phone_number, is_default } = req.body;
 
     if (!address) {
       return res.status(400).json({ error: 'You must enter an address.' });
@@ -79,7 +79,7 @@ router.post('/add', auth, async (req, res) => {
       return res.status(400).json({ error: 'You must enter a state.' });
     }
 
-    if (!zipCode) {
+    if (!zip_code) {
       return res.status(400).json({ error: 'You must enter a zip code.' });
     }
 
@@ -88,22 +88,22 @@ router.post('/add', auth, async (req, res) => {
     }
 
     // If this is the default address, unset other default addresses
-    if (isDefault) {
+    if (is_default) {
       await Address.update(
-        { isDefault: false },
-        { where: { userId: req.user.id } }
+        { is_default: false },
+        { where: { user_id: req.user.id } }
       );
     }
 
     const newAddress = await Address.create({
-      userId: req.user.id,
+      user_id: req.user.id,
       address,
       city,
       state,
-      zipCode,
+      zip_code,
       country,
-      phoneNumber,
-      isDefault: isDefault || false
+      phone_number,
+      is_default: is_default || false
     });
 
     res.status(200).json({
@@ -122,10 +122,10 @@ router.post('/add', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
   try {
     const addressId = req.params.id;
-    const { address, city, state, zipCode, country, phoneNumber, isDefault } = req.body;
+    const { address, city, state, zip_code, country, phone_number, is_default } = req.body;
 
     const addressDoc = await Address.findOne({
-      where: { id: addressId, userId: req.user.id }
+      where: { id: addressId, user_id: req.user.id }
     });
 
     if (!addressDoc) {
@@ -135,10 +135,10 @@ router.put('/:id', auth, async (req, res) => {
     }
 
     // If this is the default address, unset other default addresses
-    if (isDefault) {
+    if (is_default) {
       await Address.update(
-        { isDefault: false },
-        { where: { userId: req.user.id, id: { [require('sequelize').Op.ne]: addressId } } }
+        { is_default: false },
+        { where: { user_id: req.user.id, id: { [require('sequelize').Op.ne]: addressId } } }
       );
     }
 
@@ -146,10 +146,10 @@ router.put('/:id', auth, async (req, res) => {
       address,
       city,
       state,
-      zipCode,
+      zip_code,
       country,
-      phoneNumber,
-      isDefault: isDefault || false
+      phone_number,
+      is_default: is_default || false
     });
 
     res.status(200).json({
@@ -168,7 +168,7 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/delete/:id', auth, async (req, res) => {
   try {
     const address = await Address.findOne({
-      where: { id: req.params.id, userId: req.user.id }
+      where: { id: req.params.id, user_id: req.user.id }
     });
 
     if (!address) {

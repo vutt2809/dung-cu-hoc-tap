@@ -21,7 +21,7 @@ const Merchant = sequelize.define('Merchant', {
       isEmail: true
     }
   },
-  phoneNumber: {
+  phone_number: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -33,11 +33,11 @@ const Merchant = sequelize.define('Merchant', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
-  isVerified: {
+  is_verified: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
@@ -45,7 +45,7 @@ const Merchant = sequelize.define('Merchant', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  brandName: {
+  brand_name: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -62,8 +62,8 @@ const Merchant = sequelize.define('Merchant', {
 }, {
   tableName: 'merchants',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Merchant;

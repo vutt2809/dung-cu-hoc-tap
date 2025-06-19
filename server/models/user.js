@@ -15,15 +15,15 @@ const User = sequelize.define('User', {
       isEmail: true
     }
   },
-  phoneNumber: {
+  phone_number: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  firstName: {
+  first_name: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  lastName: {
+  last_name: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -31,7 +31,7 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  merchantId: {
+  merchant_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
@@ -44,11 +44,11 @@ const User = sequelize.define('User', {
     allowNull: false,
     defaultValue: EMAIL_PROVIDER.Email
   },
-  googleId: {
+  google_id: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  facebookId: {
+  facebook_id: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -61,19 +61,19 @@ const User = sequelize.define('User', {
     allowNull: false,
     defaultValue: ROLES.Member
   },
-  resetPasswordToken: {
+  reset_password_token: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  resetPasswordExpires: {
+  reset_password_expires: {
     type: DataTypes.DATE,
     allowNull: true
   }
 }, {
   tableName: 'users',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = User;

@@ -16,7 +16,7 @@ const Brand = sequelize.define('Brand', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
@@ -27,8 +27,8 @@ const Brand = sequelize.define('Brand', {
 }, {
   tableName: 'brands',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Brand;

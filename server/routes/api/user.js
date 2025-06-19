@@ -15,11 +15,11 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
     const regex = new RegExp(search, 'i');
 
     const users = await User.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'created'],
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created'],
       where: {
         $or: [
-          { firstName: { $iLike: regex } },
-          { lastName: { $iLike: regex } },
+          { first_name: { $iLike: regex } },
+          { last_name: { $iLike: regex } },
           { email: { $iLike: regex } }
         ]
       }
@@ -39,7 +39,7 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
 router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'created']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created']
     });
 
     res.status(200).json({
@@ -56,7 +56,7 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
 router.get('/profile', auth, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'created']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created']
     });
 
     res.status(200).json({
@@ -72,7 +72,7 @@ router.get('/profile', auth, async (req, res) => {
 // update user api
 router.put('/profile', auth, async (req, res) => {
   try {
-    const { firstName, lastName, email } = req.body;
+    const { first_name, last_name, email } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: 'You must enter an email address.' });
@@ -88,8 +88,8 @@ router.put('/profile', auth, async (req, res) => {
 
     const user = await User.findByPk(req.user.id);
     await user.update({
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email
     });
 

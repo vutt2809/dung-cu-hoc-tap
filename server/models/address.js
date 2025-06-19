@@ -7,7 +7,7 @@ const Address = sequelize.define('Address', {
     primaryKey: true,
     autoIncrement: true
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -27,7 +27,7 @@ const Address = sequelize.define('Address', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  zipCode: {
+  zip_code: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -35,19 +35,19 @@ const Address = sequelize.define('Address', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  phoneNumber: {
+  phone_number: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  isDefault: {
+  is_default: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   }
 }, {
   tableName: 'addresses',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Address;

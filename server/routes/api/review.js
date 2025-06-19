@@ -8,17 +8,17 @@ const role = require('../../middleware/role');
 const { ROLES } = require('../../constants');
 
 // fetch product reviews api
-router.get('/list/:productId', async (req, res) => {
+router.get('/list/:product_id', async (req, res) => {
   try {
-    const productId = req.params.productId;
+    const product_id = req.params.product_id;
 
     const reviews = await Review.findAll({
-      where: { productId, isActive: true },
+      where: { product_id, is_active: true },
       include: [
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'first_name', 'last_name']
         }
       ],
       order: [['created', 'DESC']]
@@ -42,12 +42,12 @@ router.get('/', auth, async (req, res) => {
         {
           model: Product,
           as: 'product',
-          attributes: ['id', 'name', 'imageUrl']
+          attributes: ['id', 'name', 'image_url']
         },
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'first_name', 'last_name']
         }
       ],
       order: [['created', 'DESC']]
@@ -73,12 +73,12 @@ router.get('/:id', auth, async (req, res) => {
         {
           model: Product,
           as: 'product',
-          attributes: ['id', 'name', 'imageUrl']
+          attributes: ['id', 'name', 'image_url']
         },
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'first_name', 'last_name']
         }
       ]
     });
@@ -102,9 +102,9 @@ router.get('/:id', auth, async (req, res) => {
 // add review api
 router.post('/add', auth, async (req, res) => {
   try {
-    const { productId, rating, title, comment } = req.body;
+    const { product_id, rating, title, comment } = req.body;
 
-    if (!productId) {
+    if (!product_id) {
       return res.status(400).json({ error: 'You must enter a product id.' });
     }
 
@@ -116,7 +116,7 @@ router.post('/add', auth, async (req, res) => {
       return res.status(400).json({ error: 'Rating must be between 1 and 5.' });
     }
 
-    const product = await Product.findByPk(productId);
+    const product = await Product.findByPk(product_id);
 
     if (!product) {
       return res.status(404).json({ error: 'Product not found.' });
@@ -124,7 +124,7 @@ router.post('/add', auth, async (req, res) => {
 
     // Check if user already reviewed this product
     const existingReview = await Review.findOne({
-      where: { userId: req.user.id, productId }
+      where: { user_id: req.user.id, product_id }
     });
 
     if (existingReview) {
@@ -132,12 +132,12 @@ router.post('/add', auth, async (req, res) => {
     }
 
     const review = await Review.create({
-      productId,
-      userId: req.user.id,
+      product_id,
+      user_id: req.user.id,
       rating,
       title,
       comment,
-      isActive: true
+      is_active: true
     });
 
     res.status(200).json({
@@ -159,7 +159,7 @@ router.put('/:id', auth, async (req, res) => {
     const { rating, title, comment } = req.body;
 
     const review = await Review.findOne({
-      where: { id: reviewId, userId: req.user.id }
+      where: { id: reviewId, user_id: req.user.id }
     });
 
     if (!review) {
@@ -194,7 +194,7 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/delete/:id', auth, async (req, res) => {
   try {
     const review = await Review.findOne({
-      where: { id: req.params.id, userId: req.user.id }
+      where: { id: req.params.id, user_id: req.user.id }
     });
 
     if (!review) {
@@ -220,7 +220,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
 router.put('/:id/status', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const reviewId = req.params.id;
-    const { isActive } = req.body;
+    const { is_active } = req.body;
 
     const review = await Review.findByPk(reviewId);
 
@@ -230,7 +230,7 @@ router.put('/:id/status', auth, role.check(ROLES.Admin), async (req, res) => {
       });
     }
 
-    await review.update({ isActive });
+    await review.update({ is_active });
 
     res.status(200).json({
       success: true,

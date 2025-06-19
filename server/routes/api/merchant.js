@@ -20,7 +20,7 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
         {
           model: User,
           as: 'users',
-          attributes: ['id', 'firstName', 'lastName', 'email']
+          attributes: ['id', 'first_name', 'last_name', 'email']
         }
       ],
       order: [['created', 'DESC']]
@@ -39,14 +39,14 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
 // fetch merchant api
 router.get('/:id', auth, async (req, res) => {
   try {
-    const merchantId = req.params.id;
+    const merchant_id = req.params.id;
 
-    const merchantDoc = await Merchant.findByPk(merchantId, {
+    const merchantDoc = await Merchant.findByPk(merchant_id, {
       include: [
         {
           model: User,
           as: 'users',
-          attributes: ['id', 'firstName', 'lastName', 'email']
+          attributes: ['id', 'first_name', 'last_name', 'email']
         }
       ]
     });
@@ -75,7 +75,7 @@ router.post(
   upload.single('avatar'),
   async (req, res) => {
     try {
-      const { name, email, phoneNumber, brand, business } = req.body;
+      const { name, email, phone_number, brand, business } = req.body;
       const avatar = req.file;
 
       if (!name) {
@@ -104,12 +104,12 @@ router.post(
       const merchant = await Merchant.create({
         name,
         email,
-        phoneNumber,
+        phone_number,
         brand,
         business,
         avatar: avatarUrl,
-        isActive: false,
-        isVerified: false,
+        is_active: false,
+        is_verified: false,
         status: MERCHANT_STATUS.Waiting_Approval
       });
 
@@ -134,11 +134,11 @@ router.put(
   upload.single('avatar'),
   async (req, res) => {
     try {
-      const merchantId = req.params.id;
+      const merchant_id = req.params.id;
       const update = req.body.merchant;
       const avatar = req.file;
 
-      const merchant = await Merchant.findByPk(merchantId);
+      const merchant = await Merchant.findByPk(merchant_id);
 
       if (!merchant) {
         return res.status(404).json({
@@ -169,9 +169,9 @@ router.put(
 // approve merchant api
 router.put('/:id/approve', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
-    const merchantId = req.params.id;
+    const merchant_id = req.params.id;
 
-    const merchant = await Merchant.findByPk(merchantId);
+    const merchant = await Merchant.findByPk(merchant_id);
 
     if (!merchant) {
       return res.status(404).json({
@@ -181,8 +181,8 @@ router.put('/:id/approve', auth, role.check(ROLES.Admin), async (req, res) => {
 
     await merchant.update({
       status: MERCHANT_STATUS.Approved,
-      isActive: true,
-      isVerified: true
+      is_active: true,
+      is_verified: true
     });
 
     res.status(200).json({
@@ -200,9 +200,9 @@ router.put('/:id/approve', auth, role.check(ROLES.Admin), async (req, res) => {
 // reject merchant api
 router.put('/:id/reject', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
-    const merchantId = req.params.id;
+    const merchant_id = req.params.id;
 
-    const merchant = await Merchant.findByPk(merchantId);
+    const merchant = await Merchant.findByPk(merchant_id);
 
     if (!merchant) {
       return res.status(404).json({
@@ -212,8 +212,8 @@ router.put('/:id/reject', auth, role.check(ROLES.Admin), async (req, res) => {
 
     await merchant.update({
       status: MERCHANT_STATUS.Rejected,
-      isActive: false,
-      isVerified: false
+      is_active: false,
+      is_verified: false
     });
 
     res.status(200).json({

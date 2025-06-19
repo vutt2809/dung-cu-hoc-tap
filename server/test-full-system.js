@@ -67,7 +67,7 @@ async function testFullSystem() {
             quantity: 50,
             price: 99.99,
             taxable: true,
-            isActive: true,
+            is_active: true,
             brandId: testBrand.id,
             categoryId: testCategory.id,
             merchantId: testMerchant.id
@@ -125,7 +125,7 @@ async function testFullSystem() {
             rating: 5,
             title: 'Great Product!',
             comment: 'This is an excellent test product.',
-            isActive: true
+            is_active: true
         });
         console.log('✅ Review created');
 
@@ -188,7 +188,7 @@ async function testFullSystem() {
         const searchResults = await Product.findAll({
             where: {
                 name: { [require('sequelize').Op.like]: '%Test%' },
-                isActive: true
+                is_active: true
             },
             include: [
                 { model: Brand, as: 'brand' },

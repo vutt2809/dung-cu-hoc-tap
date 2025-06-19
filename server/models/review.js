@@ -7,7 +7,7 @@ const Review = sequelize.define('Review', {
     primaryKey: true,
     autoIncrement: true
   },
-  productId: {
+  product_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -15,7 +15,7 @@ const Review = sequelize.define('Review', {
       key: 'id'
     }
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -39,15 +39,15 @@ const Review = sequelize.define('Review', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   }
 }, {
   tableName: 'reviews',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Review;

@@ -9,12 +9,12 @@ const auth = require('../../middleware/auth');
 router.get('/', auth, async (req, res) => {
   try {
     const cartDoc = await Cart.findAll({
-      where: { userId: req.user.id },
+      where: { user_id: req.user.id },
       include: [
         {
           model: Product,
           as: 'product',
-          attributes: ['name', 'imageUrl', 'price', 'quantity']
+          attributes: ['name', 'image_url', 'price', 'quantity']
         }
       ]
     });
@@ -32,9 +32,9 @@ router.get('/', auth, async (req, res) => {
 // add product to cart api
 router.post('/add', auth, async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
+    const { product_id, quantity } = req.body;
 
-    if (!productId) {
+    if (!product_id) {
       return res.status(400).json({ error: 'You must enter a product id.' });
     }
 
@@ -42,7 +42,7 @@ router.post('/add', auth, async (req, res) => {
       return res.status(400).json({ error: 'You must enter a quantity.' });
     }
 
-    const product = await Product.findOne({ where: { id: productId } });
+    const product = await Product.findOne({ where: { id: product_id } });
 
     if (!product) {
       return res.status(404).json({ error: 'Product not found.' });
@@ -53,7 +53,7 @@ router.post('/add', auth, async (req, res) => {
     }
 
     const existingCartItem = await Cart.findOne({
-      where: { userId: req.user.id, productId }
+      where: { user_id: req.user.id, product_id }
     });
 
     if (existingCartItem) {
@@ -62,8 +62,8 @@ router.post('/add', auth, async (req, res) => {
       });
     } else {
       await Cart.create({
-        userId: req.user.id,
-        productId,
+        user_id: req.user.id,
+        product_id,
         quantity,
         price: product.price
       });
@@ -91,7 +91,7 @@ router.put('/update/:id', auth, async (req, res) => {
     }
 
     const cartItem = await Cart.findOne({
-      where: { id: cartId, userId: req.user.id },
+      where: { id: cartId, user_id: req.user.id },
       include: [{ model: Product, as: 'product' }]
     });
 
@@ -122,7 +122,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
     const cartId = req.params.id;
 
     const cartItem = await Cart.findOne({
-      where: { id: cartId, userId: req.user.id }
+      where: { id: cartId, user_id: req.user.id }
     });
 
     if (!cartItem) {

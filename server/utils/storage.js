@@ -4,8 +4,8 @@ const keys = require('../config/keys');
 
 exports.s3Upload = async image => {
   try {
-    let imageUrl = '';
-    let imageKey = '';
+    let image_url = '';
+    let image_key = '';
 
     if (!keys.aws.accessKeyId) {
       console.warn('Missing aws keys');
@@ -27,12 +27,12 @@ exports.s3Upload = async image => {
 
       const s3Upload = await s3bucket.upload(params).promise();
 
-      imageUrl = s3Upload.Location;
-      imageKey = s3Upload.key;
+      image_url = s3Upload.Location;
+      image_key = s3Upload.key;
     }
 
-    return { imageUrl, imageKey };
+    return { image_url, image_key };
   } catch (error) {
-    return { imageUrl: '', imageKey: '' };
+    return { image_url: '', image_key: '' };
   }
 };

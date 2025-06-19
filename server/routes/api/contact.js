@@ -28,7 +28,7 @@ router.post('/add', async (req, res) => {
       name,
       email,
       message,
-      isRead: false
+      is_read: false
     });
 
     res.status(200).json({
@@ -96,7 +96,7 @@ router.put('/:id/read', auth, role.check(ROLES.Admin), async (req, res) => {
       });
     }
 
-    await contact.update({ isRead: true });
+    await contact.update({ is_read: true });
 
     res.status(200).json({
       success: true,

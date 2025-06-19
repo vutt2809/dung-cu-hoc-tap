@@ -22,15 +22,15 @@ const Contact = sequelize.define('Contact', {
     type: DataTypes.TEXT,
     allowNull: false
   },
-  isRead: {
+  is_read: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   }
 }, {
   tableName: 'contacts',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Contact;

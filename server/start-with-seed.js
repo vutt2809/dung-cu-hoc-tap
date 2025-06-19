@@ -90,7 +90,7 @@ async function seedDatabase() {
                     quantity: faker.number.int({ min: 10, max: 100 }),
                     price: parseFloat(faker.commerce.price({ min: 10, max: 500 })),
                     taxable: faker.datatype.boolean(),
-                    isActive: true,
+                    is_active: true,
                     brandId: randomBrand.id,
                     categoryId: randomCategory.id
                 });

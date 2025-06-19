@@ -20,11 +20,11 @@ const Product = sequelize.define('Product', {
     allowNull: false,
     unique: true
   },
-  imageUrl: {
+  image_url: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  imageKey: {
+  image_key: {
     type: DataTypes.STRING,
     allowNull: true
   },
@@ -45,11 +45,11 @@ const Product = sequelize.define('Product', {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
-  brandId: {
+  brand_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
@@ -57,7 +57,7 @@ const Product = sequelize.define('Product', {
       key: 'id'
     }
   },
-  categoryId: {
+  category_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
@@ -65,7 +65,7 @@ const Product = sequelize.define('Product', {
       key: 'id'
     }
   },
-  merchantId: {
+  merchant_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {

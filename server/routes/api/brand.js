@@ -16,7 +16,7 @@ const upload = multer({ storage });
 router.get('/list', async (req, res) => {
   try {
     const brands = await Brand.findAll({
-      where: { isActive: true },
+      where: { is_active: true },
       attributes: ['id', 'name', 'description', 'logo']
     });
 
@@ -34,7 +34,7 @@ router.get('/list', async (req, res) => {
 router.get('/', auth, async (req, res) => {
   try {
     const brands = await Brand.findAll({
-      attributes: ['id', 'name', 'description', 'isActive', 'created']
+      attributes: ['id', 'name', 'description', 'is_active', 'created']
     });
 
     res.status(200).json({
@@ -50,9 +50,9 @@ router.get('/', auth, async (req, res) => {
 // fetch brand api
 router.get('/:id', auth, async (req, res) => {
   try {
-    const brandId = req.params.id;
+    const brand_id = req.params.id;
 
-    const brandDoc = await Brand.findByPk(brandId);
+    const brandDoc = await Brand.findByPk(brand_id);
 
     if (!brandDoc) {
       return res.status(404).json({
@@ -80,7 +80,7 @@ router.post(
     try {
       const name = req.body.name;
       const description = req.body.description;
-      const isActive = req.body.isActive;
+      const is_active = req.body.is_active;
       const logo = req.file;
 
       if (!name) {
@@ -105,7 +105,7 @@ router.post(
       const brand = await Brand.create({
         name,
         description,
-        isActive,
+        is_active,
         logo: logoUrl
       });
 
@@ -130,11 +130,11 @@ router.put(
   upload.single('logo'),
   async (req, res) => {
     try {
-      const brandId = req.params.id;
+      const brand_id = req.params.id;
       const update = req.body.brand;
       const logo = req.file;
 
-      const brand = await Brand.findByPk(brandId);
+      const brand = await Brand.findByPk(brand_id);
 
       if (!brand) {
         return res.status(404).json({

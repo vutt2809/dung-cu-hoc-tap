@@ -32,8 +32,8 @@ const seedDB = async () => {
       await User.create({
         email,
         password: hash,
-        firstName: 'admin',
-        lastName: 'admin',
+        first_name: 'admin',
+        last_name: 'admin',
         role: ROLES.Admin
       });
 
@@ -51,7 +51,7 @@ const seedDB = async () => {
         const category = await Category.create({
           name: faker.commerce.department(),
           description: faker.lorem.sentence(),
-          isActive: true
+          is_active: true
         });
         categories.push(category);
       }
@@ -66,7 +66,7 @@ const seedDB = async () => {
         await Brand.create({
           name: faker.company.name(),
           description: faker.lorem.sentence(),
-          isActive: true
+          is_active: true
         });
       }
       console.log(`${chalk.green('✓')} ${chalk.green('Brands seeded.')}`);
@@ -89,9 +89,9 @@ const seedDB = async () => {
           quantity: faker.number.int({ min: 1, max: 100 }),
           price: faker.commerce.price(),
           taxable: faker.datatype.boolean(),
-          isActive: true,
-          brandId: brands[randomBrandIndex].id,
-          categoryId: categories[randomCategoryIndex].id
+          is_active: true,
+          brand_id: brands[randomBrandIndex].id,
+          category_id: categories[randomCategoryIndex].id
         });
       }
       console.log(`${chalk.green('✓')} ${chalk.green('Products seeded and associated with categories.')}`);

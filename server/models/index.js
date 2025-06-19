@@ -11,50 +11,50 @@ const Wishlist = require('./wishlist');
 const Contact = require('./contact');
 
 // User associations
-User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
-User.hasMany(Cart, { foreignKey: 'userId', as: 'carts' });
-User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
-User.hasMany(Address, { foreignKey: 'userId', as: 'addresses' });
-User.hasMany(Wishlist, { foreignKey: 'userId', as: 'wishlists' });
-User.belongsTo(Merchant, { foreignKey: 'merchantId', as: 'merchant' });
+User.hasMany(Order, { foreignKey: 'user_id', as: 'orders' });
+User.hasMany(Cart, { foreignKey: 'user_id', as: 'carts' });
+User.hasMany(Review, { foreignKey: 'user_id', as: 'reviews' });
+User.hasMany(Address, { foreignKey: 'user_id', as: 'addresses' });
+User.hasMany(Wishlist, { foreignKey: 'user_id', as: 'wishlists' });
+User.belongsTo(Merchant, { foreignKey: 'merchant_id', as: 'merchant' });
 
 // Merchant associations
-Merchant.hasMany(User, { foreignKey: 'merchantId', as: 'users' });
-Merchant.hasMany(Product, { foreignKey: 'merchantId', as: 'products' });
+Merchant.hasMany(User, { foreignKey: 'merchant_id', as: 'users' });
+Merchant.hasMany(Product, { foreignKey: 'merchant_id', as: 'products' });
 
 // Product associations
-Product.belongsTo(Brand, { foreignKey: 'brandId', as: 'brand' });
-Product.belongsTo(Category, { foreignKey: 'categoryId', as: 'category' });
-Product.belongsTo(Merchant, { foreignKey: 'merchantId', as: 'merchant' });
-Product.hasMany(Review, { foreignKey: 'productId', as: 'reviews' });
-Product.hasMany(Cart, { foreignKey: 'productId', as: 'carts' });
-Product.hasMany(Wishlist, { foreignKey: 'productId', as: 'wishlists' });
+Product.belongsTo(Brand, { foreignKey: 'brand_id', as: 'brand' });
+Product.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
+Product.belongsTo(Merchant, { foreignKey: 'merchant_id', as: 'merchant' });
+Product.hasMany(Review, { foreignKey: 'product_id', as: 'reviews' });
+Product.hasMany(Cart, { foreignKey: 'product_id', as: 'carts' });
+Product.hasMany(Wishlist, { foreignKey: 'product_id', as: 'wishlists' });
 
 // Brand associations
-Brand.hasMany(Product, { foreignKey: 'brandId', as: 'products' });
+Brand.hasMany(Product, { foreignKey: 'brand_id', as: 'products' });
 
 // Category associations
-Category.hasMany(Product, { foreignKey: 'categoryId', as: 'products' });
-Category.belongsTo(Category, { foreignKey: 'parentId', as: 'parent' });
-Category.hasMany(Category, { foreignKey: 'parentId', as: 'children' });
+Category.hasMany(Product, { foreignKey: 'category_id', as: 'products' });
+Category.belongsTo(Category, { foreignKey: 'parent_id', as: 'parent' });
+Category.hasMany(Category, { foreignKey: 'parent_id', as: 'children' });
 
 // Order associations
-Order.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Order.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
 // Cart associations
-Cart.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-Cart.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
+Cart.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+Cart.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
 // Review associations
-Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-Review.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
+Review.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+Review.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
 // Address associations
-Address.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+Address.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
 // Wishlist associations
-Wishlist.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-Wishlist.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
+Wishlist.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+Wishlist.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
 module.exports = {
     User,

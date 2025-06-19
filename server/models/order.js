@@ -7,7 +7,7 @@ const Order = sequelize.define('Order', {
     primaryKey: true,
     autoIncrement: true
   },
-  orderNumber: {
+  order_number: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
@@ -20,7 +20,7 @@ const Order = sequelize.define('Order', {
     type: DataTypes.ENUM(['pending', 'processing', 'shipped', 'delivered', 'cancelled']),
     defaultValue: 'pending'
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -28,23 +28,23 @@ const Order = sequelize.define('Order', {
       key: 'id'
     }
   },
-  shippingAddress: {
+  shipping_address: {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  paymentMethod: {
+  payment_method: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  paymentStatus: {
+  payment_status: {
     type: DataTypes.ENUM(['pending', 'paid', 'failed']),
     defaultValue: 'pending'
   }
 }, {
   tableName: 'orders',
   timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated'
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Order;
