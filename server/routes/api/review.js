@@ -21,7 +21,7 @@ router.get('/list/:product_id', async (req, res) => {
           attributes: ['id', 'first_name', 'last_name']
         }
       ],
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     res.status(200).json({
@@ -50,7 +50,7 @@ router.get('/', auth, async (req, res) => {
           attributes: ['id', 'first_name', 'last_name']
         }
       ],
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     res.status(200).json({

@@ -1,0 +1,125 @@
+export const VI = {
+  // Navigation
+  'Shop By Category': 'Mua theo danh mục',
+  'Search Products': 'Tìm kiếm sản phẩm',
+  'Free Shipping': 'Miễn phí vận chuyển',
+  'Payment Methods': 'Phương thức thanh toán',
+  'Call us': 'Gọi cho chúng tôi',
+  'Need advice? Call us': 'Cần tư vấn? Gọi cho chúng tôi',
+  'MERN Store': 'Cửa hàng MERN',
+  'Brands': 'Thương hiệu',
+  'Shop': 'Cửa hàng',
+  'Welcome': 'Chào mừng',
+  'Welcome!': 'Chào mừng!',
+  'Dashboard': 'Bảng điều khiển',
+  'Sign Out': 'Đăng xuất',
+  'Login': 'Đăng nhập',
+  'Sign Up': 'Đăng ký',
+  
+  // Footer
+  'Customer Service': 'Dịch vụ khách hàng',
+  'Contact Us': 'Liên hệ chúng tôi',
+  'Sell With Us': 'Bán cùng chúng tôi',
+  'Shipping': 'Vận chuyển',
+  'Links': 'Liên kết',
+  'Newsletter': 'Bản tin',
+  'Account Details': 'Chi tiết tài khoản',
+  'Orders': 'Đơn hàng',
+  
+  // Buttons
+  'Submit': 'Gửi',
+  'Cancel': 'Hủy',
+  'Add': 'Thêm',
+  'Edit': 'Sửa',
+  'Delete': 'Xóa',
+  'Save': 'Lưu',
+  'Update': 'Cập nhật',
+  'Continue shopping': 'Tiếp tục mua sắm',
+  'Place Order': 'Đặt hàng',
+  'Proceed To Checkout': 'Tiến hành thanh toán',
+  'Back to orders': 'Quay lại đơn hàng',
+  'Cancel Order': 'Hủy đơn hàng',
+  'Approve': 'Phê duyệt',
+  'Reject': 'Từ chối',
+  'Re Approve Review': 'Phê duyệt lại đánh giá',
+  
+  // Forms
+  'Name': 'Tên',
+  'Email Address': 'Địa chỉ email',
+  'Phone Number': 'Số điện thoại',
+  'Password': 'Mật khẩu',
+  'Confirm Password': 'Xác nhận mật khẩu',
+  'Message': 'Tin nhắn',
+  'Title': 'Tiêu đề',
+  'Comment': 'Bình luận',
+  'Rating': 'Đánh giá',
+  'Description': 'Mô tả',
+  'Brand': 'Thương hiệu',
+  'Business': 'Kinh doanh',
+  'Category': 'Danh mục',
+  'Categories': 'Danh mục',
+  'Products': 'Sản phẩm',
+  'Price': 'Giá',
+  'Quantity': 'Số lượng',
+  'Total': 'Tổng cộng',
+  'Status': 'Trạng thái',
+  'Active?': 'Hoạt động?',
+  
+  // Placeholders
+  'Your Full Name': 'Họ và tên của bạn',
+  'Your Email Address': 'Địa chỉ email của bạn',
+  'Your Phone Number': 'Số điện thoại của bạn',
+  'Your Business Brand': 'Thương hiệu kinh doanh của bạn',
+  'Please Describe Your Business': 'Vui lòng mô tả kinh doanh của bạn',
+  'Please Describe Your Message': 'Vui lòng mô tả tin nhắn của bạn',
+  'Enter Review title': 'Nhập tiêu đề đánh giá',
+  'Write Review': 'Viết đánh giá',
+  'Brand Name': 'Tên thương hiệu',
+  'Brand Description': 'Mô tả thương hiệu',
+  
+  // Messages
+  'No categories found.': 'Không tìm thấy danh mục.',
+  'No products found.': 'Không tìm thấy sản phẩm.',
+  'No reviews found.': 'Không tìm thấy đánh giá.',
+  'No orders found.': 'Không tìm thấy đơn hàng.',
+  'Order Details': 'Chi tiết đơn hàng',
+  'Order ID': 'Mã đơn hàng',
+  'Order Date': 'Ngày đặt hàng',
+  'Review Added on': 'Đánh giá được thêm vào',
+  'Approved': 'Đã phê duyệt',
+  'Rejected': 'Đã từ chối',
+  'Waiting Approval': 'Chờ phê duyệt',
+  
+  // Errors
+  'Please Try Again!': 'Vui lòng thử lại!',
+  'Unauthorized Access! Please login again': 'Truy cập không được phép! Vui lòng đăng nhập lại',
+  'Forbidden! You are not allowed to access this resource.': 'Bị cấm! Bạn không được phép truy cập tài nguyên này.',
+  'Your request could not be processed. Please try again.': 'Yêu cầu của bạn không thể xử lý. Vui lòng thử lại.',
+  
+  // Validation
+  'Name is required.': 'Tên là bắt buộc.',
+  'Email is required.': 'Email là bắt buộc.',
+  'Password is required.': 'Mật khẩu là bắt buộc.',
+  'Description is required.': 'Mô tả là bắt buộc.',
+  'Products are required.': 'Sản phẩm là bắt buộc.',
+  'Description may not be greater than 200 characters.': 'Mô tả không được vượt quá 200 ký tự.',
+  
+  // Success
+  'Subscribe': 'Đăng ký',
+  'Add Brand': 'Thêm thương hiệu',
+  'Add Category': 'Thêm danh mục',
+  'Add Review': 'Thêm đánh giá',
+  'Add Product': 'Thêm sản phẩm',
+  'Add Merchant': 'Thêm người bán',
+  
+  // Dashboard
+  'Dashboard Menu': 'Menu bảng điều khiển',
+  'Account': 'Tài khoản',
+  
+  // Status
+  'Processing': 'Đang xử lý',
+  'Shipped': 'Đã gửi hàng',
+  'Delivered': 'Đã giao hàng',
+  'Cancelled': 'Đã hủy',
+  'Not processed': 'Chưa xử lý'
+}; 

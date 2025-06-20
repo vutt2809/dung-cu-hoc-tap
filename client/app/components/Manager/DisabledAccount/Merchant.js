@@ -14,7 +14,7 @@ const DisabledMerchantAccount = props => {
       className='d-flex flex-column justify-content-center align-items-center'
       style={{ minHeight: 250 }}
     >
-      <h3 className='mb-3'>Hi, {user.firstName}</h3>
+      <h3 className='mb-3'>Hi, {user.first_name}</h3>
       <div className='p-4 rounded-sm bg-secondary'>
         <h5>Unfortunately it seems your account has been disabled.</h5>
         <p className='text-gray mb-1'>

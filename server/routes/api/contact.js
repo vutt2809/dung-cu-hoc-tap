@@ -47,7 +47,7 @@ router.post('/add', async (req, res) => {
 router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const contacts = await Contact.findAll({
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     res.status(200).json({

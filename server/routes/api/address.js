@@ -17,15 +17,16 @@ router.get('/', auth, async (req, res) => {
           attributes: ['id', 'first_name', 'last_name']
         }
       ],
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
+    console.log('addresses', addresses);
 
     res.status(200).json({
       addresses
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Address list error: ' + error.message
     });
   }
 });

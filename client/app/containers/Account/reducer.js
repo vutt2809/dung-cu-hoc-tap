@@ -13,8 +13,8 @@ import {
 
 const initialState = {
   user: {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     provider: '',
     role: ''
   },
@@ -43,8 +43,8 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          firstName: '',
-          lastName: ''
+          first_name: '',
+          last_name: ''
         }
       };
     case SET_PROFILE_LOADING:

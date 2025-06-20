@@ -80,11 +80,11 @@ const EditAddress = props => {
           <Col xs='12' lg='6'>
             <Input
               type={'text'}
-              error={formErrors['zipCode']}
-              label={'Zipcode'}
-              name={'zipCode'}
-              placeholder={'Please Enter Your Zipcode'}
-              value={address.zipCode}
+              error={formErrors['zip_code']}
+              label={'zip_code'}
+              name={'zip_code'}
+              placeholder={'Please Enter Your zip_code'}
+              value={address.zip_code}
               onInputChange={(name, value) => {
                 addressChange(name, value);
               }}

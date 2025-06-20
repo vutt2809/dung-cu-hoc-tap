@@ -43,9 +43,9 @@ const AccountDetails = props => {
             <Input
               type={'text'}
               label={'First Name'}
-              name={'firstName'}
+              name={'first_name'}
               placeholder={'Please Enter Your First Name'}
-              value={user.firstName ? user.firstName : ''}
+              value={user.first_name ? user.first_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}
@@ -55,9 +55,9 @@ const AccountDetails = props => {
             <Input
               type={'text'}
               label={'Last Name'}
-              name={'lastName'}
+              name={'last_name'}
               placeholder={'Please Enter Your Last Name'}
-              value={user.lastName ? user.lastName : ''}
+              value={user.last_name ? user.last_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}

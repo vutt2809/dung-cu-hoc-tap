@@ -9,6 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
+import { VI } from '../../constants/vi';
 
 import EditCategory from '../../components/Manager/EditCategory';
 import SubPage from '../../components/Manager/SubPage';
@@ -44,8 +45,8 @@ class Edit extends React.PureComponent {
 
     return (
       <SubPage
-        title='Edit Category'
-        actionTitle='Cancel'
+        title={VI['Edit Category']}
+        actionTitle={VI['Cancel']}
         handleAction={history.goBack}
       >
         {category?._id ? (
@@ -59,7 +60,7 @@ class Edit extends React.PureComponent {
             activateCategory={activateCategory}
           />
         ) : (
-          <NotFound message='No category found.' />
+          <NotFound message={VI['No category found.']} />
         )}
       </SubPage>
     );

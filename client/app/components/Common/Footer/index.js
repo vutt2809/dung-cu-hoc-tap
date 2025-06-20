@@ -10,21 +10,22 @@ import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import Newsletter from '../../../containers/Newsletter';
+import { VI } from '../../../constants/vi';
 
 const Footer = () => {
   const infoLinks = [
-    { id: 0, name: 'Contact Us', to: '/contact' },
-    { id: 1, name: 'Sell With Us', to: '/sell' },
-    { id: 2, name: 'Shipping', to: '/shipping' }
+    { id: 0, name: VI['Contact Us'], to: '/contact' },
+    { id: 1, name: VI['Sell With Us'], to: '/sell' },
+    { id: 2, name: VI['Shipping'], to: '/shipping' }
   ];
 
   const footerBusinessLinks = (
     <ul className='support-links'>
       <li className='footer-link'>
-        <Link to='/dashboard'>Account Details</Link>
+        <Link to='/dashboard'>{VI['Account Details']}</Link>
       </li>
       <li className='footer-link'>
-        <Link to='/dashboard/orders'>Orders</Link>
+        <Link to='/dashboard/orders'>{VI['Orders']}</Link>
       </li>
     </ul>
   );
@@ -43,7 +44,7 @@ const Footer = () => {
         <div className='footer-content'>
           <div className='footer-block'>
             <div className='block-title'>
-              <h3 className='text-uppercase'>Customer Service</h3>
+              <h3 className='text-uppercase'>{VI['Customer Service']}</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
@@ -51,7 +52,7 @@ const Footer = () => {
           </div>
           <div className='footer-block'>
             <div className='block-title'>
-              <h3 className='text-uppercase'>Links</h3>
+              <h3 className='text-uppercase'>{VI['Links']}</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
@@ -59,13 +60,13 @@ const Footer = () => {
           </div>
           <div className='footer-block'>
             <div className='block-title'>
-              <h3 className='text-uppercase'>Newsletter</h3>
+              <h3 className='text-uppercase'>{VI['Newsletter']}</h3>
               <Newsletter />
             </div>
           </div>
         </div>
         <div className='footer-copyright'>
-          <span>© {new Date().getFullYear()} MERN Store</span>
+          <span>© {new Date().getFullYear()} {VI['MERN Store']}</span>
         </div>
         <ul className='footer-social-item'>
           <li>

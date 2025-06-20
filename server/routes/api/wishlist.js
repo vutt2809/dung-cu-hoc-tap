@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
           attributes: ['id', 'name', 'image_url', 'price', 'quantity']
         }
       ],
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     res.status(200).json({

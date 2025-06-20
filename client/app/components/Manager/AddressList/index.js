@@ -37,7 +37,7 @@ const AddressList = props => {
                 <h4 className='mb-0'>Delivery Address</h4>
               )}
               <p className='mb-2 address-desc'>
-                {`${address?.address} ${address?.city}, ${address?.country}, ${address?.zipCode}`}
+                {`${address?.address} ${address?.city}, ${address?.country}, ${address?.zip_code}`}
               </p>
             </div>
           </div>

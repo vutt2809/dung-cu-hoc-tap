@@ -9,18 +9,13 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import SelectOption from '../../Common/SelectOption';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
-import SelectOption from '../../Common/SelectOption';
+import { VI } from '../../../constants/vi';
 
 const AddCategory = props => {
-  const {
-    products,
-    categoryFormData,
-    formErrors,
-    categoryChange,
-    addCategory
-  } = props;
+  const { categoryFormData, formErrors, categoryChange, addCategory } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -35,9 +30,9 @@ const AddCategory = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI['Name']}
               name={'name'}
-              placeholder={'Category Name'}
+              placeholder={VI['Category Name']}
               value={categoryFormData.name}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
@@ -48,9 +43,9 @@ const AddCategory = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={'Description'}
+              label={VI['Description']}
               name={'description'}
-              placeholder={'Category Description'}
+              placeholder={VI['Category Description']}
               value={categoryFormData.description}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
@@ -59,11 +54,10 @@ const AddCategory = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
-              error={formErrors['products']}
-              label={'Select Products'}
-              multi={true}
+              label={VI['Products']}
+              name={'products'}
               value={categoryFormData.products}
-              options={products}
+              options={categoryFormData.products}
               handleSelectChange={value => {
                 categoryChange('products', value);
               }}
@@ -73,7 +67,7 @@ const AddCategory = props => {
             <Switch
               id={'active-category'}
               name={'isActive'}
-              label={'Active?'}
+              label={VI['Active?']}
               checked={categoryFormData.isActive}
               toggleCheckboxChange={value => categoryChange('isActive', value)}
             />
@@ -81,7 +75,7 @@ const AddCategory = props => {
         </Row>
         <hr />
         <div className='add-category-actions'>
-          <Button type='submit' text='Add Category' />
+          <Button type='submit' text={VI['Add Category']} />
         </div>
       </form>
     </div>

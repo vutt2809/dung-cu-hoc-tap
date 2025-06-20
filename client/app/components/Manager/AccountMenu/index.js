@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar } from 'reactstrap';
 
 import Button from '../../Common/Button';
+import { VI } from '../../../constants/vi';
 
 const AccountMenu = props => {
   const { user, isMenuOpen, links, toggleMenu } = props;
@@ -26,13 +27,13 @@ const AccountMenu = props => {
   return (
     <div className='panel-sidebar'>
       <Button
-        text='Dashboard Menu'
+        text={VI['Dashboard Menu']}
         className={`${isMenuOpen ? 'menu-panel' : 'menu-panel collapse'}`}
         ariaExpanded={isMenuOpen ? 'true' : 'false'}
         // ariaLabel={isMenuOpen ? 'dashboard menu expanded' : 'dashboard menu collapse'}
         onClick={toggleMenu}
       />
-      <h3 className='panel-title'>Account</h3>
+      <h3 className='panel-title'>{VI['Account']}</h3>
       <Navbar color='light' light expand='md'>
         <Collapse isOpen={isMenuOpen} navbar>
           <ul className='panel-links'>

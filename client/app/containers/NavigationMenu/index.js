@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import actions from '../../actions';
+import { VI } from '../../constants/vi';
 
 import Button from '../../components/Common/Button';
 import { CloseIcon } from '../../components/Common/Icon';
@@ -38,7 +39,7 @@ class NavigationMenu extends React.PureComponent {
         </div>
         <div className='menu-body'>
           <Container>
-            <h3 className='menu-title text-uppercase'>Shop By Category</h3>
+            <h3 className='menu-title text-uppercase'>{VI['Shop By Category']}</h3>
             <nav role='navigation'>
               <ul className='menu-list'>
                 {categories.map((link, index) => (

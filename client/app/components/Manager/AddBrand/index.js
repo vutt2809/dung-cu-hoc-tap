@@ -11,6 +11,7 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
+import { VI } from '../../../constants/vi';
 
 const AddBrand = props => {
   const { brandFormData, formErrors, brandChange, addBrand } = props;
@@ -28,9 +29,9 @@ const AddBrand = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI['Name']}
               name={'name'}
-              placeholder={'Brand Name'}
+              placeholder={VI['Brand Name']}
               value={brandFormData.name}
               onInputChange={(name, value) => {
                 brandChange(name, value);
@@ -41,9 +42,9 @@ const AddBrand = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={'Description'}
+              label={VI['Description']}
               name={'description'}
-              placeholder={'Brand Description'}
+              placeholder={VI['Brand Description']}
               value={brandFormData.description}
               onInputChange={(name, value) => {
                 brandChange(name, value);
@@ -54,7 +55,7 @@ const AddBrand = props => {
             <Switch
               id={'active-brand'}
               name={'isActive'}
-              label={'Active?'}
+              label={VI['Active?']}
               checked={brandFormData.isActive}
               toggleCheckboxChange={value => brandChange('isActive', value)}
             />
@@ -62,7 +63,7 @@ const AddBrand = props => {
         </Row>
         <hr />
         <div className='add-brand-actions'>
-          <Button type='submit' text='Add Brand' />
+          <Button type='submit' text={VI['Add Brand']} />
         </div>
       </form>
     </div>

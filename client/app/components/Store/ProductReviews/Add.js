@@ -11,10 +11,11 @@ import { Row, Col } from 'reactstrap';
 import SelectOption from '../../Common/SelectOption';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import { VI } from '../../../constants/vi';
 
 const recommedableSelect = [
-  { value: 1, label: 'Yes' },
-  { value: 0, label: 'No' }
+  { value: 1, label: 'Có' },
+  { value: 0, label: 'Không' }
 ];
 
 const Add = props => {
@@ -28,15 +29,15 @@ const Add = props => {
   return (
     <div className='bg-white p-4 box-shadow-primary add-review'>
       <form onSubmit={handleSubmit} noValidate>
-        <h3 className='mb-3'>Add Review</h3>
+        <h3 className='mb-3'>{VI['Add Review']}</h3>
         <Row>
           <Col xs='12' md='12'>
             <Input
               type={'text'}
               error={reviewFormErrors['title']}
-              label={'Title'}
+              label={VI['Title']}
               name={'title'}
-              placeholder={'Enter Review title'}
+              placeholder={VI['Enter Review title']}
               value={reviewFormData.title}
               onInputChange={(name, value) => {
                 reviewChange(name, value);
@@ -47,9 +48,9 @@ const Add = props => {
             <Input
               type={'textarea'}
               error={reviewFormErrors['review']}
-              label={'Comment'}
+              label={VI['Comment']}
               name={'review'}
-              placeholder={'Write Review'}
+              placeholder={VI['Write Review']}
               value={reviewFormData.review}
               onInputChange={(name, value) => {
                 reviewChange(name, value);
@@ -60,7 +61,7 @@ const Add = props => {
             <Input
               type={'stars'}
               error={reviewFormErrors['rating']}
-              label={'Rating'}
+              label={VI['Rating']}
               name={'rating'}
               value={reviewFormData.rating}
               onInputChange={(name, value) => {
@@ -70,8 +71,7 @@ const Add = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
-              error={reviewFormErrors['isRecommended']}
-              label={'Will you recommend this product?'}
+              label={'Bạn có khuyến nghị sản phẩm này không?'}
               name={'isRecommended'}
               value={reviewFormData.isRecommended}
               options={recommedableSelect}
@@ -81,8 +81,9 @@ const Add = props => {
             />
           </Col>
         </Row>
-        <div className='mt-4'>
-          <Button type='submit' text='Publish Review' />
+        <hr />
+        <div className='add-review-actions'>
+          <Button type='submit' text={VI['Submit']} />
         </div>
       </form>
     </div>

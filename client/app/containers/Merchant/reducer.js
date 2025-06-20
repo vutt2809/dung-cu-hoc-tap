@@ -37,8 +37,8 @@ const initialState = {
   formErrors: {},
   signupFormData: {
     email: '',
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     password: ''
   },
   signupFormErrors: {},
@@ -125,8 +125,8 @@ const merchantReducer = (state = initialState, action) => {
         ...state,
         signupFormData: {
           email: '',
-          firstName: '',
-          lastName: '',
+          first_name: '',
+          last_name: '',
           password: ''
         }
       };

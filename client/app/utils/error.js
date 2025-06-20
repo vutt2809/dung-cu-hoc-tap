@@ -7,6 +7,7 @@
 import { error } from 'react-notification-system-redux';
 
 import { signOut } from '../containers/Login/actions';
+import { VI } from '../constants/vi';
 
 const handleError = (err, dispatch, title = '') => {
   const unsuccessfulOptions = {
@@ -18,7 +19,7 @@ const handleError = (err, dispatch, title = '') => {
 
   if (err.response) {
     if (err.response.status === 400) {
-      unsuccessfulOptions.title = title ? title : 'Please Try Again!';
+      unsuccessfulOptions.title = title ? title : VI['Please Try Again!'];
       unsuccessfulOptions.message = err.response.data.error;
       dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 404) {
@@ -27,12 +28,11 @@ const handleError = (err, dispatch, title = '') => {
       //   'Your request could not be processed. Please try again.';
       // dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 401) {
-      unsuccessfulOptions.message = 'Unauthorized Access! Please login again';
+      unsuccessfulOptions.message = VI['Unauthorized Access! Please login again'];
       dispatch(signOut());
       dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 403) {
-      unsuccessfulOptions.message =
-        'Forbidden! You are not allowed to access this resource.';
+      unsuccessfulOptions.message = VI['Forbidden! You are not allowed to access this resource.'];
       dispatch(error(unsuccessfulOptions));
     }
   } else if (err.message) {
@@ -40,8 +40,7 @@ const handleError = (err, dispatch, title = '') => {
     dispatch(error(unsuccessfulOptions));
   } else {
     // fallback
-    unsuccessfulOptions.message =
-      'Your request could not be processed. Please try again.';
+    unsuccessfulOptions.message = VI['Your request could not be processed. Please try again.'];
   }
 };
 

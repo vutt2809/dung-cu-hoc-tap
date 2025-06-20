@@ -16,13 +16,13 @@ const List = props => {
 
   const getAvatar = review => {
     const color = getRandomColors();
-    if (review.user.firstName) {
+    if (review.user.first_name) {
       return (
         <div
           className='d-flex flex-column justify-content-center align-items-center fw-normal text-white avatar'
           style={{ backgroundColor: color ? color : 'red' }}
         >
-          {review.user.firstName.charAt(0)}
+          {review.user.first_name.charAt(0)}
         </div>
       );
     }

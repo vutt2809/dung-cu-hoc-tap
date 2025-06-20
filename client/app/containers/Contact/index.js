@@ -10,71 +10,80 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
+import { VI } from '../../constants/vi';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 
 class Contact extends React.PureComponent {
+  componentDidMount() {
+    this.props.resetContact();
+  }
+
   render() {
-    const { contactFormData, contactFormChange, contactUs, formErrors } =
-      this.props;
+    const {
+      contactFormData,
+      formErrors,
+      contactChange,
+      addContact
+    } = this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
-      contactUs();
+      addContact();
     };
 
     return (
       <div className='contact'>
-        <h3 className='text-uppercase'>Contact Information</h3>
-        <hr />
-        <form onSubmit={handleSubmit}>
-          <Row>
-            <Col xs='12' md='6'>
-              <Input
-                type={'text'}
-                error={formErrors['name']}
-                label={'Name'}
-                name={'name'}
-                placeholder={'You Full Name'}
-                value={contactFormData.name}
-                onInputChange={(name, value) => {
-                  contactFormChange(name, value);
-                }}
-              />
-            </Col>
-            <Col xs='12' md='6'>
-              <Input
-                type={'text'}
-                error={formErrors['email']}
-                label={'Email'}
-                name={'email'}
-                placeholder={'Your Email Address'}
-                value={contactFormData.email}
-                onInputChange={(name, value) => {
-                  contactFormChange(name, value);
-                }}
-              />
-            </Col>
-            <Col xs='12' md='12'>
-              <Input
-                type={'textarea'}
-                error={formErrors['message']}
-                label={'Message'}
-                name={'message'}
-                placeholder={'Please Describe Your Message'}
-                value={contactFormData.message}
-                onInputChange={(name, value) => {
-                  contactFormChange(name, value);
-                }}
-              />
-            </Col>
-          </Row>
-          <hr />
-          <div className='contact-actions'>
-            <Button type='submit' text='Submit' />
-          </div>
-        </form>
+        <div className='bg-white p-4 box-shadow-primary'>
+          <form onSubmit={handleSubmit} noValidate>
+            <Row>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  error={formErrors['name']}
+                  label={VI['Name']}
+                  name={'name'}
+                  placeholder={VI['Your Full Name']}
+                  value={contactFormData.name}
+                  onInputChange={(name, value) => {
+                    contactChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  error={formErrors['email']}
+                  label={VI['Email Address']}
+                  name={'email'}
+                  placeholder={VI['Your Email Address']}
+                  value={contactFormData.email}
+                  onInputChange={(name, value) => {
+                    contactChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'textarea'}
+                  error={formErrors['message']}
+                  label={VI['Message']}
+                  name={'message'}
+                  placeholder={VI['Please Describe Your Message']}
+                  value={contactFormData.message}
+                  onInputChange={(name, value) => {
+                    contactChange(name, value);
+                  }}
+                />
+              </Col>
+            </Row>
+            <hr />
+            <div className='contact-actions'>
+              <Button type='submit' text={VI['Submit']} />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

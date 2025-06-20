@@ -10,13 +10,14 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import { VI } from '../../../constants/vi';
 
 const AddMerchant = props => {
   const {
     merchantFormData,
     formErrors,
     isSubmitting,
-    submitTitle = 'Submit',
+    submitTitle = VI['Submit'],
     merchantChange,
     addMerchant
   } = props;
@@ -34,9 +35,9 @@ const AddMerchant = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI['Name']}
               name={'name'}
-              placeholder={'Your Full Name'}
+              placeholder={VI['Your Full Name']}
               value={merchantFormData.name}
               onInputChange={(name, value) => {
                 merchantChange(name, value);
@@ -47,9 +48,9 @@ const AddMerchant = props => {
             <Input
               type={'text'}
               error={formErrors['email']}
-              label={'Email Address'}
+              label={VI['Email Address']}
               name={'email'}
-              placeholder={'Your Email Address'}
+              placeholder={VI['Your Email Address']}
               value={merchantFormData.email}
               onInputChange={(name, value) => {
                 merchantChange(name, value);
@@ -60,9 +61,9 @@ const AddMerchant = props => {
             <Input
               type={'text'}
               error={formErrors['phoneNumber']}
-              label={'Phone Number'}
+              label={VI['Phone Number']}
               name={'phoneNumber'}
-              placeholder={'Your Phone Number'}
+              placeholder={VI['Your Phone Number']}
               value={merchantFormData.phoneNumber}
               onInputChange={(name, value) => {
                 merchantChange(name, value);
@@ -73,9 +74,9 @@ const AddMerchant = props => {
             <Input
               type={'text'}
               error={formErrors['brandName']}
-              label={'Brand'}
+              label={VI['Brand']}
               name={'brandName'}
-              placeholder={'Your Business Brand'}
+              placeholder={VI['Your Business Brand']}
               value={merchantFormData.brand}
               onInputChange={(name, value) => {
                 merchantChange(name, value);
@@ -86,9 +87,9 @@ const AddMerchant = props => {
             <Input
               type={'textarea'}
               error={formErrors['business']}
-              label={'Business'}
+              label={VI['Business']}
               name={'business'}
-              placeholder={'Please Describe Your Business'}
+              placeholder={VI['Please Describe Your Business']}
               value={merchantFormData.business}
               onInputChange={(name, value) => {
                 merchantChange(name, value);

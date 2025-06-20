@@ -97,7 +97,7 @@ export const addAddress = () => {
         city: 'required',
         state: 'required',
         country: 'required',
-        zipCode: 'required|min:5'
+        zip_code: 'required|min:5'
       };
 
       const newAddress = getState().address.addressFormData;
@@ -108,7 +108,7 @@ export const addAddress = () => {
         'required.city': 'City is required.',
         'required.state': 'State is required.',
         'required.country': 'Country is required.',
-        'required.zipCode': 'Zipcode is required.'
+        'required.zip_code': 'zip_code is required.'
       });
 
       if (!isValid) {
@@ -152,7 +152,7 @@ export const updateAddress = () => {
         city: 'required',
         state: 'required',
         address: 'required',
-        zipCode: 'required'
+        zip_code: 'required'
       };
 
       const newAddress = getState().address.address;
@@ -162,7 +162,7 @@ export const updateAddress = () => {
         'required.city': 'City is required.',
         'required.state': 'State is required.',
         'required.country': 'Country is required.',
-        'required.zipCode': 'Zipcode is required.'
+        'required.zip_code': 'zip_code is required.'
       });
 
       if (!isValid) {

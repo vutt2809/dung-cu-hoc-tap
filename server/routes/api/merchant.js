@@ -23,7 +23,7 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
           attributes: ['id', 'first_name', 'last_name', 'email']
         }
       ],
-      order: [['created', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     res.status(200).json({

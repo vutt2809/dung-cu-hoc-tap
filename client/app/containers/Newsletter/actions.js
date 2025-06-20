@@ -19,19 +19,18 @@ import { API_URL } from '../../constants';
 export const newsletterChange = (name, value) => {
   return {
     type: NEWSLETTER_CHANGE,
-    payload: value
+    payload: { name, value }
   };
 };
 
-export const subscribeToNewsletter = () => {
+export const subscribeNewsletter = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
         email: 'required|email'
       };
 
-      const user = {};
-      user.email = getState().newsletter.email;
+      const user = getState().newsletter.newsletterFormData;
 
       const { isValid, errors } = allFieldsValidation(user, rules, {
         'required.email': 'Email is required.',
@@ -60,3 +59,7 @@ export const subscribeToNewsletter = () => {
     }
   };
 };
+
+export const resetNewsletter = () => ({
+  type: NEWSLETTER_RESET
+});

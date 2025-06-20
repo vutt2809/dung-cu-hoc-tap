@@ -1,4 +1,4 @@
-/*
+/**
  *
  * Newsletter
  *
@@ -7,38 +7,52 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Row, Col } from 'reactstrap';
 
-import actions from '../../actions';
+import mapDispatchToProps from '../../actions';
+import { VI } from '../../constants/vi';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 
 class Newsletter extends React.PureComponent {
+  componentDidMount() {
+    this.props.resetNewsletter();
+  }
+
   render() {
-    const { email, newsletterChange, subscribeToNewsletter, formErrors } =
-      this.props;
+    const {
+      newsletterFormData,
+      formErrors,
+      newsletterChange,
+      subscribeNewsletter
+    } = this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
-      subscribeToNewsletter();
+      subscribeNewsletter();
     };
 
     return (
-      <div className='newsletter-form'>
-        <p>Sign Up for Our Newsletter</p>
-        <form onSubmit={handleSubmit}>
-          <div className='subscribe'>
-            <Input
-              type={'text'}
-              error={formErrors['email']}
-              name={'email'}
-              placeholder={'Please Enter Your Email'}
-              value={email}
-              onInputChange={(name, value) => {
-                newsletterChange(name, value);
-              }}
-              inlineElement={SubscribeButton}
-            />
+      <div className='newsletter'>
+        <form onSubmit={handleSubmit} noValidate>
+          <Row>
+            <Col xs='12' md='12'>
+              <Input
+                type={'text'}
+                error={formErrors['email']}
+                label={VI['Email Address']}
+                name={'email'}
+                placeholder={VI['Your Email Address']}
+                value={newsletterFormData.email}
+                onInputChange={(name, value) => {
+                  newsletterChange(name, value);
+                }}
+              />
+            </Col>
+          </Row>
+          <div className='newsletter-actions'>
+            <Button type='submit' variant='primary' text={VI['Subscribe']} />
           </div>
         </form>
       </div>
@@ -46,15 +60,11 @@ class Newsletter extends React.PureComponent {
   }
 }
 
-const SubscribeButton = (
-  <Button type='submit' variant='primary' text='Subscribe' />
-);
-
 const mapStateToProps = state => {
   return {
-    email: state.newsletter.email,
+    newsletterFormData: state.newsletter.newsletterFormData,
     formErrors: state.newsletter.formErrors
   };
 };
 
-export default connect(mapStateToProps, actions)(Newsletter);
+export default connect(mapStateToProps, mapDispatchToProps)(Newsletter);
