@@ -29,8 +29,8 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
       users
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'User list error: ' + error.message
     });
   }
 });
@@ -46,8 +46,8 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
       users
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'User list error: ' + error.message
     });
   }
 });
@@ -63,8 +63,8 @@ router.get('/profile', auth, async (req, res) => {
       user
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'User profile error: ' + error.message
     });
   }
 });
@@ -98,8 +98,8 @@ router.put('/profile', auth, async (req, res) => {
       message: 'Profile has been updated!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'User profile update error: ' + error.message
     });
   }
 });

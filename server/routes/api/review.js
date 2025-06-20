@@ -28,8 +28,8 @@ router.get('/list/:product_id', async (req, res) => {
       reviews
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review list error: ' + error.message
     });
   }
 });
@@ -57,8 +57,8 @@ router.get('/', auth, async (req, res) => {
       reviews
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review list error: ' + error.message
     });
   }
 });
@@ -93,8 +93,8 @@ router.get('/:id', auth, async (req, res) => {
       review: reviewDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review error: ' + error.message
     });
   }
 });
@@ -146,8 +146,8 @@ router.post('/add', auth, async (req, res) => {
       review
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review add error: ' + error.message
     });
   }
 });
@@ -184,8 +184,8 @@ router.put('/:id', auth, async (req, res) => {
       review
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review update error: ' + error.message
     });
   }
 });
@@ -210,8 +210,8 @@ router.delete('/delete/:id', auth, async (req, res) => {
       message: 'Review has been deleted successfully!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review delete error: ' + error.message
     });
   }
 });
@@ -238,8 +238,8 @@ router.put('/:id/status', auth, role.check(ROLES.Admin), async (req, res) => {
       review
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Review status update error: ' + error.message
     });
   }
 });

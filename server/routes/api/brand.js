@@ -24,8 +24,8 @@ router.get('/list', async (req, res) => {
       brands
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Brand list error: ' + error.message
     });
   }
 });
@@ -41,8 +41,8 @@ router.get('/', auth, async (req, res) => {
       brands
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Brand list error: ' + error.message
     });
   }
 });
@@ -64,8 +64,8 @@ router.get('/:id', auth, async (req, res) => {
       brand: brandDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Brand error: ' + error.message
     });
   }
 });
@@ -115,8 +115,8 @@ router.post(
         brand
       });
     } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+      res.status(500).json({
+        error: 'Brand add error: ' + error.message
       });
     }
   }
@@ -155,8 +155,8 @@ router.put(
         brand
       });
     } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+      res.status(500).json({
+        error: 'Brand update error: ' + error.message
       });
     }
   }
@@ -180,8 +180,8 @@ router.delete('/delete/:id', auth, role.check(ROLES.Admin), async (req, res) => 
       message: 'Brand has been deleted successfully!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Brand delete error: ' + error.message
     });
   }
 });

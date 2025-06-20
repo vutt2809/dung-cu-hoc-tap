@@ -74,8 +74,8 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Login error: ' + error.message
     });
   }
 });
@@ -151,8 +151,8 @@ router.post('/register', async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Register error: ' + error.message
     });
   }
 });
@@ -195,8 +195,8 @@ router.post('/forgot', async (req, res) => {
       message: 'Please check your email for the link to reset your password.'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Reset password error: ' + error.message
     });
   }
 });
@@ -238,8 +238,8 @@ router.post('/reset/:token', async (req, res) => {
         'Password changed successfully. Please login with your new password.'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Reset password error: ' + error.message
     });
   }
 });
@@ -285,8 +285,8 @@ router.post('/reset', auth, async (req, res) => {
         'Password changed successfully. Please login with your new password.'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Reset password error: ' + error.message
     });
   }
 });

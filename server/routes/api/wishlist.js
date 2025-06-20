@@ -24,8 +24,8 @@ router.get('/', auth, async (req, res) => {
       wishlist: wishlistItems
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Wishlist list error: ' + error.message
     });
   }
 });
@@ -63,8 +63,8 @@ router.post('/add', auth, async (req, res) => {
       message: 'Product has been added to your wishlist!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Wishlist add error: ' + error.message
     });
   }
 });
@@ -89,8 +89,8 @@ router.delete('/delete/:id', auth, async (req, res) => {
       message: 'Product has been removed from your wishlist!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Wishlist delete error: ' + error.message
     });
   }
 });

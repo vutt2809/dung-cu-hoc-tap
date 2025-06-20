@@ -37,8 +37,8 @@ router.post('/add', async (req, res) => {
       contact
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Contact add error: ' + error.message
     });
   }
 });
@@ -54,8 +54,8 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
       contacts
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Contact list error: ' + error.message
     });
   }
 });
@@ -77,8 +77,8 @@ router.get('/:id', auth, role.check(ROLES.Admin), async (req, res) => {
       contact: contactDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Contact error: ' + error.message
     });
   }
 });
@@ -104,8 +104,8 @@ router.put('/:id/read', auth, role.check(ROLES.Admin), async (req, res) => {
       contact
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Contact read error: ' + error.message
     });
   }
 });
@@ -128,8 +128,8 @@ router.delete('/delete/:id', auth, role.check(ROLES.Admin), async (req, res) => 
       message: 'Contact has been deleted successfully!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Contact delete error: ' + error.message
     });
   }
 });

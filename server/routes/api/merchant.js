@@ -30,8 +30,8 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
       merchants
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Merchant list error: ' + error.message
     });
   }
 });
@@ -61,8 +61,8 @@ router.get('/:id', auth, async (req, res) => {
       merchant: merchantDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Merchant error: ' + error.message
     });
   }
 });
@@ -119,8 +119,8 @@ router.post(
         merchant
       });
     } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+      res.status(500).json({
+        error: 'Merchant update error: ' + error.message
       });
     }
   }

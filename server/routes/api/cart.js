@@ -23,8 +23,8 @@ router.get('/', auth, async (req, res) => {
       cart: cartDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Cart list error: ' + error.message
     });
   }
 });
@@ -74,8 +74,8 @@ router.post('/add', auth, async (req, res) => {
       message: 'Product has been added to your cart!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Cart add error: ' + error.message
     });
   }
 });
@@ -110,8 +110,8 @@ router.put('/update/:id', auth, async (req, res) => {
       message: 'Cart has been updated!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Cart update error: ' + error.message
     });
   }
 });
@@ -136,8 +136,8 @@ router.delete('/delete/:id', auth, async (req, res) => {
       message: 'Product has been removed from your cart!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Cart delete error: ' + error.message
     });
   }
 });

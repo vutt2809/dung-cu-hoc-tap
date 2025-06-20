@@ -33,8 +33,8 @@ router.get('/list', async (req, res) => {
       categories
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Category list error: ' + error.message
     });
   }
 });
@@ -62,8 +62,8 @@ router.get('/', auth, async (req, res) => {
       categories
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Category list error: ' + error.message
     });
   }
 });
@@ -98,8 +98,8 @@ router.get('/:id', auth, async (req, res) => {
       category: categoryDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Category error: ' + error.message
     });
   }
 });
@@ -150,8 +150,8 @@ router.post(
         category
       });
     } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+      res.status(500).json({
+        error: 'Category add error: ' + error.message
       });
     }
   }
@@ -191,8 +191,8 @@ router.put(
         category
       });
     } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
+      res.status(500).json({
+        error: 'Category update error: ' + error.message
       });
     }
   }
@@ -224,8 +224,8 @@ router.delete('/delete/:id', auth, role.check(ROLES.Admin), async (req, res) => 
       message: 'Category has been deleted successfully!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Category delete error: ' + error.message
     });
   }
 });

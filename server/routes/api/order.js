@@ -41,8 +41,8 @@ router.get('/', auth, async (req, res) => {
       orders
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Order list error: ' + error.message
     });
   }
 });
@@ -72,8 +72,8 @@ router.get('/:id', auth, async (req, res) => {
       order: orderDoc
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Order error: ' + error.message
     });
   }
 });
@@ -143,8 +143,8 @@ router.post('/add', auth, async (req, res) => {
       order
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Order add error: ' + error.message
     });
   }
 });
@@ -171,8 +171,8 @@ router.put('/:id/status', auth, role.check(ROLES.Admin), async (req, res) => {
       order
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Order status update error: ' + error.message
     });
   }
 });
@@ -205,8 +205,8 @@ router.put('/:id/cancel', auth, async (req, res) => {
       message: 'Order has been cancelled successfully!'
     });
   } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+    res.status(500).json({
+      error: 'Order cancel error: ' + error.message
     });
   }
 });
