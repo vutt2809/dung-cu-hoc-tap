@@ -12,6 +12,7 @@ import actions from '../../actions';
 
 import AddAddress from '../../components/Manager/AddAddress';
 import SubPage from '../../components/Manager/SubPage';
+import { VI } from '../../constants';
 
 class Add extends React.PureComponent {
   render() {
@@ -25,8 +26,8 @@ class Add extends React.PureComponent {
 
     return (
       <SubPage
-        title='Add Address'
-        actionTitle='Cancel'
+        title={VI['Add Address']}
+        actionTitle={VI['Cancel']}
         handleAction={() => history.goBack()}
       >
         <AddAddress

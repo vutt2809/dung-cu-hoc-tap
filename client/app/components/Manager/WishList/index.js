@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { XIcon } from '../../Common/Icon';
+import { VI } from '../../../constants';
 
 const WishList = props => {
   const { wishlist, updateWishlist } = props;
@@ -49,7 +50,7 @@ const WishList = props => {
             <div className='d-flex flex-column justify-content-center px-3 text-truncate'>
               <h4 className='text-truncate'>{item.product.name}</h4>
               <p className='mb-2 price'>${item.product.price}</p>
-              <label className='text-truncate'>{`Wishlist Added on ${formatDate(
+              <label className='text-truncate'>{`${VI['Date']} ${formatDate(
                 item.created
               )}`}</label>
             </div>
@@ -60,7 +61,7 @@ const WishList = props => {
               icon={<XIcon className='text-white' width={15} />}
               round={20}
               onClick={e => {
-                updateWishlist(!item.isLiked, item.product._id);
+                updateWishlist(!item.isLiked, item.product.id);
               }}
             />
           </div>

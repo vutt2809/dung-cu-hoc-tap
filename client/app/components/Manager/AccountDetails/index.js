@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import { EMAIL_PROVIDER } from '../../../constants';
+import { VI } from '../../../constants/vi';
 import UserRole from '../UserRole';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
@@ -30,7 +31,7 @@ const AccountDetails = props => {
               user.email
             ) : (
               <span className='provider-email'>
-                Logged in With {user.provider}
+                {VI['Logged In With'] || 'Logged in With'} {user.provider}
               </span>
             )}
           </p>
@@ -42,9 +43,9 @@ const AccountDetails = props => {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
-              label={'First Name'}
+              label={VI['First Name'] || 'First Name'}
               name={'first_name'}
-              placeholder={'Please Enter Your First Name'}
+              placeholder={VI['Please Enter Your First Name'] || 'Please Enter Your First Name'}
               value={user.first_name ? user.first_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -54,9 +55,9 @@ const AccountDetails = props => {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
-              label={'Last Name'}
+              label={VI['Last Name'] || 'Last Name'}
               name={'last_name'}
-              placeholder={'Please Enter Your Last Name'}
+              placeholder={VI['Please Enter Your Last Name'] || 'Please Enter Your Last Name'}
               value={user.last_name ? user.last_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -79,9 +80,9 @@ const AccountDetails = props => {
           <Col xs='12' md='12'>
             <Input
               type={'text'}
-              label={'Phone Number'}
+              label={VI['Phone Number'] || 'Phone Number'}
               name={'phoneNumber'}
-              placeholder={'Please Enter Your Phone Number'}
+              placeholder={VI['Please Enter Your Phone Number'] || 'Please Enter Your Phone Number'}
               value={user.phoneNumber ? user.phoneNumber : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -91,7 +92,11 @@ const AccountDetails = props => {
         </Row>
         <hr />
         <div className='profile-actions'>
-          <Button type='submit' variant='secondary' text='Save changes' />
+          <Button
+            type='submit'
+            variant='secondary'
+            text={VI['Save Changes'] || 'Save Changes'}
+          />
         </div>
       </form>
     </div>

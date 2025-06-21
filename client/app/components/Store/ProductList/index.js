@@ -21,7 +21,7 @@ const ProductList = props => {
             <div className='item-box'>
               <div className='add-wishlist-box'>
                 <AddToWishList
-                  id={product._id}
+                  id={product.id}
                   liked={product?.isLiked ?? false}
                   enabled={authenticated}
                   updateWishlist={updateWishlist}

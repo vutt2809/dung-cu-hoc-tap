@@ -34,15 +34,15 @@ export const fetchUsers = page => {
         }
       });
 
-      const { users, totalPages, currentPage, count } = response.data;
+      const { data, current_page, last_page, total } = response.data.users;
 
       dispatch({
         type: FETCH_USERS,
-        payload: users
+        payload: data
       });
       dispatch({
         type: SET_ADVANCED_FILTERS,
-        payload: { totalPages, currentPage, count }
+        payload: { totalPages: last_page, currentPage: current_page, count: total }
       });
     } catch (error) {
       handleError(error, dispatch);

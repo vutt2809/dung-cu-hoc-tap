@@ -40,3 +40,7 @@ export const EMAIL_PROVIDER = {
   Google: 'Google',
   Facebook: 'Facebook'
 };
+
+export const JWT_COOKIE = 'x-jwt-cookie';
+
+export * from './vi';

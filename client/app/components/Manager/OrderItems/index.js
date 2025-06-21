@@ -25,7 +25,7 @@ const OrderItems = props => {
           <DropdownItem
             key={`${s}-${i}`}
             className={s === item?.status ? 'active' : ''}
-            onClick={() => updateOrderItemStatus(item._id, s)}
+            onClick={() => updateOrderItemStatus(itemid, s)}
           >
             {s}
           </DropdownItem>
@@ -60,7 +60,7 @@ const OrderItems = props => {
                 text='Confirm Cancel'
                 role='menuitem'
                 className='cancel-order-btn'
-                onClick={() => updateOrderItemStatus(item._id, 'Cancelled')}
+                onClick={() => updateOrderItemStatus(itemid, 'Cancelled')}
               />
             </div>
           </DropdownConfirm>

@@ -13,6 +13,7 @@ import actions from '../../actions';
 import AddressList from '../../components/Manager/AddressList';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
+import { VI } from '../../constants';
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -25,14 +26,14 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title='Addresses'
-          actionTitle={'Add'}
+          title={VI['Address']}
+          actionTitle={VI['Add']}
           handleAction={() => history.push('/dashboard/address/add')}
         >
           {addresses.length > 0 ? (
             <AddressList addresses={addresses} />
           ) : (
-            <NotFound message='No addresses found.' />
+            <NotFound message={VI['No addresses found.']} />
           )}
         </SubPage>
       </>

@@ -55,7 +55,10 @@ export const resetPassword = token => {
         });
       }
 
-      const response = await axios.post(`${API_URL}/auth/reset/${token}`, user);
+      const response = await axios.post(`${API_URL}/auth/reset`, {
+        token: token,
+        password: user.password
+      });
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
@@ -99,7 +102,11 @@ export const resetAccountPassword = () => {
         });
       }
 
-      const response = await axios.post(`${API_URL}/auth/reset`, user);
+      const response = await axios.put(`${API_URL}/user/password`, {
+        current_password: user.currentPassword,
+        password: user.password,
+        password_confirmation: user.confirmPassword
+      });
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',

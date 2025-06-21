@@ -13,17 +13,18 @@ import actions from '../../actions';
 import EditBrand from '../../components/Manager/EditBrand';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
+import { VI } from '../../constants';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
-    const brandId = this.props.match.params.id;
-    this.props.fetchBrand(brandId);
+    const brand_id = this.props.match.params.id;
+    this.props.fetchBrand(brand_id);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
-      const brandId = this.props.match.params.id;
-      this.props.fetchBrand(brandId);
+      const brand_id = this.props.match.params.id;
+      this.props.fetchBrand(brand_id);
     }
   }
 
@@ -41,11 +42,11 @@ class Edit extends React.PureComponent {
 
     return (
       <SubPage
-        title='Edit Brand'
-        actionTitle='Cancel'
+        title={VI['Edit Brand'] || 'Edit Brand'}
+        actionTitle={VI['Cancel'] || 'Cancel'}
         handleAction={history.goBack}
       >
-        {brand?._id ? (
+        {brand && brand.id ? (
           <EditBrand
             user={user}
             brand={brand}
@@ -56,7 +57,7 @@ class Edit extends React.PureComponent {
             activateBrand={activateBrand}
           />
         ) : (
-          <NotFound message='No brand found.' />
+          <NotFound message={VI['No brand found.'] || 'No brand found.'} />
         )}
       </SubPage>
     );

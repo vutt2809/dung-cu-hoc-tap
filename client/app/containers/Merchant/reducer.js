@@ -31,7 +31,7 @@ const initialState = {
     name: '',
     email: '',
     phoneNumber: '',
-    brandName: '',
+    brand_name: '',
     business: ''
   },
   formErrors: {},
@@ -59,7 +59,7 @@ const merchantReducer = (state = initialState, action) => {
         searchedMerchants: action.payload
       };
     case REMOVE_MERCHANT:
-      const index = state.merchants.findIndex(b => b._id === action.payload);
+      const index = state.merchants.findIndex(b => bid === action.payload);
       return {
         ...state,
         merchants: [
@@ -105,7 +105,7 @@ const merchantReducer = (state = initialState, action) => {
           name: '',
           email: '',
           phoneNumber: '',
-          brandName: '',
+          brand_name: '',
           business: ''
         },
         formErrors: {}

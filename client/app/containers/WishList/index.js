@@ -14,6 +14,7 @@ import SubPage from '../../components/Manager/SubPage';
 import WishList from '../../components/Manager/WishList';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import { VI } from '../../constants';
 
 class Wishlist extends React.PureComponent {
   componentDidMount() {
@@ -27,13 +28,13 @@ class Wishlist extends React.PureComponent {
 
     return (
       <div className='wishlist-dashboard'>
-        <SubPage title={'Your Wishlist'} isMenuOpen={null}>
+        <SubPage title={VI['WishList']} isMenuOpen={null}>
           {isLoading && <LoadingIndicator />}
           {displayWishlist && (
             <WishList wishlist={wishlist} updateWishlist={updateWishlist} />
           )}
           {!isLoading && !displayWishlist && (
-            <NotFound message='You have no items in your wishlist yet.' />
+            <NotFound message={VI['No items found in your wishlist.']} />
           )}
         </SubPage>
       </div>

@@ -34,7 +34,7 @@ router.get('/list', async (req, res) => {
 router.get('/', auth, async (req, res) => {
   try {
     const brands = await Brand.findAll({
-      attributes: ['id', 'name', 'description', 'is_active', 'created']
+      attributes: ['id', 'name', 'description', 'is_active', 'created_at']
     });
 
     res.status(200).json({

@@ -30,7 +30,7 @@ const setupDB = async () => {
     console.log(`${chalk.green('✓')} ${chalk.blue('MySQL Connected!')}`);
 
     // Sync all models
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: false });
     console.log(`${chalk.green('✓')} ${chalk.blue('Database synced!')}`);
   } catch (error) {
     console.error('Unable to connect to the database:', error);

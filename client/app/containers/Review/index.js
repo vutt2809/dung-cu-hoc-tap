@@ -15,6 +15,7 @@ import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
 import Pagination from '../../components/Common/Pagination';
+import { VI } from '../../constants';
 
 class Review extends React.PureComponent {
   componentDidMount() {
@@ -37,7 +38,7 @@ class Review extends React.PureComponent {
 
     return (
       <div className='review-dashboard'>
-        <SubPage title={'Reviews'} isMenuOpen={null}>
+        <SubPage title={VI['Reviews']} isMenuOpen={null}>
           {isLoading && <LoadingIndicator />}
 
           {displayPagination && (
@@ -48,7 +49,7 @@ class Review extends React.PureComponent {
           )}
           {displayReviews && (
             <>
-              <SearchResultMeta label='reviews' count={advancedFilters.count} />
+              <SearchResultMeta label={VI['Reviews'].toLowerCase()} count={advancedFilters.count} />
               <ReviewList
                 reviews={reviews}
                 approveReview={approveReview}
@@ -59,7 +60,7 @@ class Review extends React.PureComponent {
           )}
 
           {!isLoading && !displayReviews && (
-            <NotFound message='No reviews found.' />
+            <NotFound message={VI['No reviews found']} />
           )}
         </SubPage>
       </div>

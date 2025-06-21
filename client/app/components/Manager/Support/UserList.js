@@ -38,18 +38,18 @@ const UserList = props => {
 
   // return (
   //   <>
-  //     {users.filter(x => x._id !== user._id).length === 0 && (
+  //     {users.filter(x => xid !== userid).length === 0 && (
   //       <MessageBox>No Online User Found</MessageBox>
   //     )}
   //     <ul>
   //       {users
-  //         .filter(x => x._id !== user._id)
+  //         .filter(x => xid !== userid)
   //         .map((user, index) => (
   //           <li
   //             style={{ animationDelay: `0.2s` }}
   //             key={index}
   //             className={
-  //               user._id === selectedUser?._id
+  //               userid === selectedUser?.id
   //                 ? `chatlist-item active `
   //                 : 'chatlist-item'
   //             }

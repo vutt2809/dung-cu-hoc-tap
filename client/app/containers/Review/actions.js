@@ -63,7 +63,7 @@ export const fetchReviews = (n, v) => {
 export const approveReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/approve/${review._id}`);
+      await axios.put(`${API_URL}/review/approve/${reviewid}`);
 
       dispatch(fetchReviews());
     } catch (error) {
@@ -75,7 +75,7 @@ export const approveReview = review => {
 export const rejectReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/reject/${review._id}`);
+      await axios.put(`${API_URL}/review/reject/${reviewid}`);
 
       dispatch(fetchReviews());
     } catch (error) {
@@ -150,7 +150,7 @@ export const addProductReview = () => {
       const product = getState().product.storeProduct;
 
       const newReview = {
-        product: product._id,
+        product: product.id,
         isRecommended: review.isRecommended.value,
         rating: review.rating,
         review: review.review,

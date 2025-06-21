@@ -15,7 +15,7 @@ const CategoryList = props => {
     <div className='c-list'>
       {categories.map((category, index) => (
         <Link
-          to={`/dashboard/category/edit/${category._id}`}
+          to={`/dashboard/category/edit/${category.id}`}
           key={index}
           className='d-block mb-3 p-4 category-box'
         >

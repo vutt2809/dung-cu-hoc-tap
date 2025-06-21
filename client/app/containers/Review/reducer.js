@@ -70,7 +70,7 @@ const reviewReducer = (state = initialState, action) => {
         productReviews: [...state.productReviews, action.payload]
       };
     case REMOVE_REVIEW:
-      const index = state.reviews.findIndex(r => r._id === action.payload);
+      const index = state.reviews.findIndex(r => rid === action.payload);
       return {
         ...state,
         reviews: [

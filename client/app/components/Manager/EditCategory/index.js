@@ -13,6 +13,7 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 import Switch from '../../Common/Switch';
+import { VI } from '../../../constants/vi';
 
 const EditCategory = props => {
   const {
@@ -30,6 +31,22 @@ const EditCategory = props => {
     updateCategory();
   };
 
+  const newProducts = products.map(p => {
+    return {
+      value: p.id,
+      label: p.name
+    };
+  });
+  const newCategory = {
+    ...category,
+    products: category?.products?.map(p => {
+      return {
+        value: p.id,
+        label: p.name
+      };
+    })
+  };
+
   return (
     <div className='edit-category'>
       <div className='d-flex flex-row mx-0 mb-3'>
@@ -44,10 +61,10 @@ const EditCategory = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI['Name']}
               name={'name'}
               placeholder={'Category Name'}
-              value={category.name}
+              value={newCategory.name}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
               }}
@@ -70,10 +87,10 @@ const EditCategory = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={'Description'}
+              label={VI['Description']}
               name={'description'}
               placeholder={'Category Description'}
-              value={category.description}
+              value={newCategory.description}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
               }}
@@ -82,10 +99,10 @@ const EditCategory = props => {
           <Col xs='12' md='12'>
             <SelectOption
               error={formErrors['products']}
-              label={'Select Products'}
+              label={VI['Select Products'] || 'Select Products'}
               multi={true}
-              defaultValue={category.products}
-              options={products}
+              defaultValue={newCategory.products}
+              options={newProducts}
               handleSelectChange={value => {
                 categoryChange('products', value);
               }}
@@ -94,14 +111,14 @@ const EditCategory = props => {
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               style={{ width: 100 }}
-              tooltip={category.isActive}
-              tooltipContent={`Disabling ${category.name} will also disable all ${category.name} products.`}
-              id={`enable-category-${category._id}`}
+              tooltip={newCategory.isActive}
+              tooltipContent={`Disabling ${newCategory.name} will also disable all ${newCategory.name} products.`}
+              id={`enable-category-${newCategory.id}`}
               name={'isActive'}
-              label={'Active?'}
-              checked={category.isActive}
+              label={VI['Active?']}
+              checked={newCategory.isActive}
               toggleCheckboxChange={value =>
-                activateCategory(category._id, value)
+                activateCategory(newCategory.id, value)
               }
             />
           </Col>
@@ -110,13 +127,13 @@ const EditCategory = props => {
         <div className='d-flex flex-column flex-md-row'>
           <Button
             type='submit'
-            text='Save'
+            text={VI['Save']}
             className='mb-3 mb-md-0 mr-0 mr-md-3'
           />
           <Button
             variant='danger'
-            text='Delete'
-            onClick={() => deleteCategory(category._id)}
+            text={VI['Delete']}
+            onClick={() => deleteCategory(newCategory.id)}
           />
         </div>
       </form>

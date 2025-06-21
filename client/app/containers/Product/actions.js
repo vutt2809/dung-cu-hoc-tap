@@ -43,7 +43,11 @@ export const productChange = (name, value) => {
 
 export const productEditChange = (name, value) => {
   let formData = {};
-  formData[name] = value;
+  if (name === 'image') {
+    formData[name] = value[0];
+  } else {
+    formData[name] = value;
+  }
 
   return {
     type: PRODUCT_EDIT_CHANGE,
@@ -93,21 +97,21 @@ export const filterProducts = (n, v) => {
 
       dispatch({ type: SET_ADVANCED_FILTERS, payload });
       const sortOrder = getSortOrder(payload.order);
-      const response = await axios.get(`${API_URL}/product/list`, {
+      const response = await axios.get(`${API_URL}/product`, {
         params: { ...payload, sortOrder }
       });
-      const { products, totalPages, currentPage, count } = response.data;
+      const { data, current_page, last_page, total } = response.data.products;
 
       dispatch({
         type: FETCH_STORE_PRODUCTS,
-        payload: products
+        payload: data
       });
 
       const newPayload = {
         ...payload,
-        totalPages,
-        currentPage,
-        count
+        totalPages: last_page,
+        currentPage: current_page,
+        count: total
       };
       dispatch({
         type: SET_ADVANCED_FILTERS,
@@ -127,7 +131,7 @@ export const fetchStoreProduct = slug => {
     dispatch(setProductLoading(true));
 
     try {
-      const response = await axios.get(`${API_URL}/product/item/${slug}`);
+      const response = await axios.get(`${API_URL}/product/${slug}`);
 
       const inventory = response.data.product.quantity;
       const product = { ...response.data.product, inventory };
@@ -147,7 +151,7 @@ export const fetchStoreProduct = slug => {
 export const fetchProductsSelect = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`${API_URL}/product/list/select`);
+      const response = await axios.get(`${API_URL}/product`);
 
       const formattedProducts = formatSelectOptions(response.data.products);
 
@@ -171,7 +175,7 @@ export const fetchProducts = () => {
 
       dispatch({
         type: FETCH_PRODUCTS,
-        payload: response.data.products
+        payload: response.data.products.data
       });
     } catch (error) {
       handleError(error, dispatch);
@@ -190,14 +194,14 @@ export const fetchProduct = id => {
       const inventory = response.data.product.quantity;
 
       const brand = response.data.product.brand;
-      const isBrand = brand ? true : false;
-      const brandData = formatSelectOptions(
-        isBrand && [brand],
-        !isBrand,
-        'fetchProduct'
-      );
+      const brandId = response.data.product.brand_id;
 
-      response.data.product.brand = brandData[0];
+      if (brand && brandId) {
+        response.data.product.brand = {
+          value: brandId,
+          label: brand.name
+        };
+      }
 
       const product = { ...response.data.product, inventory };
 
@@ -280,7 +284,7 @@ export const addProduct = () => {
         }
       }
 
-      const response = await axios.post(`${API_URL}/product/add`, formData, {
+      const response = await axios.post(`${API_URL}/product`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -292,6 +296,14 @@ export const addProduct = () => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
+        const brand = response.data.product.brand;
+        const brandId = response.data.product.brand_id;
+        if (brand && brandId) {
+          response.data.product.brand = {
+            value: brandId,
+            label: brand.name
+          };
+        }
         dispatch({
           type: ADD_PRODUCT,
           payload: response.data.product
@@ -322,8 +334,6 @@ export const updateProduct = () => {
 
       const product = getState().product.product;
 
-      const brand = unformatSelectOptions([product.brand]);
-
       const newProduct = {
         name: product.name,
         sku: product.sku,
@@ -332,24 +342,25 @@ export const updateProduct = () => {
         quantity: product.quantity,
         price: product.price,
         taxable: product.taxable,
-        brand: brand != 0 ? brand : null
+        brand: product.brand.value,
+        is_active: product.is_active
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
-        'required.name': 'Name is required.',
-        'required.sku': 'Sku is required.',
+        'required.name': 'Tên sản phẩm là bắt buộc.',
+        'required.sku': 'Sku là bắt buộc.',
         'alpha_dash.sku':
-          'Sku may have alpha-numeric characters, as well as dashes and underscores only.',
-        'required.slug': 'Slug is required.',
+          'Sku có thể có các ký tự alpha-numeric, cũng như dấu gạch ngang và dấu gạch dưới.',
+        'required.slug': 'Slug là bắt buộc.',
         'alpha_dash.slug':
-          'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
-        'required.description': 'Description is required.',
+          'Slug có thể có các ký tự alpha-numeric, cũng như dấu gạch ngang và dấu gạch dưới.',
+        'required.description': 'Mô tả là bắt buộc.',
         'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.quantity': 'Quantity is required.',
-        'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
-        'required.brand': 'Brand is required.'
+          'Mô tả không được lớn hơn 200 ký tự.',
+        'required.quantity': 'Số lượng là bắt buộc.',
+        'required.price': 'Giá là bắt buộc.',
+        'required.taxable': 'Thuế là bắt buộc.',
+        'required.brand': 'Thương hiệu là bắt buộc.'
       });
 
       if (!isValid) {
@@ -359,9 +370,25 @@ export const updateProduct = () => {
         });
       }
 
-      const response = await axios.put(`${API_URL}/product/${product._id}`, {
-        product: newProduct
-      });
+      const formData = new FormData();
+      if (product.image) {
+        formData.append('image', product.image);
+      }
+      for (const key in newProduct) {
+        if (newProduct.hasOwnProperty(key)) {
+          formData.append(key, newProduct[key]);
+        }
+      }
+
+      const response = await axios.put(
+        `${API_URL}/product/${product.id}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -372,7 +399,7 @@ export const updateProduct = () => {
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
 
-        //dispatch(goBack());
+        dispatch(fetchProduct(product.id));
       }
     } catch (error) {
       handleError(error, dispatch);
@@ -385,9 +412,7 @@ export const activateProduct = (id, value) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.put(`${API_URL}/product/${id}/active`, {
-        product: {
-          isActive: value
-        }
+        is_active: value
       });
 
       const successfulOptions = {
@@ -409,7 +434,7 @@ export const activateProduct = (id, value) => {
 export const deleteProduct = id => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.delete(`${API_URL}/product/delete/${id}`);
+      const response = await axios.delete(`${API_URL}/product/${id}`);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -524,7 +549,7 @@ const getSortOrder = value => {
   let sortOrder = {};
   switch (value) {
     case 0:
-      sortOrder._id = -1;
+      sortOrder.id = -1;
       break;
     case 1:
       sortOrder.price = -1;

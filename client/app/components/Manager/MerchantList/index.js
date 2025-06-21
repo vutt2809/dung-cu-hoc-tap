@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import { MERCHANT_STATUS } from '../../../constants';
+import { MERCHANT_STATUS, VI } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
@@ -24,14 +24,14 @@ const MerchantList = props => {
     <div className='p-2'>
       <p className='text-gray text-14'>
         {merchant.isActive
-          ? "Disabling merchant account will disable merchant's brand and account access."
-          : 'Enabling merchant account will restore merchant account access.'}
+          ? "Việc vô hiệu hóa tài khoản người bán sẽ vô hiệu hóa quyền truy cập vào thương hiệu và tài khoản của người bán."
+          : 'Việc kích hoạt tài khoản người bán sẽ khôi phục quyền truy cập tài khoản người bán.'}
       </p>
       <Button
         variant='dark'
         size='sm'
         className='w-100'
-        text={merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'}
+        text={merchant.isActive ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'}
         onClick={() => disableMerchant(merchant, !merchant.isActive)}
       />
     </div>
@@ -42,20 +42,20 @@ const MerchantList = props => {
       {merchants.map((merchant, index) => (
         <div key={index} className='merchant-box'>
           <div className='mb-3 p-4'>
-            <label className='text-black'>Business</label>
+            <label className='text-black'>{VI.Business}</label>
             <p className='fw-medium text-truncate'>{merchant.business}</p>
-            <label className='text-black'>Brand</label>
-            <p className='text-truncate'>{merchant.brandName}</p>
-            <label className='text-black'>Name</label>
+            <label className='text-black'>{VI.Brand}</label>
+            <p className='text-truncate'>{merchant.brand_name}</p>
+            <label className='text-black'>{VI.Name}</label>
             <p className='text-truncate'>{merchant.name}</p>
-            <label className='text-black'>Email</label>
+            <label className='text-black'>{VI.Email || 'Email'}</label>
             <p className='text-truncate'>
               {merchant.email ? merchant.email : 'N/A'}
             </p>
-            <label className='text-black'>Phone Number</label>
+            <label className='text-black'>{VI['Phone Number']}</label>
             <p>{merchant.phoneNumber}</p>
-            <label className='text-black'>Request date</label>
-            <p>{formatDate(merchant.created)}</p>
+            <label className='text-black'>{VI['Request date']}</label>
+            <p>{merchant.created ? formatDate(merchant.created) : ''}</p>
 
             <hr />
 
@@ -64,7 +64,7 @@ const MerchantList = props => {
                 <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
                   <div className='d-flex flex-row mx-0'>
                     <CheckIcon className='text-green' />
-                    <p className='ml-2 mb-0'>Approved</p>
+                    <p className='ml-2 mb-0'>{VI.Approved}</p>
                   </div>
 
                   <div className='d-flex flex-row align-items-center mx-0'>
@@ -74,8 +74,8 @@ const MerchantList = props => {
                       round={20}
                       icon={<TrashIcon width={20} />}
                       tooltip={true}
-                      tooltipContent='Delete'
-                      id={`delete-${merchant._id}`}
+                      tooltipContent={VI.Delete}
+                      id={`delete-${merchant.id }`}
                       onClick={() => deleteMerchant(merchant)}
                     />
                   </div>
@@ -84,12 +84,12 @@ const MerchantList = props => {
                   className='w-100 mt-3'
                   size='sm'
                   text={
-                    merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
+                    merchant.isActive ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'
                   }
                   popover={true}
-                  popoverTitle={`Are you sure you want to ${
-                    merchant.isActive ? 'disable' : 'enable'
-                  } ${merchant.name}'s merchant account?`}
+                  popoverTitle={`Bạn có chắc chắn muốn ${
+                    merchant.isActive ? 'vô hiệu hóa' : 'kích hoạt'
+                  } tài khoản của ${merchant.name} không?`}
                   popoverContent={renderMerchantPopover(merchant)}
                 />
               </>
@@ -101,8 +101,8 @@ const MerchantList = props => {
                     round={20}
                     icon={<RefreshIcon width={18} className='text-primary' />}
                     tooltip={true}
-                    tooltipContent='Re-Approve'
-                    id={`re-approve-${merchant._id}`}
+                    tooltipContent={VI['Re Approve Review']}
+                    id={`re-approve-${merchant.id}`}
                     onClick={() => approveMerchant(merchant)}
                   />
                   <div className='d-flex flex-row align-items-center mx-0'>
@@ -112,8 +112,8 @@ const MerchantList = props => {
                       round={20}
                       icon={<TrashIcon width={20} />}
                       tooltip={true}
-                      tooltipContent='Delete'
-                      id={`delete-${merchant._id}`}
+                      tooltipContent={VI.Delete}
+                      id={`delete-${merchant.id}`}
                       onClick={() => deleteMerchant(merchant)}
                     />
                   </div>
@@ -127,8 +127,8 @@ const MerchantList = props => {
                     round={20}
                     icon={<CheckIcon width={18} className='text-green' />}
                     tooltip={true}
-                    tooltipContent='Approve'
-                    id={`approve-${merchant._id}`}
+                    tooltipContent={VI.Approve}
+                    id={`approve-${merchant.id }`}
                     onClick={() => approveMerchant(merchant)}
                   />
                   <Button
@@ -137,8 +137,8 @@ const MerchantList = props => {
                     round={20}
                     icon={<XIcon width={20} />}
                     tooltip={true}
-                    tooltipContent='Reject'
-                    id={`reject-${merchant._id}`}
+                    tooltipContent={VI.Reject}
+                    id={`reject-${merchant.id }`}
                     onClick={() => rejectMerchant(merchant)}
                   />
                 </div>
@@ -149,8 +149,8 @@ const MerchantList = props => {
                     round={20}
                     icon={<TrashIcon width={20} />}
                     tooltip={true}
-                    tooltipContent='Delete'
-                    id={`delete-${merchant._id}`}
+                    tooltipContent={VI.Delete}
+                    id={`delete-${merchant.id }`}
                     onClick={() => deleteMerchant(merchant)}
                   />
                 </div>
@@ -172,8 +172,8 @@ const MerchantList = props => {
                   round={20}
                   icon={<TrashIcon width={20} />}
                   tooltip={true}
-                  tooltipContent='Delete'
-                  id={`delete-${merchant._id}`}
+                  tooltipContent={VI.Delete}
+                  id={`delete-${merchant.id }`}
                   onClick={() => deleteMerchant(merchant)}
                 />
               </>

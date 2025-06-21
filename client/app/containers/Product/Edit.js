@@ -13,6 +13,7 @@ import actions from '../../actions';
 import EditProduct from '../../components/Manager/EditProduct';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
+import { VI } from '../../constants/vi';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
@@ -45,11 +46,11 @@ class Edit extends React.PureComponent {
 
     return (
       <SubPage
-        title='Edit Product'
-        actionTitle='Cancel'
+        title={VI['Edit Product'] || 'Edit Product'}
+        actionTitle={VI['Cancel'] || 'Cancel'}
         handleAction={history.goBack}
       >
-        {product?._id ? (
+        {product && product.id ? (
           <EditProduct
             user={user}
             product={product}

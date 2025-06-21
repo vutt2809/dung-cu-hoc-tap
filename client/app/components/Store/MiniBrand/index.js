@@ -18,21 +18,21 @@ const MiniBrand = props => {
   return (
     <div className='mini-brand-list'>
       <div className='d-flex align-items-center justify-content-between min-brand-title'>
-        <h3 className='mb-0 text-uppercase'>Shop By Brand</h3>
+        <h3 className='mb-0 text-uppercase'>Thương hiệu</h3>
         <Link
           to={'/brands'}
           className='redirect-link'
           role='menuitem'
           onClick={handleMenuItemClick}
         >
-          See all
+          Xem tất cả
         </Link>
       </div>
       <div className='mini-brand-block'>
         {brands.map((brand, index) => (
           <div key={index} className='brand-item'>
             <Link
-              to={`/shop/brand/${brand.slug}`}
+              to={`/shop/brand/${brand.id}`}
               className='brand-link'
               role='menuitem'
               onClick={handleMenuItemClick}

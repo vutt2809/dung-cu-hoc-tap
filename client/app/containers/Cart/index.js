@@ -53,7 +53,7 @@ class Cart extends React.PureComponent {
         ) : (
           <div className='empty-cart'>
             <BagIcon />
-            <p>Your shopping cart is empty</p>
+            <p>Giỏ hàng của bạn trống</p>
           </div>
         )}
         {cartItems.length > 0 && (

@@ -61,7 +61,7 @@ const initialState = {
     min: 1,
     max: 2500,
     rating: 0,
-    order: 0,
+    order: 'created_at_desc',
     totalPages: 1,
     currentPage: 1,
     count: 0,
@@ -109,7 +109,7 @@ const productReducer = (state = initialState, action) => {
         products: [...state.products, action.payload]
       };
     case REMOVE_PRODUCT:
-      const index = state.products.findIndex(b => b._id === action.payload);
+      const index = state.products.findIndex(b => bid === action.payload);
       return {
         ...state,
         products: [
@@ -204,7 +204,7 @@ const productReducer = (state = initialState, action) => {
           min: 1,
           max: 2500,
           rating: 0,
-          order: 0,
+          order: 'created_at_desc',
           totalPages: 1,
           currentPage: 1,
           count: 0,

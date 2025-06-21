@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 import { ROLES } from '../../constants';
+import { VI } from '../../constants/vi';
 
 import SubPage from '../../components/Manager/SubPage';
 import MerchantList from '../../components/Manager/MerchantList';
@@ -74,9 +75,9 @@ class List extends React.PureComponent {
     return (
       <div className='merchant-dashboard'>
         <SubPage
-          title={'Merchants'}
-          actionTitle={user.role === ROLES.Admin && 'Add'}
-          handleAction={() => history.push('/dashboard/merchant/add')}
+          title={VI.Merchants}
+          actionTitle={user.role === ROLES.Admin && VI.Add}
+          handleAction={() => history.push('/dashboard/merchant')}
         />
         <MerchantSearch
           onSearch={this.handleMerchantSearch}
@@ -92,7 +93,7 @@ class List extends React.PureComponent {
               />
             )}
             <SearchResultMeta
-              label='merchants'
+              label={VI.Merchants.toLowerCase()}
               count={
                 isSearch ? filteredMerchants.length : advancedFilters.count
               }
@@ -115,7 +116,7 @@ class List extends React.PureComponent {
           </>
         )}
         {!isLoading && !displayMerchants && (
-          <NotFound message='No merchants found.' />
+          <NotFound message={VI['No merchants found.']} />
         )}
       </div>
     );

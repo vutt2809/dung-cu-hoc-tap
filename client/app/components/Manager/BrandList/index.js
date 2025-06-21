@@ -15,7 +15,7 @@ const BrandList = props => {
     <div className='b-list'>
       {brands.map((brand, index) => (
         <Link
-          to={`/dashboard/brand/edit/${brand._id}`}
+          to={`/dashboard/brand/edit/${brand.id}`}
           key={index}
           className='d-block mb-3 p-4 brand-box'
         >
@@ -23,7 +23,7 @@ const BrandList = props => {
             <h4 className='mb-0'>{brand.name}</h4>
           </div>
           <p className='brand-desc mb-2'>{brand.description}</p>
-          {brand?.merchant && brand?.merchant?._id !== user?.merchant && (
+          {brand?.merchant && brand?.merchant?.id !== user?.merchant && (
             <div className='d-flex'>
               <label>By</label>
               <p className='brand-merchant mb-0 ml-2 text-primary'>

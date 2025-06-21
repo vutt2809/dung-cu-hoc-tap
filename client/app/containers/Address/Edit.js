@@ -13,6 +13,7 @@ import actions from '../../actions';
 import EditAddress from '../../components/Manager/EditAddress';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
+import { VI } from '../../constants';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
@@ -40,11 +41,11 @@ class Edit extends React.PureComponent {
 
     return (
       <SubPage
-        title='Edit Address'
-        actionTitle='Cancel'
+        title={VI['Edit Address']}
+        actionTitle={VI['Cancel']}
         handleAction={() => history.goBack()}
       >
-        {address?._id ? (
+        {address?.id ? (
           <EditAddress
             address={address}
             addressChange={addressEditChange}
@@ -54,7 +55,7 @@ class Edit extends React.PureComponent {
             defaultChange={defaultChange}
           />
         ) : (
-          <NotFound message='No address found.' />
+          <NotFound message={VI['No addresses found.']} />
         )}
       </SubPage>
     );

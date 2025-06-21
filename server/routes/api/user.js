@@ -15,7 +15,7 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
     const regex = new RegExp(search, 'i');
 
     const users = await User.findAll({
-      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created'],
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created_at'],
       where: {
         $or: [
           { first_name: { $iLike: regex } },
@@ -39,7 +39,7 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
 router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created_at']
     });
 
     res.status(200).json({
@@ -56,7 +56,7 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
 router.get('/profile', auth, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created']
+      attributes: ['id', 'first_name', 'last_name', 'email', 'role', 'created_at']
     });
 
     res.status(200).json({
@@ -102,6 +102,13 @@ router.put('/profile', auth, async (req, res) => {
       error: 'User profile update error: ' + error.message
     });
   }
+});
+
+// fetch user api
+router.get('/me', auth, (req, res) => {
+  res.status(200).json({
+    user: req.user
+  });
 });
 
 module.exports = router;

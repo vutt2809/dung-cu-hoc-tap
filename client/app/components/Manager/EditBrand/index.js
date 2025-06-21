@@ -12,7 +12,7 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import Switch from '../../Common/Switch';
-import { ROLES } from '../../../constants';
+import { ROLES, VI } from '../../../constants';
 
 const EditBrand = props => {
   const {
@@ -44,9 +44,9 @@ const EditBrand = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI['Name']}
               name={'name'}
-              placeholder={'Brand Name'}
+              placeholder={VI['Brand Name'] || 'Brand Name'}
               value={brand.name}
               onInputChange={(name, value) => {
                 brandChange(name, value);
@@ -70,9 +70,9 @@ const EditBrand = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={'Description'}
+              label={VI['Description']}
               name={'description'}
-              placeholder={'Brand Description'}
+              placeholder={VI['Brand Description'] || 'Brand Description'}
               value={brand.description}
               onInputChange={(name, value) => {
                 brandChange(name, value);
@@ -84,11 +84,11 @@ const EditBrand = props => {
               style={{ width: 100 }}
               tooltip={brand.isActive}
               tooltipContent={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
-              id={`enable-brand-${brand._id}`}
+              id={`enable-brand-${brand.id}`}
               name={'isActive'}
-              label={'Active?'}
+              label={VI['Active?']}
               checked={brand.isActive}
-              toggleCheckboxChange={value => activateBrand(brand._id, value)}
+              toggleCheckboxChange={value => activateBrand(brand.id, value)}
             />
           </Col>
         </Row>
@@ -96,14 +96,14 @@ const EditBrand = props => {
         <div className='d-flex flex-column flex-md-row'>
           <Button
             type='submit'
-            text='Save'
+            text={VI['Save']}
             className='mb-3 mb-md-0 mr-0 mr-md-3'
           />
           <Button
             variant='danger'
-            text='Delete'
+            text={VI['Delete']}
             disabled={user.role === ROLES.Merchant}
-            onClick={() => deleteBrand(brand._id)}
+            onClick={() => deleteBrand(brand.id)}
           />
         </div>
       </form>

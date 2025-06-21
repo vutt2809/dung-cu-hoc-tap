@@ -48,7 +48,7 @@ const AccountMenu = props => {
                     activeClassName='active-link'
                     exact
                   >
-                    {link.name}
+                    {VI[link.name] || link.name}
                   </NavLink>
                 </li>
               );

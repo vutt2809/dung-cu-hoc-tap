@@ -77,7 +77,7 @@ export const handleAddToCart = product => {
 export const handleRemoveFromCart = product => {
   return (dispatch, getState) => {
     const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
-    const newCartItems = cartItems.filter(item => item._id !== product._id);
+    const newCartItems = cartItems.filter(item => itemid !== productid);
     localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
 
     dispatch({
@@ -159,7 +159,7 @@ export const getCartId = () => {
 
       // create cart id if there is no one
       if (!cartId) {
-        const response = await axios.post(`${API_URL}/cart/add`, { products });
+        const response = await axios.post(`${API_URL}/cart`, { products });
 
         dispatch(setCartId(response.data.cartId));
       }
@@ -198,7 +198,7 @@ const getCartItems = cartItems => {
     newItem.quantity = item.quantity;
     newItem.price = item.price;
     newItem.taxable = item.taxable;
-    newItem.product = item._id;
+    newItem.product = itemid;
     newCartItems.push(newItem);
   });
 

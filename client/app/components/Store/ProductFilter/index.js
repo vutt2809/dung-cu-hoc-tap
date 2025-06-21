@@ -10,8 +10,8 @@ import { Card, CardBody, CardHeader } from 'reactstrap';
 import RangeSlider from '../../Common/RangeSlider';
 
 const priceMarks = {
-  1: { label: <p className='fw-normal text-black'>$1</p> },
-  5000: { label: <p className='fw-normal text-black'>$5000</p> }
+  1: { label: <p className='fw-normal text-black'>1₫</p> },
+  5000: { label: <p className='fw-normal text-black'>5000₫</p> }
 };
 
 const rateMarks = {
@@ -59,7 +59,7 @@ const rateMarks = {
       </span>
     )
   },
-  100: { label: <span>Any</span> }
+  100: { label: <span>Tất cả</span> }
 };
 
 const rating = v => {
@@ -86,7 +86,7 @@ const ProductFilter = props => {
   return (
     <div className='product-filter'>
       <Card className='mb-4'>
-        <CardHeader tag='h3'>Price</CardHeader>
+        <CardHeader tag='h3'>Giá</CardHeader>
         <CardBody>
           <div className='mx-2 mb-3'>
             <RangeSlider
@@ -101,7 +101,7 @@ const ProductFilter = props => {
         </CardBody>
       </Card>
       <Card>
-        <CardHeader tag='h3'>Rating</CardHeader>
+        <CardHeader tag='h3'>Đánh giá</CardHeader>
         <CardBody>
           <div className='mx-2 mb-4'>
             <RangeSlider

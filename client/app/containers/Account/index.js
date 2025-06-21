@@ -11,6 +11,7 @@ import actions from '../../actions';
 
 import AccountDetails from '../../components/Manager/AccountDetails';
 import SubPage from '../../components/Manager/SubPage';
+import { VI } from '../../constants/vi';
 
 class Account extends React.PureComponent {
   componentDidMount() {
@@ -22,7 +23,7 @@ class Account extends React.PureComponent {
 
     return (
       <div className='account'>
-        <SubPage title={'Account Details'} isMenuOpen={null}>
+        <SubPage title={VI['Account Details']} isMenuOpen={null}>
           <AccountDetails
             user={user}
             accountChange={accountChange}

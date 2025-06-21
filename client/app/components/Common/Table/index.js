@@ -34,7 +34,7 @@ const Table = props => {
 
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
-      clickAction(row._id, rowIndex);
+      clickAction(rowid, rowIndex);
     }
   };
 

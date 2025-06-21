@@ -18,16 +18,16 @@ import NotFound from '../../components/Common/NotFound';
 class Edit extends React.PureComponent {
   componentDidMount() {
     this.props.resetCategory();
-    const categoryId = this.props.match.params.id;
-    this.props.fetchCategory(categoryId);
+    const category_id = this.props.match.params.id;
+    this.props.fetchCategory(category_id);
     this.props.fetchProductsSelect();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.props.resetCategory();
-      const categoryId = this.props.match.params.id;
-      this.props.fetchCategory(categoryId);
+      const category_id = this.props.match.params.id;
+      this.props.fetchCategory(category_id);
     }
   }
 
@@ -45,11 +45,11 @@ class Edit extends React.PureComponent {
 
     return (
       <SubPage
-        title={VI['Edit Category']}
-        actionTitle={VI['Cancel']}
+        title={VI['Edit Category'] || 'Edit Category'}
+        actionTitle={VI['Cancel'] || 'Cancel'}
         handleAction={history.goBack}
       >
-        {category?._id ? (
+        {category && category.id ? (
           <EditCategory
             products={products}
             category={category}
@@ -60,7 +60,7 @@ class Edit extends React.PureComponent {
             activateCategory={activateCategory}
           />
         ) : (
-          <NotFound message={VI['No category found.']} />
+          <NotFound message={VI['No categories found.']} />
         )}
       </SubPage>
     );

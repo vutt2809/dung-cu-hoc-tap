@@ -61,7 +61,7 @@ const ReviewList = props => {
                       className='mt-3 mt-lg-0'
                       text={VI['Delete']}
                       icon={<TrashIcon width={15} />}
-                      onClick={() => deleteReview(review._id)}
+                      onClick={() => deleteReview(reviewid)}
                     />
                   </div>
                 ) : review.status === REVIEW_STATUS.Rejected ? (
@@ -82,7 +82,7 @@ const ReviewList = props => {
                         className='mt-3 mt-lg-0'
                         text={VI['Delete']}
                         icon={<TrashIcon width={15} />}
-                        onClick={() => deleteReview(review._id)}
+                        onClick={() => deleteReview(reviewid)}
                       />
                     </div>
                   </>
@@ -103,7 +103,7 @@ const ReviewList = props => {
                         className='mt-3 mt-lg-0'
                         text={VI['Delete']}
                         icon={<TrashIcon width={15} />}
-                        onClick={() => deleteReview(review._id)}
+                        onClick={() => deleteReview(reviewid)}
                       />
                     </div>
                   </div>

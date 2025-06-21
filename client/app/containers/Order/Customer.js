@@ -67,8 +67,8 @@ class Customer extends React.PureComponent {
     return (
       <div className='order-dashboard'>
         <SubPage
-          title='Customer Orders'
-          actionTitle='My Orders'
+          title='Đơn hàng của khách hàng'
+          actionTitle='Đơn hàng của tôi'
           handleAction={() =>
             user.role === ROLES.Admin && history.push('/dashboard/orders')
           }

@@ -11,6 +11,7 @@ import { Row, Col } from 'reactstrap';
 import Checkbox from '../../Common/Checkbox';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import { VI } from '../../../constants';
 
 const EditAddress = props => {
   const { address, addressChange, formErrors, updateAddress, deleteAddress } =
@@ -29,7 +30,7 @@ const EditAddress = props => {
             <Input
               type={'text'}
               error={formErrors['address']}
-              label={'Address'}
+              label={VI['Address']}
               name={'address'}
               placeholder={'Address: Street, House No / Apartment No'}
               value={address.address}
@@ -42,9 +43,9 @@ const EditAddress = props => {
             <Input
               type={'text'}
               error={formErrors['city']}
-              label={'City'}
+              label={VI['City']}
               name={'city'}
-              placeholder={'City'}
+              placeholder={VI['City']}
               value={address.city}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -55,9 +56,9 @@ const EditAddress = props => {
             <Input
               type={'text'}
               error={formErrors['state']}
-              label={'State'}
+              label={VI['State']}
               name={'state'}
-              placeholder={'State'}
+              placeholder={VI['State']}
               value={address.state}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -68,7 +69,7 @@ const EditAddress = props => {
             <Input
               type={'text'}
               error={formErrors['country']}
-              label={'Country'}
+              label={VI['Country']}
               name={'country'}
               placeholder={'Please Enter Your Country'}
               value={address.country}
@@ -81,7 +82,7 @@ const EditAddress = props => {
             <Input
               type={'text'}
               error={formErrors['zip_code']}
-              label={'zip_code'}
+              label={VI['Zip Code']}
               name={'zip_code'}
               placeholder={'Please Enter Your zip_code'}
               value={address.zip_code}
@@ -93,7 +94,7 @@ const EditAddress = props => {
           <Col xs='12' md='12'>
             <Checkbox
               id={'default'}
-              label={'As the Default'}
+              label={VI['Set as default']}
               name={'isDefault'}
               checked={address.isDefault}
               onChange={(name, value) => {
@@ -106,13 +107,13 @@ const EditAddress = props => {
         <div className='d-flex flex-column flex-md-row'>
           <Button
             type='submit'
-            text='Save'
+            text={VI['Save']}
             className='mb-3 mb-md-0 mr-0 mr-md-3'
           />
           <Button
             variant='danger'
-            text='Delete'
-            onClick={() => deleteAddress(address._id)}
+            text={VI['Delete']}
+            onClick={() => deleteAddress(address.id)}
           />
         </div>
       </form>

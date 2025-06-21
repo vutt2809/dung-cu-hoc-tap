@@ -16,6 +16,7 @@ import { sortOptions } from '../../utils/store';
 import ProductsShop from '../ProductsShop';
 import BrandsShop from '../BrandsShop';
 import CategoryShop from '../CategoryShop';
+// import BrandShop from '../BrandShop';
 
 import Page404 from '../../components/Common/Page404';
 import ProductFilter from '../../components/Store/ProductFilter';
@@ -64,10 +65,10 @@ class Shop extends React.PureComponent {
                 lg={{ size: 6, order: 1 }}
                 className='text-center text-md-left mt-3 mt-md-0 mb-1 mb-md-0'
               >
-                <span>Showing: </span>
+                <span>Đang hiển thị: </span>
                 {totalProducts > 0
-                  ? `${left}-${right} products of ${count} products`
-                  : `${count} products`}
+                  ? `${left}-${right} sản phẩm của ${count} sản phẩm`
+                  : `${count} sản phẩm`}
               </Col>
               <Col
                 xs={{ size: 12, order: 2 }}
@@ -76,7 +77,7 @@ class Shop extends React.PureComponent {
                 lg={{ size: 2, order: 2 }}
                 className='text-right pr-0 d-none d-md-block'
               >
-                <span>Sort by</span>
+                <span>Sắp xếp theo</span>
               </Col>
               <Col
                 xs={{ size: 12, order: 2 }}
@@ -86,7 +87,7 @@ class Shop extends React.PureComponent {
               >
                 <SelectOption
                   name={'sorting'}
-                  value={{ value: order, label: sortOptions[order].label }}
+                  value={sortOptions.find(option => option.value === order)}
                   options={sortOptions}
                   handleSelectChange={(n, v) => {
                     filterProducts('sorting', n.value);
@@ -96,8 +97,8 @@ class Shop extends React.PureComponent {
             </Row>
             <Switch>
               <Route exact path='/shop' component={ProductsShop} />
-              <Route path='/shop/category/:slug' component={CategoryShop} />
-              <Route path='/shop/brand/:slug' component={BrandsShop} />
+              <Route path='/shop/category/:id' component={CategoryShop} />
+              <Route path='/shop/brand/:id' component={BrandsShop} />
               <Route path='*' component={Page404} />
             </Switch>
 

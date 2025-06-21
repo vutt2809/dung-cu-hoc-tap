@@ -16,6 +16,7 @@ import {
   SET_LOGIN_SUBMITTING
 } from './constants';
 import { setAuth, clearAuth } from '../Authentication/actions';
+import { FETCH_PROFILE } from '../Account/constants';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
 import { clearCart } from '../Cart/actions';
@@ -58,22 +59,20 @@ export const login = () => {
 
     try {
       const response = await axios.post(`${API_URL}/auth/login`, user);
+      const { token, user: userData } = response.data;
 
-      const first_name = response.data.user.first_name;
+      localStorage.setItem('token', token);
+      setToken(token);
 
       const successfulOptions = {
-        title: `Hey${first_name ? ` ${first_name}` : ''}, Welcome Back!`,
+        title: `Hey${userData.first_name ? ` ${userData.first_name}` : ''}, Welcome Back!`,
         position: 'tr',
         autoDismiss: 1
       };
 
-      localStorage.setItem('token', response.data.token);
-
-      setToken(response.data.token);
-
+      dispatch({ type: FETCH_PROFILE, payload: userData });
       dispatch(setAuth());
       dispatch(success(successfulOptions));
-
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
       const title = `Please try to login again!`;

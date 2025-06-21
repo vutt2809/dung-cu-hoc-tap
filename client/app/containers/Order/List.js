@@ -9,7 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { ROLES } from '../../constants';
+import { ROLES, VI } from '../../constants';
 import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
@@ -52,7 +52,7 @@ class List extends React.PureComponent {
     const { search } = this.state;
     const isSearch = search.length > 0;
     const filteredOrders = search
-      ? orders.filter(o => o._id.includes(search))
+      ? orders.filter(o => o.id.includes(search))
       : orders;
 
     const displayPagination = advancedFilters.totalPages > 1;
@@ -61,8 +61,8 @@ class List extends React.PureComponent {
     return (
       <div className='order-dashboard'>
         <SubPage
-          title='Your Orders'
-          actionTitle={user.role === ROLES.Admin && 'Customer Orders'}
+          title={VI['Orders']}
+          actionTitle={user.role === ROLES.Admin && VI['Customer Orders']}
           handleAction={() =>
             user.role === ROLES.Admin &&
             history.push('/dashboard/orders/customers')
@@ -85,14 +85,14 @@ class List extends React.PureComponent {
               )}
 
               <SearchResultMeta
-                label='orders'
+                label={VI['Orders'].toLowerCase()}
                 count={isSearch ? filteredOrders.length : advancedFilters.count}
               />
               <OrderList orders={filteredOrders} />
             </>
           )}
           {!isLoading && !displayOrders && (
-            <NotFound message='You have no orders yet.' />
+            <NotFound message={VI['No orders found.']} />
           )}
         </SubPage>
       </div>

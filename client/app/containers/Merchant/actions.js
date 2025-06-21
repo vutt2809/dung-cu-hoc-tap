@@ -72,7 +72,7 @@ export const addMerchant = (isBack = false) => {
         name: 'required',
         email: 'required|email',
         phoneNumber: ['required', `regex:${phoneno}`],
-        brandName: 'required',
+        brand_name: 'required',
         business: 'required|min:10'
       };
 
@@ -84,7 +84,7 @@ export const addMerchant = (isBack = false) => {
         'email.email': 'Email format is invalid.',
         'required.phoneNumber': 'Phone number is required.',
         'regex.phoneNumber': 'Phone number format is invalid.',
-        'required.brandName': 'Brand is required.',
+        'required.brand_name': 'Brand is required.',
         'required.business': 'Business is required.',
         'min.business': 'Business must be at least 10 characters.'
       });
@@ -96,7 +96,7 @@ export const addMerchant = (isBack = false) => {
       dispatch(setMerchantLoading(true));
       dispatch(setMerchantSubmitting(true));
 
-      const response = await axios.post(`${API_URL}/merchant/add`, merchant);
+      const response = await axios.post(`${API_URL}/merchant`, merchant);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -175,7 +175,7 @@ export const searchMerchants = filter => {
 export const disableMerchant = (merchant, value, search, page) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/merchant/${merchant._id}/active`, {
+      await axios.put(`${API_URL}/merchant/${merchant_id}/active`, {
         merchant: {
           isActive: value
         }
@@ -193,7 +193,7 @@ export const disableMerchant = (merchant, value, search, page) => {
 export const approveMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/merchant/approve/${merchant._id}`);
+      await axios.put(`${API_URL}/merchant/approve/${merchant_id}`);
 
       if (search)
         return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
@@ -207,7 +207,7 @@ export const approveMerchant = (merchant, search, page) => {
 export const rejectMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/merchant/reject/${merchant._id}`);
+      await axios.put(`${API_URL}/merchant/reject/${merchant_id}`);
 
       if (search)
         return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
@@ -265,7 +265,7 @@ export const deleteMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(
-        `${API_URL}/merchant/delete/${merchant._id}`
+        `${API_URL}/merchant/delete/${merchant_id}`
       );
 
       const successfulOptions = {
@@ -284,7 +284,7 @@ export const deleteMerchant = (merchant, search, page) => {
 
         // dispatch({
         //   type: REMOVE_MERCHANT,
-        //   payload: merchant._id
+        //   payload: merchant_id
         // });
       }
     } catch (error) {

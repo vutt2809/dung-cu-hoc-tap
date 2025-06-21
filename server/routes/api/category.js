@@ -43,7 +43,7 @@ router.get('/list', async (req, res) => {
 router.get('/', auth, async (req, res) => {
   try {
     const categories = await Category.findAll({
-      attributes: ['id', 'name', 'description', 'is_active', 'parent_id', 'created'],
+      attributes: ['id', 'name', 'description', 'is_active', 'parent_id', 'created_at'],
       include: [
         {
           model: Category,

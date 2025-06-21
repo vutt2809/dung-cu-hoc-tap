@@ -47,7 +47,7 @@ const OrderMeta = props => {
               <p className='one-line-ellipsis'>{VI['Order ID']}</p>
             </Col>
             <Col xs='8'>
-              <span className='order-label one-line-ellipsis'>{` ${order._id}`}</span>
+              <span className='order-label one-line-ellipsis'>{` ${orderid}`}</span>
             </Col>
           </Row>
           <Row>

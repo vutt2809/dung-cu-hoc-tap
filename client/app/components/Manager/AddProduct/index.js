@@ -8,15 +8,15 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import { ROLES } from '../../../constants';
+import { ROLES, VI } from '../../../constants';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
 const taxableSelect = [
-  { value: 1, label: 'Yes' },
-  { value: 0, label: 'No' }
+  { value: 1, label: VI.Yes },
+  { value: 0, label: VI.No }
 ];
 
 const AddProduct = props => {
@@ -43,9 +43,9 @@ const AddProduct = props => {
             <Input
               type={'text'}
               error={formErrors['sku']}
-              label={'Sku'}
+              label={VI.Sku}
               name={'sku'}
-              placeholder={'Product Sku'}
+              placeholder={VI['Product Sku']}
               value={productFormData.sku}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -56,9 +56,9 @@ const AddProduct = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={'Name'}
+              label={VI.Name}
               name={'name'}
-              placeholder={'Product Name'}
+              placeholder={VI['Product Name']}
               value={productFormData.name}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -69,9 +69,9 @@ const AddProduct = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={'Description'}
+              label={VI.Description}
               name={'description'}
-              placeholder={'Product Description'}
+              placeholder={VI['Product Description']}
               value={productFormData.description}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -82,10 +82,10 @@ const AddProduct = props => {
             <Input
               type={'number'}
               error={formErrors['quantity']}
-              label={'Quantity'}
+              label={VI.Quantity}
               name={'quantity'}
               decimals={false}
-              placeholder={'Product Quantity'}
+              placeholder={VI['Product Quantity']}
               value={productFormData.quantity}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -96,10 +96,10 @@ const AddProduct = props => {
             <Input
               type={'number'}
               error={formErrors['price']}
-              label={'Price'}
+              label={VI.Price}
               name={'price'}
               min={1}
-              placeholder={'Product Price'}
+              placeholder={VI['Product Price']}
               value={productFormData.price}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -109,7 +109,7 @@ const AddProduct = props => {
           <Col xs='12' md='12'>
             <SelectOption
               error={formErrors['taxable']}
-              label={'Taxable'}
+              label={VI.Taxable}
               name={'taxable'}
               options={taxableSelect}
               value={productFormData.taxable}
@@ -123,7 +123,7 @@ const AddProduct = props => {
               disabled={user.role === ROLES.Merchant}
               error={formErrors['brand']}
               name={'brand'}
-              label={'Select Brand'}
+              label={VI['Select Brand']}
               value={
                 user.role === ROLES.Merchant ? brands[1] : productFormData.brand
               }
@@ -150,7 +150,7 @@ const AddProduct = props => {
             <Switch
               id={'active-product'}
               name={'isActive'}
-              label={'Active?'}
+              label={VI['Active?']}
               checked={productFormData.isActive}
               toggleCheckboxChange={value => productChange('isActive', value)}
             />
@@ -158,7 +158,7 @@ const AddProduct = props => {
         </Row>
         <hr />
         <div className='add-product-actions'>
-          <Button type='submit' text='Add Product' />
+          <Button type='submit' text={VI['Add Product']} />
         </div>
       </form>
     </div>

@@ -34,20 +34,20 @@ class OrderSuccess extends React.PureComponent {
       <div className='order-success'>
         {isLoading ? (
           <LoadingIndicator />
-        ) : order._id ? (
+        ) : orderid ? (
           <div className='order-message'>
             <h2>Thank you for your order.</h2>
             <p>
               Order{' '}
               <Link
                 to={{
-                  pathname: `/order/${order._id}?success`,
+                  pathname: `/order/${orderid}?success`,
                   state: { prevPath: location.pathname }
                 }}
-                // to={`/order/${order._id}?success`}
+                // to={`/order/${orderid}?success`}
                 className='order-label'
               >
-                #{order._id}
+                #{orderid}
               </Link>{' '}
               is complete.
             </p>

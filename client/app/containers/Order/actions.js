@@ -152,7 +152,7 @@ export const cancelOrder = () => {
     try {
       const order = getState().order.order;
 
-      await axios.delete(`${API_URL}/order/cancel/${order._id}`);
+      await axios.delete(`${API_URL}/order/cancel/${orderid}`);
 
       dispatch(push(`/dashboard/orders`));
     } catch (error) {
@@ -169,7 +169,7 @@ export const updateOrderItemStatus = (itemId, status) => {
       const response = await axios.put(
         `${API_URL}/order/status/item/${itemId}`,
         {
-          orderId: order._id,
+          orderId: orderid,
           cartId: order.cartId,
           status
         }
@@ -179,7 +179,7 @@ export const updateOrderItemStatus = (itemId, status) => {
         dispatch(push(`/dashboard/orders`));
       } else {
         dispatch(updateOrderStatus({ itemId, status }));
-        dispatch(fetchOrder(order._id, false));
+        dispatch(fetchOrder(orderid, false));
       }
 
       const successfulOptions = {
@@ -207,7 +207,7 @@ export const addOrder = () => {
           total
         });
 
-        dispatch(push(`/order/success/${response.data.order._id}`));
+        dispatch(push(`/order/success/${response.data.orderid}`));
         dispatch(clearCart());
       }
     } catch (error) {

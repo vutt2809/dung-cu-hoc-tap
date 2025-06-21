@@ -60,7 +60,7 @@ const orderReducer = (state = initialState, action) => {
       };
     case UPDATE_ORDER_STATUS:
       const itemIndex = state.order.products.findIndex(
-        item => item._id === action.payload.itemId
+        item => itemid === action.payload.itemId
       );
 
       const newProducts = [...state.order.products];

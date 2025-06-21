@@ -40,7 +40,7 @@ class CategoryShop extends React.PureComponent {
           />
         )}
         {!isLoading && products && products.length <= 0 && (
-          <NotFound message='No products found.' />
+          <NotFound message='Không tìm thấy sản phẩm.' />
         )}
       </div>
     );

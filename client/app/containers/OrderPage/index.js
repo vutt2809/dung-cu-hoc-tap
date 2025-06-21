@@ -41,7 +41,7 @@ class OrderPage extends React.PureComponent {
       <div className='order-page'>
         {isLoading ? (
           <LoadingIndicator backdrop />
-        ) : order._id ? (
+        ) : orderid ? (
           <OrderDetails
             order={order}
             user={user}
