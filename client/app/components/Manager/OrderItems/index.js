@@ -90,10 +90,14 @@ const OrderItems = props => {
                   <img
                     className='item-image'
                     src={`${
-                      item.product && item.product.imageUrl
-                        ? item.product.imageUrl
+                      item.product && (item.product.image_url || item.product.imageUrl)
+                        ? (item.product.image_url || item.product.imageUrl)
                         : '/images/placeholder-image.png'
                     }`}
+                    alt={item.product?.name || 'Product'}
+                    onError={(e) => {
+                      e.target.src = '/images/placeholder-image.png';
+                    }}
                   />
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>
                     <div className='item-details'>

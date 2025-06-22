@@ -15,6 +15,13 @@ export const VI = {
   'Sign Out': 'Đăng xuất',
   'Login': 'Đăng nhập',
   'Sign Up': 'Đăng ký',
+  'Back To Login': 'Quay lại trang đăng nhập',
+  'Login with Google': 'Đăng nhập với Google',
+  'Login with Facebook': 'Đăng nhập với Facebook',
+  'Or': 'Hoặc',
+  'Subscribe to newsletter': 'Đăng ký nhận bản tin',
+  'Forgot Password?': 'Quên mật khẩu?',
+  'Create an account': 'Tạo một tài khoản',
   
   // Footer
   'Customer Service': 'Dịch vụ khách hàng',
@@ -188,5 +195,7 @@ export const VI = {
   'Delivered': 'Đã giao hàng',
   'Cancelled': 'Đã hủy',
   'Not processed': 'Chưa xử lý',
-  'You have no orders yet.': 'Bạn không có đơn hàng nào.'
+  'You have no orders yet.': 'Bạn không có đơn hàng nào.',
+  'Please Enter Your Email': 'Vui lòng nhập email của bạn',
+  'Please Enter Your Password': 'Vui lòng nhập mật khẩu của bạn'
 }; 

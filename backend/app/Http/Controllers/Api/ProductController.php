@@ -82,6 +82,26 @@ class ProductController extends Controller
 
         $products = $query->paginate(12);
 
+        // Add wishlist status for authenticated users
+        if ($request->user()) {
+            $userWishlistIds = $request->user()->wishlist()->pluck('product_id')->toArray();
+            
+            $products->getCollection()->transform(function ($product) use ($userWishlistIds) {
+                $product->isLiked = in_array($product->id, $userWishlistIds);
+                return $product;
+            });
+        }
+
+        // Ensure image_url is included in the response
+        $products->getCollection()->transform(function ($product) {
+            // Make sure image_url is available
+            if (!$product->image_url && $product->image_key) {
+                // If you have image_key but no image_url, you might want to construct the URL
+                // $product->image_url = config('app.url') . '/storage/' . $product->image_key;
+            }
+            return $product;
+        });
+
         return response()->json([
             'success' => true,
             'products' => $products
@@ -102,6 +122,18 @@ class ProductController extends Controller
             return response()->json([
                 'error' => 'Product not found.'
             ], 404);
+        }
+
+        // Add wishlist status for authenticated users
+        if (request()->user()) {
+            $isLiked = request()->user()->wishlist()->where('product_id', $product->id)->exists();
+            $product->isLiked = $isLiked;
+        }
+
+        // Ensure image_url is included in the response
+        if (!$product->image_url && $product->image_key) {
+            // If you have image_key but no image_url, you might want to construct the URL
+            // $product->image_url = config('app.url') . '/storage/' . $product->image_key;
         }
 
         return response()->json([

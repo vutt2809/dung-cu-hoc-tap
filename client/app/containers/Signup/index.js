@@ -17,6 +17,7 @@ import Button from '../../components/Common/Button';
 import Checkbox from '../../components/Common/Checkbox';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import SignupProvider from '../../components/Common/SignupProvider';
+import { VI } from '../../constants';
 
 class Signup extends React.PureComponent {
   render() {
@@ -42,7 +43,7 @@ class Signup extends React.PureComponent {
     return (
       <div className='signup-form'>
         {isLoading && <LoadingIndicator />}
-        <h2>Sign Up</h2>
+        <h2>{VI['Sign Up']}</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>
@@ -55,9 +56,9 @@ class Signup extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['email']}
-                  label={'Email Address'}
+                  label={VI['Email Address']}
                   name={'email'}
-                  placeholder={'Please Enter Your Email'}
+                  placeholder={VI['Please Enter Your Email']}
                   value={signupFormData.email}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
@@ -68,9 +69,9 @@ class Signup extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['first_name']}
-                  label={'First Name'}
+                  label={VI['First Name']}
                   name={'first_name'}
-                  placeholder={'Please Enter Your First Name'}
+                  placeholder={VI['Please Enter Your First Name']}
                   value={signupFormData.first_name}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
@@ -81,9 +82,9 @@ class Signup extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['last_name']}
-                  label={'Last Name'}
+                  label={VI['Last Name']}
                   name={'last_name'}
-                  placeholder={'Please Enter Your Last Name'}
+                  placeholder={VI['Please Enter Your Last Name']}
                   value={signupFormData.last_name}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
@@ -93,10 +94,10 @@ class Signup extends React.PureComponent {
               <Col xs='12' md='12'>
                 <Input
                   type={'password'}
-                  label={'Password'}
+                  label={VI['Password']}
                   error={formErrors['password']}
                   name={'password'}
-                  placeholder={'Please Enter Your Password'}
+                  placeholder={VI['Please Enter Your Password']}
                   value={signupFormData.password}
                   onInputChange={(name, value) => {
                     signupChange(name, value);
@@ -115,7 +116,7 @@ class Signup extends React.PureComponent {
           <hr />
           <Checkbox
             id={'subscribe'}
-            label={'Subscribe to newsletter'}
+            label={VI['Subscribe to newsletter']}
             checked={isSubscribed}
             onChange={subscribeChange}
           />
@@ -123,11 +124,11 @@ class Signup extends React.PureComponent {
             <Button
               type='submit'
               variant='primary'
-              text='Sign Up'
+              text={VI['Sign Up']}
               disabled={isSubmitting}
             />
             <Link className='mt-3 mt-md-0 redirect-link' to={'/login'}>
-              Back to login
+              {VI['Back To Login']}
             </Link>
           </div>
         </form>

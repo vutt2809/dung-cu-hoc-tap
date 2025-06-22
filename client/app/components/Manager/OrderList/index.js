@@ -21,14 +21,18 @@ const OrderList = props => {
         <img
           className='item-image'
           src={`${
-            product && product?.imageUrl
-              ? product?.imageUrl
+            product && (product.image_url || product.imageUrl)
+              ? (product.image_url || product.imageUrl)
               : '/images/placeholder-image.png'
           }`}
+          alt={product?.name || 'Product'}
+          onError={(e) => {
+            e.target.src = '/images/placeholder-image.png';
+          }}
         />
       );
     } else {
-      return <img className='item-image' src='/images/placeholder-image.png' />;
+      return <img className='item-image' src='/images/placeholder-image.png' alt="Placeholder" />;
     }
   };
 

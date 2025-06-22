@@ -16,6 +16,7 @@ import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import SignupProvider from '../../components/Common/SignupProvider';
+import { VI } from '../../constants';
 
 class Login extends React.PureComponent {
   render() {
@@ -43,7 +44,7 @@ class Login extends React.PureComponent {
     return (
       <div className='login-form'>
         {isLoading && <LoadingIndicator />}
-        <h2>Login</h2>
+        <h2>{VI.Login}</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>
@@ -56,9 +57,9 @@ class Login extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['email']}
-                  label={'Email Address'}
+                  label={VI['Email Address']}
                   name={'email'}
-                  placeholder={'Please Enter Your Email'}
+                  placeholder={VI['Please Enter Your Email']}
                   value={loginFormData.email}
                   onInputChange={(name, value) => {
                     loginChange(name, value);
@@ -69,9 +70,9 @@ class Login extends React.PureComponent {
                 <Input
                   type={'password'}
                   error={formErrors['password']}
-                  label={'Password'}
+                  label={VI.Password}
                   name={'password'}
-                  placeholder={'Please Enter Your Password'}
+                  placeholder={VI['Please Enter Your Password']}
                   value={loginFormData.password}
                   onInputChange={(name, value) => {
                     loginChange(name, value);
@@ -93,11 +94,11 @@ class Login extends React.PureComponent {
               <Button
                 type='submit'
                 variant='primary'
-                text='Login'
+                text={VI.Login}
                 disabled={isSubmitting}
               />
               <Button
-                text='Create an account'
+                text={VI['Create an account']}
                 variant='link'
                 className='ml-md-3'
                 onClick={registerLink}
@@ -107,7 +108,7 @@ class Login extends React.PureComponent {
               className='redirect-link forgot-password-link'
               to={'/forgot-password'}
             >
-              Forgot Password?
+              {VI['Forgot Password?']}
             </Link>
           </div>
         </form>

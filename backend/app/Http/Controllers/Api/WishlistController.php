@@ -36,11 +36,17 @@ class WishlistController extends Controller
             ->first();
 
         if ($existingWishlist) {
+            // If already in wishlist, remove it (toggle behavior)
+            $existingWishlist->delete();
+            
             return response()->json([
-                'error' => 'Product already in wishlist.'
-            ], 400);
+                'success' => true,
+                'message' => 'Product removed from wishlist successfully.',
+                'action' => 'removed'
+            ]);
         }
 
+        // Add to wishlist
         $wishlist = Wishlist::create([
             'user_id' => $request->user()->id,
             'product_id' => $request->product_id
@@ -49,7 +55,8 @@ class WishlistController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product added to wishlist successfully.',
-            'wishlist' => $wishlist
+            'wishlist' => $wishlist,
+            'action' => 'added'
         ], 201);
     }
 

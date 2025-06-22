@@ -32,7 +32,7 @@ const cartReducer = (state = initialState, action) => {
       return newState;
     case REMOVE_FROM_CART:
       let itemIndex = state.cartItems.findIndex(
-        x => xid == action.payloadid
+        x => x.id == action.payload.id
       );
 
       newState = {

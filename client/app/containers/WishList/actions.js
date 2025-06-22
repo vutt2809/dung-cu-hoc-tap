@@ -16,8 +16,7 @@ export const updateWishlist = (isLiked, productId) => {
     try {
       if (getState().authentication.authenticated === true) {
         const response = await axios.post(`${API_URL}/wishlist`, {
-          isLiked,
-          product: productId
+          product_id: productId
         });
 
         const successfulOptions = {

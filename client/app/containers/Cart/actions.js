@@ -77,7 +77,7 @@ export const handleAddToCart = product => {
 export const handleRemoveFromCart = product => {
   return (dispatch, getState) => {
     const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
-    const newCartItems = cartItems.filter(item => itemid !== productid);
+    const newCartItems = cartItems.filter(item => item.id !== product.id);
     localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
 
     dispatch({
@@ -198,7 +198,7 @@ const getCartItems = cartItems => {
     newItem.quantity = item.quantity;
     newItem.price = item.price;
     newItem.taxable = item.taxable;
-    newItem.product = itemid;
+    newItem.product = item.id;
     newCartItems.push(newItem);
   });
 
