@@ -31,7 +31,7 @@ import { VI } from '../../constants/vi';
 
 import Button from '../../components/Common/Button';
 import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon } from '../../components/Common/Icon';
+import { BarsIcon, UserIcon } from '../../components/Common/Icon';
 import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
@@ -257,19 +257,11 @@ class Navigation extends React.PureComponent {
                       </DropdownMenu>
                     </Dropdown>
                   )}
-                  <NavItem>
-                    <NavLink
-                      tag={ActiveLink}
-                      to='/shop'
-                      activeClassName='active'
-                    >
-                      {VI['Shop']}
-                    </NavLink>
-                  </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        {user.first_name ? user.first_name : VI['Welcome']}
+                        <UserIcon style={{marginRight: 6, verticalAlign: 'middle'}} width={20} height={20} />
+                        <span className='d-none d-md-inline'>{user.first_name ? user.first_name : ''}</span>
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>
@@ -284,7 +276,8 @@ class Navigation extends React.PureComponent {
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        {VI['Welcome!']}
+                        <UserIcon style={{marginRight: 6, verticalAlign: 'middle'}} width={20} height={20} />
+                        <span className='d-none d-md-inline'></span>
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>

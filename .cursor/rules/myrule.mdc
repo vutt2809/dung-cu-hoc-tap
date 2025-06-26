@@ -1,0 +1,11 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- Khi đổi code phải review kỹ có ảnh hưởng các tính năng khác không
+- Hãy tự động sửa file không cần hỏi là có muốn sửa không
+- luôn sử dụng yarn thay vì npm

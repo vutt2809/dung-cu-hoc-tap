@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import actions from '../../actions';
 
@@ -16,6 +17,10 @@ import { BagIcon, CloseIcon } from '../../components/Common/Icon';
 import Button from '../../components/Common/Button';
 
 class Cart extends React.PureComponent {
+  handlePlaceOrder = () => {
+    this.props.history.push('/checkout');
+    this.props.toggleCart();
+  };
   render() {
     const {
       isCartOpen,
@@ -25,7 +30,6 @@ class Cart extends React.PureComponent {
       handleShopping,
       handleCheckout,
       handleRemoveFromCart,
-      placeOrder,
       authenticated
     } = this.props;
 
@@ -62,7 +66,7 @@ class Cart extends React.PureComponent {
             <Checkout
               handleShopping={handleShopping}
               handleCheckout={handleCheckout}
-              placeOrder={placeOrder}
+              placeOrder={this.handlePlaceOrder}
               authenticated={authenticated}
             />
           </div>
@@ -81,4 +85,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Cart);
+export default withRouter(connect(mapStateToProps, actions)(Cart));
