@@ -34,11 +34,9 @@ const ProductList = props => {
             <div className='product-image-box'>
               <img
                 className='product-image'
-                src={`$${(product.image_url || product.imageUrl) ? (product.image_url || product.imageUrl) : '/images/placeholder-image.png'}`}
+                src={product.image_url || product.imageUrl || '/images/placeholder-image.png'}
                 alt={product.name}
-                onError={(e) => {
-                  e.target.src = '/images/placeholder-image.png';
-                }}
+                onError={e => { e.target.src = '/images/placeholder-image.png'; }}
               />
             </div>
             <div className='product-info'>

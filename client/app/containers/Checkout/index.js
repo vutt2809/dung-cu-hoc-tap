@@ -78,7 +78,7 @@ const Checkout = ({ cartItems, cartTotal, clearCart }) => {
           <div style={{display: 'flex', flexDirection: 'column', gap: 16}}>
             {cartItems.map(item => (
               <div key={item.id} style={{display: 'flex', alignItems: 'center', gap: 16, borderBottom: '1px solid #eee', paddingBottom: 12}}>
-                <img src={item.imageUrl || '/images/placeholder-image.png'} alt={item.name} style={{width: 80, height: 80, objectFit: 'cover', borderRadius: 8, border: '1px solid #ddd'}} />
+                <img src={item.image_url || item.imageUrl || '/images/placeholder-image.png'} alt={item.name} style={{width: 80, height: 80, objectFit: 'cover', borderRadius: 8, border: '1px solid #ddd'}} />
                 <div style={{flex: 1}}>
                   <div style={{fontWeight: 500, fontSize: 16}}>{item.name}</div>
                   <div style={{color: '#888', fontSize: 14}}>Số lượng: {item.quantity}</div>

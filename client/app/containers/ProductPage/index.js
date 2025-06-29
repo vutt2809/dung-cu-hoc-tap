@@ -67,15 +67,9 @@ class ProductPage extends React.PureComponent {
                 <div className='position-relative'>
                   <img
                     className='item-image'
-                    src={`${
-                      (product.image_url || product.imageUrl)
-                        ? (product.image_url || product.imageUrl)
-                        : '/images/placeholder-image.png'
-                    }`}
+                    src={product.image_url || product.imageUrl || '/images/placeholder-image.png'}
                     alt={product.name}
-                    onError={(e) => {
-                      e.target.src = '/images/placeholder-image.png';
-                    }}
+                    onError={e => { e.target.src = '/images/placeholder-image.png'; }}
                   />
                   {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                     <p className='stock out-of-stock'>Hết hàng</p>
