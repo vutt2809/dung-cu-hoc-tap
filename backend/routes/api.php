@@ -79,7 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [CartController::class, 'index']);
         Route::post('/', [CartController::class, 'store']);
         Route::put('/{id}', [CartController::class, 'update']);
-        Route::delete('/{id}', [CartController::class, 'destroy']);
+        Route::delete('/{product_id}', [CartController::class, 'destroy']);
         Route::delete('/', [CartController::class, 'clear']);
     });
 
@@ -88,8 +88,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
         Route::post('/add', [OrderController::class, 'store']);
+        Route::get('/me', [OrderController::class, 'myOrders']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::put('/{id}/cancel', [OrderController::class, 'cancel']);
+        Route::put('/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
     });
 
     // Wishlist routes
@@ -101,7 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Review routes
     Route::prefix('review')->group(function () {
-        Route::get('/product/{productId}', [ReviewController::class, 'index']);
+        Route::get('/{slug}', [ReviewController::class, 'index']);
         Route::post('/', [ReviewController::class, 'store']);
         Route::put('/{id}', [ReviewController::class, 'update']);
         Route::delete('/{id}', [ReviewController::class, 'destroy']);
@@ -141,6 +143,12 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::put('/{id}', [MerchantController::class, 'update']);
             Route::delete('/{id}', [MerchantController::class, 'destroy']);
             Route::put('/{id}/active', [MerchantController::class, 'toggleActive']);
+        });
+
+        // Admin routes
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/order', [OrderController::class, 'allOrders']);
+            Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
         });
     });
 });

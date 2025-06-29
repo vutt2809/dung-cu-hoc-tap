@@ -9,78 +9,60 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import AddToWishList from '../AddToWishList';
+import './ProductList.css';
 
 const ProductList = props => {
   const { products, updateWishlist, authenticated } = props;
 
   return (
-    <div className='product-list'>
+    <div className='product-list grid-list'>
       {products.map((product, index) => (
-        <div key={index} className='mb-3 mb-md-0'>
-          <div className='product-container'>
-            <div className='item-box'>
-              <div className='add-wishlist-box'>
-                <AddToWishList
-                  id={product.id}
-                  liked={product?.isLiked ?? false}
-                  enabled={authenticated}
-                  updateWishlist={updateWishlist}
-                  authenticated={authenticated}
-                />
-              </div>
-
-              <div className='item-link'>
-                <Link
-                  to={`/product/${product.slug}`}
-                  className='d-flex flex-column h-100'
-                >
-                  <div className='item-image-container'>
-                    <div className='item-image-box'>
-                      <img
-                        className='item-image'
-                        src={`${
-                          (product.image_url || product.imageUrl)
-                            ? (product.image_url || product.imageUrl)
-                            : '/images/placeholder-image.png'
-                        }`}
-                        alt={product.name}
-                        onError={(e) => {
-                          e.target.src = '/images/placeholder-image.png';
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className='item-body'>
-                    <div className='item-details p-3'>
-                      <h1 className='item-name'>{product.name}</h1>
-                      {product.brand && Object.keys(product.brand).length > 0 && (
-                        <p className='by'>
-                          By <span>{product.brand.name}</span>
-                        </p>
-                      )}
-                      <p className='item-desc mb-0'>{product.description}</p>
-                    </div>
-                  </div>
-                  <div className='d-flex flex-row justify-content-between align-items-center px-4 mb-2 item-footer'>
-                    <p className='price mb-0'>${product.price}</p>
-                    {product.totalReviews > 0 && (
-                      <p className='mb-0'>
-                        <span className='fs-16 fw-normal mr-1'>
-                          {parseFloat(product?.averageRating).toFixed(1)}
-                        </span>
-                        <span
-                          className={`fa fa-star ${
-                            product.totalReviews !== 0 ? 'checked' : ''
-                          }`}
-                          style={{ color: '#ffb302' }}
-                        ></span>
-                      </p>
-                    )}
-                  </div>
-                </Link>
+        <div key={index} className='product-card'>
+          <div className='add-wishlist-box'>
+            <AddToWishList
+              id={product.id}
+              liked={product?.isLiked ?? false}
+              enabled={authenticated}
+              updateWishlist={updateWishlist}
+              authenticated={authenticated}
+            />
+          </div>
+          <Link
+            to={`/product/${product.slug}`}
+            className='product-link'
+          >
+            <div className='product-image-box'>
+              <img
+                className='product-image'
+                src={`$${(product.image_url || product.imageUrl) ? (product.image_url || product.imageUrl) : '/images/placeholder-image.png'}`}
+                alt={product.name}
+                onError={(e) => {
+                  e.target.src = '/images/placeholder-image.png';
+                }}
+              />
+            </div>
+            <div className='product-info'>
+              <h2 className='product-name'>{product.name}</h2>
+              {product.brand && Object.keys(product.brand).length > 0 && (
+                <p className='product-brand'>Thương hiệu: <span>{product.brand.name}</span></p>
+              )}
+              <p className='product-desc'>{product.description}</p>
+              <div className='product-footer'>
+                <span className='product-price'>{product.price.toLocaleString('vi-VN')}₫</span>
+                {product.totalReviews > 0 && (
+                  <span className='product-rating'>
+                    <span className='fs-16 fw-normal mr-1'>
+                      {parseFloat(product?.averageRating).toFixed(1)}
+                    </span>
+                    <span
+                      className={`fa fa-star ${product.totalReviews !== 0 ? 'checked' : ''}`}
+                      style={{ color: '#ffb302' }}
+                    ></span>
+                  </span>
+                )}
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       ))}
     </div>

@@ -61,15 +61,11 @@ const OrderList = props => {
                   </div>
                   <div className='mb-1'>
                     <span>{VI['Order Date']}</span>
-                    <span className='order-label'>{` ${formatDate(
-                      order.created
-                    )}`}</span>
+                    <span className='order-label'>{` ${order.created_at ? new Date(order.created_at).toLocaleString('vi-VN') : ''}`}</span>
                   </div>
                   <div className='mb-1'>
                     <span>{VI['Total']}</span>
-                    <span className='order-label'>{` $${
-                      order?.totalWithTax ? order?.totalWithTax : 0
-                    }`}</span>
+                    <span className='order-label'>{` ${(order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)).toLocaleString('vi-VN')}₫`}</span>
                   </div>
                 </div>
               </div>

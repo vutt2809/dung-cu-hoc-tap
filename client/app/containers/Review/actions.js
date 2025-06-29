@@ -141,28 +141,29 @@ export const addProductReview = () => {
     try {
       const rules = {
         title: 'required',
-        review: 'required',
-        rating: 'required|numeric|min:1',
-        isRecommended: 'required'
+        comment: 'required',
+        rating: 'required|numeric|min:1'
       };
 
       const review = getState().review.reviewFormData;
       const product = getState().product.storeProduct;
 
+      if (!product || !product.id) {
+        return;
+      }
+
       const newReview = {
-        product: product.id,
-        isRecommended: review.isRecommended.value,
+        product_id: product.id,
         rating: review.rating,
-        review: review.review,
+        comment: review.review,
         title: review.title
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
         'required.title': 'Title is required.',
-        'required.review': 'Review is required.',
+        'required.comment': 'Comment is required.',
         'required.rating': 'Rating is required.',
-        'min.rating': 'Rating is required.',
-        'required.isRecommended': 'Recommendable is required.'
+        'min.rating': 'Rating is required.'
       });
 
       if (!isValid) {
@@ -171,10 +172,7 @@ export const addProductReview = () => {
 
       const santizedReview = santizeFields(newReview);
 
-      const response = await axios.post(`${API_URL}/review/add`, {
-        ...santizedReview,
-        isRecommended: review.isRecommended.value
-      });
+      const response = await axios.post(`${API_URL}/review`, newReview);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -185,11 +183,6 @@ export const addProductReview = () => {
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch(fetchProductReviews(product.slug));
-
-        // dispatch({
-        //   type: ADD_REVIEW,
-        //   payload: response.data.review
-        // });
         dispatch({ type: RESET_REVIEW });
       }
     } catch (error) {

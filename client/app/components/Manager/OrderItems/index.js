@@ -13,6 +13,14 @@ import { ROLES, CART_ITEM_STATUS } from '../../../constants';
 import Button from '../../Common/Button';
 import DropdownConfirm from '../../Common/DropdownConfirm';
 
+const viStatus = {
+  Processing: 'Đang xử lý',
+  Shipped: 'Đã gửi hàng',
+  Delivered: 'Đã giao',
+  Cancelled: 'Đã hủy',
+  NotProcessed: 'Chưa xử lý',
+};
+
 const OrderItems = props => {
   const { order, user, updateOrderItemStatus } = props;
 
@@ -25,9 +33,9 @@ const OrderItems = props => {
           <DropdownItem
             key={`${s}-${i}`}
             className={s === item?.status ? 'active' : ''}
-            onClick={() => updateOrderItemStatus(itemid, s)}
+            onClick={() => updateOrderItemStatus(item.id, s)}
           >
-            {s}
+            {viStatus[s]}
           </DropdownItem>
         ))}
       </div>
@@ -44,23 +52,23 @@ const OrderItems = props => {
           className='btn-link text-center py-2 fs-12'
           style={{ minWidth: 120 }}
         >
-          Reivew Product
+          Đánh giá sản phẩm
         </Link>
       );
     } else if (item.status !== 'Cancelled') {
       if (!isAdmin) {
         return (
-          <DropdownConfirm label='Cancel'>
+          <DropdownConfirm label='Hủy'>
             <div className='d-flex flex-column align-items-center justify-content-center p-2'>
-              <p className='text-center mb-2'>{`Are you sure you want to cancel ${item.product?.name}.`}</p>
+              <p className='text-center mb-2'>{`Bạn có chắc chắn muốn hủy ${item.product?.name}?`}</p>
               <Button
                 variant='danger'
                 id='CancelOrderItemPopover'
                 size='sm'
-                text='Confirm Cancel'
+                text='Xác nhận hủy'
                 role='menuitem'
                 className='cancel-order-btn'
-                onClick={() => updateOrderItemStatus(itemid, 'Cancelled')}
+                onClick={() => updateOrderItemStatus(item.id, 'Cancelled')}
               />
             </div>
           </DropdownConfirm>
@@ -68,7 +76,7 @@ const OrderItems = props => {
       } else {
         return (
           <DropdownConfirm
-            label={item.product && item.status}
+            label={item.product && viStatus[item.status]}
             className={isAdmin ? 'admin' : ''}
           >
             {renderPopoverContent(item)}
@@ -80,9 +88,9 @@ const OrderItems = props => {
 
   return (
     <div className='order-items pt-3'>
-      <h2>Order Items</h2>
+      <h2>Sản phẩm trong đơn hàng</h2>
       <Row>
-        {order.products.map((item, index) => (
+        {(order.items || []).map((item, index) => (
           <Col xs='12' key={index} className='item'>
             <div className='order-item-box'>
               <div className='d-flex justify-content-between flex-column flex-md-row'>
@@ -94,7 +102,7 @@ const OrderItems = props => {
                         ? (item.product.image_url || item.product.imageUrl)
                         : '/images/placeholder-image.png'
                     }`}
-                    alt={item.product?.name || 'Product'}
+                    alt={item.product_name || item.product?.name || 'Sản phẩm'}
                     onError={(e) => {
                       e.target.src = '/images/placeholder-image.png';
                     }}
@@ -108,31 +116,31 @@ const OrderItems = props => {
                             className='item-link'
                           >
                             <h4 className='d-block item-name one-line-ellipsis'>
-                              {item.product?.name}
+                              {item.product_name || item.product?.name}
                             </h4>
                           </Link>
                           <div className='d-flex align-items-center justify-content-between'>
                             <span className='price'>
-                              ${item.purchasePrice || item.product.price}
+                              {Number(item.price).toLocaleString()}₫
                             </span>
                           </div>
                         </>
                       ) : (
-                        <h4>Not Available</h4>
+                        <h4>Không có sản phẩm</h4>
                       )}
                     </div>
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
                       <p className='mb-1 mr-4'>
-                        Status
+                        Trạng thái
                         <span className='order-label order-status'>{` ${item.status}`}</span>
                       </p>
                       <p className='mb-1 mr-4'>
-                        Quantity
+                        Số lượng
                         <span className='order-label'>{` ${item.quantity}`}</span>
                       </p>
                       <p>
-                        Total Price
-                        <span className='order-label'>{` $${item.totalPrice}`}</span>
+                        Thành tiền
+                        <span className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</span>
                       </p>
                     </div>
                   </div>
@@ -141,18 +149,17 @@ const OrderItems = props => {
                 <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
                     <p className='order-label order-status'>{`${item.status}`}</p>
-                    <p>Status</p>
+                    <p>Trạng thái</p>
                   </div>
 
                   <div className='text-center'>
                     <p className='order-label'>{` ${item.quantity}`}</p>
-                    <p>Quantity</p>
+                    <p>Số lượng</p>
                   </div>
 
                   <div className='text-center'>
-                    <p className='order-label'>{` $${item.totalPrice}`}</p>
-
-                    <p>Total Price</p>
+                    <p className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</p>
+                    <p>Thành tiền</p>
                   </div>
                 </div>
               </div>

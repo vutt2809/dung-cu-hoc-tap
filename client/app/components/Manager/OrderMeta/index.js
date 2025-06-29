@@ -19,7 +19,7 @@ const OrderMeta = props => {
 
   const renderMetaAction = () => {
     const isNotDelivered =
-      order.products.filter(i => i.status === CART_ITEM_STATUS.Delivered)
+      (order.products || []).filter(i => i.status === CART_ITEM_STATUS.Delivered)
         .length < 1;
 
     if (isNotDelivered) {
@@ -47,7 +47,7 @@ const OrderMeta = props => {
               <p className='one-line-ellipsis'>{VI['Order ID']}</p>
             </Col>
             <Col xs='8'>
-              <span className='order-label one-line-ellipsis'>{` ${orderid}`}</span>
+              <span className='order-label one-line-ellipsis'>{` ${order.id || order._id}`}</span>
             </Col>
           </Row>
           <Row>

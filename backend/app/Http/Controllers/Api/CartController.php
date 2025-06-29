@@ -54,7 +54,6 @@ class CartController extends Controller
                     $existingCart->update([
                         'quantity' => $existingCart->quantity + $item['quantity'],
                         'price' => $item['price'],
-                        'taxable' => $item['taxable'] ?? false,
                     ]);
                     $cart = $existingCart;
                 } else {
@@ -63,7 +62,6 @@ class CartController extends Controller
                         'product_id' => $item['product'],
                         'quantity' => $item['quantity'],
                         'price' => $item['price'],
-                        'taxable' => $item['taxable'] ?? false,
                     ]);
                 }
                 $results[] = $cart->load('product');
@@ -109,7 +107,6 @@ class CartController extends Controller
             $existingCart->update([
                 'quantity' => $existingCart->quantity + $request->quantity,
                 'price' => $request->price,
-                'taxable' => $request->taxable ?? false,
             ]);
             $cart = $existingCart;
         } else {
@@ -118,7 +115,6 @@ class CartController extends Controller
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
                 'price' => $request->price,
-                'taxable' => $request->taxable ?? false,
             ]);
         }
 
@@ -164,9 +160,11 @@ class CartController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $product_id)
     {
-        $cart = $request->user()->cart()->find($id);
+        $cart = $request->user()->cart()
+                               ->where('product_id', $product_id)
+                               ->first();
 
         if (!$cart) {
             return response()->json([

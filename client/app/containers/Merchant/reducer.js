@@ -59,7 +59,7 @@ const merchantReducer = (state = initialState, action) => {
         searchedMerchants: action.payload
       };
     case REMOVE_MERCHANT:
-      const index = state.merchants.findIndex(b => bid === action.payload);
+      const index = (state.merchants || []).findIndex(b => bid === action.payload);
       return {
         ...state,
         merchants: [

@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
-    public function index($productId)
+    public function index($slug)
     {
-        $reviews = Review::where('product_id', $productId)
+        $product = Product::where('slug', $slug)->first();
+        
+        if (!$product) {
+            return response()->json([
+                'error' => 'Product not found.'
+            ], 404);
+        }
+
+        $reviews = Review::where('product_id', $product->id)
                         ->where('is_active', true)
                         ->with('user')
                         ->orderBy('created_at', 'desc')
@@ -29,9 +37,8 @@ class ReviewController extends Controller
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
             'title' => 'required|string|max:255',
-            'review' => 'required|string',
-            'rating' => 'required|integer|min:1|max:5',
-            'is_recommended' => 'boolean',
+            'comment' => 'required|string',
+            'rating' => 'required|integer|min:1|max:5'
         ]);
 
         if ($validator->fails()) {
@@ -54,9 +61,8 @@ class ReviewController extends Controller
             'user_id' => $request->user()->id,
             'product_id' => $request->product_id,
             'title' => $request->title,
-            'review' => $request->review,
+            'comment' => $request->comment,
             'rating' => $request->rating,
-            'is_recommended' => $request->is_recommended ?? true,
             'is_active' => true
         ]);
 
@@ -79,7 +85,7 @@ class ReviewController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|required|string|max:255',
-            'review' => 'sometimes|required|string',
+            'comment' => 'sometimes|required|string',
             'rating' => 'sometimes|required|integer|min:1|max:5',
             'is_recommended' => 'boolean',
         ]);

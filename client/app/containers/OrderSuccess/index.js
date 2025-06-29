@@ -29,35 +29,35 @@ class OrderSuccess extends React.PureComponent {
 
   render() {
     const { order, isLoading } = this.props;
+    const orderId = order.id || order._id || '';
 
     return (
       <div className='order-success'>
         {isLoading ? (
           <LoadingIndicator />
-        ) : orderid ? (
+        ) : orderId ? (
           <div className='order-message'>
-            <h2>Thank you for your order.</h2>
+            <h2>Cảm ơn bạn đã đặt hàng.</h2>
             <p>
-              Order{' '}
+              Đơn hàng{' '}
               <Link
                 to={{
-                  pathname: `/order/${orderid}?success`,
+                  pathname: `/order/${orderId}?success`,
                   state: { prevPath: location.pathname }
                 }}
-                // to={`/order/${orderid}?success`}
                 className='order-label'
               >
-                #{orderid}
+                #{orderId}
               </Link>{' '}
-              is complete.
+              đã hoàn tất.
             </p>
-            <p>A confirmation email will be sent to you shortly.</p>
+            <p>Email xác nhận sẽ được gửi đến bạn ngay lập tức.</p>
             <div className='order-success-actions'>
               <Link to='/dashboard/orders' className='btn-link'>
-                Manage Orders
+                Quản lý đơn hàng
               </Link>
               <Link to='/shop' className='btn-link shopping-btn'>
-                Continue Shopping
+                Tiếp tục mua hàng
               </Link>
             </div>
           </div>

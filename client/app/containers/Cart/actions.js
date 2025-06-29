@@ -29,7 +29,7 @@ import { toggleCart } from '../Navigation/actions';
 
 // Handle Add To Cart
 export const handleAddToCart = product => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
     product.totalPrice = parseFloat(product.totalPrice.toFixed(2));
@@ -70,12 +70,33 @@ export const handleAddToCart = product => {
 
     dispatch(calculateCartTotal());
     dispatch(toggleCart());
+
+    // --- Đồng bộ lên server ---
+    const token = localStorage.getItem('token');
+    const productId = product.id || product._id;
+    if (!productId) {
+      alert('Không tìm thấy id sản phẩm!');
+      return;
+    }
+    try {
+      await axios.post(`${API_URL}/cart`, {
+        product_id: productId,
+        quantity: product.quantity,
+        price: product.price,
+        taxable: product.taxable
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (err) {
+      alert(err.response?.data?.error || 'Lỗi đồng bộ giỏ hàng lên server');
+      console.error('Lỗi đồng bộ giỏ hàng lên server:', err);
+    }
   };
 };
 
 // Handle Remove From Cart
 export const handleRemoveFromCart = product => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
     const newCartItems = cartItems.filter(item => item.id !== product.id);
     localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
@@ -86,6 +107,16 @@ export const handleRemoveFromCart = product => {
     });
     dispatch(calculateCartTotal());
     // dispatch(toggleCart());
+
+    // --- Xóa trên server ---
+    const token = localStorage.getItem('token');
+    try {
+      await axios.delete(`${API_URL}/cart/${product.id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (err) {
+      console.error('Lỗi xóa sản phẩm khỏi giỏ hàng server:', err);
+    }
   };
 };
 
@@ -180,7 +211,7 @@ export const setCartId = cartId => {
 };
 
 export const clearCart = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     localStorage.removeItem(CART_ITEMS);
     localStorage.removeItem(CART_TOTAL);
     localStorage.removeItem(CART_ID);
@@ -188,6 +219,16 @@ export const clearCart = () => {
     dispatch({
       type: CLEAR_CART
     });
+
+    // --- Clear trên server ---
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post(`${API_URL}/cart/clear`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (err) {
+      console.error('Lỗi clear giỏ hàng server:', err);
+    }
   };
 };
 

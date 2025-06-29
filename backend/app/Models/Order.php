@@ -26,5 +26,10 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     // Nếu có quan hệ với order_items hoặc cart_items thì bổ sung ở đây
 } 

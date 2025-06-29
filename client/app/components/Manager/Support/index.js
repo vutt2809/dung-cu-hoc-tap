@@ -42,7 +42,7 @@ const Support = props => {
   useEffect(() => {
     if (socket && users) {
       socket.on('connectUser', user => {
-        const index = users.findIndex(u => u.id === user.id);
+        const index = (users || []).findIndex(u => u.id === user.id);
         let newUsers = [...users];
         if (index !== -1) {
           newUsers[index] = user;
@@ -53,7 +53,7 @@ const Support = props => {
       });
 
       socket.on('disconnectUser', user => {
-        const index = users.findIndex(u => u.id === user.id);
+        const index = (users || []).findIndex(u => u.id === user.id);
         const newUsers = [...users];
         if (index !== -1) {
           newUsers[index] = user;

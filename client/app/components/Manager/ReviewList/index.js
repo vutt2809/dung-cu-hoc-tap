@@ -25,7 +25,7 @@ const ReviewList = props => {
             <Col xs='12' md='6'>
               <div className='review-meta'>
                 <h4 className='mb-2'>{review.title}</h4>
-                <p className='mb-2'>{review.review}</p>
+                <p className='mb-2'>{review.comment}</p>
                 <div className='review-rating'>
                   <span className='stars'>
                     {[...Array(5)].map((_, i) => (

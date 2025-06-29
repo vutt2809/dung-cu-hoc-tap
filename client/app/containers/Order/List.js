@@ -28,7 +28,12 @@ class List extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchAccountOrders();
+    const { user, fetchAllOrders, fetchMyOrders } = this.props;
+    if (user && user.role === 'ROLE ADMIN') {
+      fetchAllOrders();
+    } else {
+      fetchMyOrders();
+    }
   }
 
   handleOrderSearch = e => {
@@ -86,7 +91,7 @@ class List extends React.PureComponent {
 
               <SearchResultMeta
                 label={VI['Orders'].toLowerCase()}
-                count={isSearch ? filteredOrders.length : advancedFilters.count}
+                count={filteredOrders.length}
               />
               <OrderList orders={filteredOrders} />
             </>

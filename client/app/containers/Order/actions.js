@@ -69,36 +69,30 @@ export const fetchOrders = (page = 1) => {
   };
 };
 
-export const fetchAccountOrders = (page = 1) => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(setOrderLoading(true));
+export const fetchMyOrders = () => async dispatch => {
+  try {
+    dispatch(setOrderLoading(true));
+    const response = await axios.get(`${API_URL}/order/me`);
+    dispatch({ type: FETCH_ORDERS, payload: response.data.orders });
+  } catch (error) {
+    dispatch(clearOrders());
+    handleError(error, dispatch);
+  } finally {
+    dispatch(setOrderLoading(false));
+  }
+};
 
-      const response = await axios.get(`${API_URL}/order/me`, {
-        params: {
-          page: page ?? 1,
-          limit: 20
-        }
-      });
-
-      const { orders, totalPages, currentPage, count } = response.data;
-
-      dispatch({
-        type: FETCH_ORDERS,
-        payload: orders
-      });
-
-      dispatch({
-        type: SET_ADVANCED_FILTERS,
-        payload: { totalPages, currentPage, count }
-      });
-    } catch (error) {
-      dispatch(clearOrders());
-      handleError(error, dispatch);
-    } finally {
-      dispatch(setOrderLoading(false));
-    }
-  };
+export const fetchAllOrders = () => async dispatch => {
+  try {
+    dispatch(setOrderLoading(true));
+    const response = await axios.get(`${API_URL}/order`);
+    dispatch({ type: FETCH_ORDERS, payload: response.data.orders });
+  } catch (error) {
+    dispatch(clearOrders());
+    handleError(error, dispatch);
+  } finally {
+    dispatch(setOrderLoading(false));
+  }
 };
 
 export const searchOrders = filter => {
@@ -152,7 +146,7 @@ export const cancelOrder = () => {
     try {
       const order = getState().order.order;
 
-      await axios.delete(`${API_URL}/order/cancel/${orderid}`);
+      await axios.delete(`${API_URL}/order/cancel/${order.id || order._id}`);
 
       dispatch(push(`/dashboard/orders`));
     } catch (error) {
@@ -169,7 +163,7 @@ export const updateOrderItemStatus = (itemId, status) => {
       const response = await axios.put(
         `${API_URL}/order/status/item/${itemId}`,
         {
-          orderId: orderid,
+          orderId: order.id || order._id,
           cartId: order.cartId,
           status
         }
@@ -179,7 +173,7 @@ export const updateOrderItemStatus = (itemId, status) => {
         dispatch(push(`/dashboard/orders`));
       } else {
         dispatch(updateOrderStatus({ itemId, status }));
-        dispatch(fetchOrder(orderid, false));
+        dispatch(fetchOrder(order.id || order._id, false));
       }
 
       const successfulOptions = {
@@ -207,7 +201,7 @@ export const addOrder = () => {
           total
         });
 
-        dispatch(push(`/order/success/${response.data.orderid}`));
+        dispatch(push(`/order/success/${response.data.order.id || response.data.order._id}`));
         dispatch(clearCart());
       }
     } catch (error) {

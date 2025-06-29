@@ -66,7 +66,7 @@ const brandReducer = (state = initialState, action) => {
         brands: [...state.brands, action.payload]
       };
     case REMOVE_BRAND:
-      const index = state.brands.findIndex(b => bid === action.payload);
+      const index = (state.brands || []).findIndex(b => bid === action.payload);
       return {
         ...state,
         brands: [
