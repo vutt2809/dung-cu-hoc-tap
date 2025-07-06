@@ -120,7 +120,7 @@ export const addAddress = () => {
         ...newAddress
       };
 
-      const response = await axios.post(`${API_URL}/address/add`, address);
+      const response = await axios.post(`${API_URL}/address`, address);
 
       const successfulOptions = {
         title: `${response.data.message}`,

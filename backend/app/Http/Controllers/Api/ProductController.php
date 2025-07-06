@@ -191,10 +191,12 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'quantity' => 'sometimes|required|integer|min:0',
             'price' => 'sometimes|required|numeric|min:0',
-            'taxable' => 'boolean',
+            'taxable' => 'sometimes|boolean',
+            'brand' => 'nullable|exists:brands,id',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
             'merchant_id' => 'nullable|exists:merchants,id',
+            'is_active' => 'sometimes|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -204,8 +206,25 @@ class ProductController extends Controller
         }
 
         $data = $request->all();
+        
         if ($request->has('name')) {
             $data['slug'] = Str::slug($request->name);
+        }
+
+        // Xử lý field brand từ frontend
+        if ($request->has('brand') && !$request->has('brand_id')) {
+            $data['brand_id'] = $request->brand;
+            unset($data['brand']);
+        }
+
+        // Xử lý field is_active
+        if ($request->has('is_active')) {
+            $data['is_active'] = filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        // Xử lý field taxable
+        if ($request->has('taxable')) {
+            $data['taxable'] = filter_var($request->taxable, FILTER_VALIDATE_BOOLEAN);
         }
 
         $product->update($data);

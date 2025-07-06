@@ -257,3 +257,79 @@ const calculatePurchaseQuantity = inventory => {
     return 50;
   }
 };
+
+// Sync cart from localStorage to server
+export const syncCartToServer = () => {
+  return async (dispatch, getState) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    const cartItems = getState().cart.cartItems;
+    if (!cartItems || cartItems.length === 0) return;
+
+    try {
+      // Clear server cart first
+      await axios.post(`${API_URL}/cart/clear`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      // Add all items from localStorage to server
+      for (const item of cartItems) {
+        await axios.post(`${API_URL}/cart`, {
+          product_id: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          taxable: item.taxable
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      }
+    } catch (err) {
+      console.error('Lỗi đồng bộ giỏ hàng lên server:', err);
+    }
+  };
+};
+
+// Load cart from server and sync with localStorage
+export const loadCartFromServer = () => {
+  return async (dispatch, getState) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await axios.get(`${API_URL}/cart`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const serverCartItems = response.data.cart;
+      const localCartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]');
+
+      // If server has more items, use server data
+      if (serverCartItems.length > localCartItems.length) {
+        const formattedItems = serverCartItems.map(item => ({
+          id: item.product.id,
+          name: item.product.name,
+          slug: item.product.slug,
+          image_url: item.product.image_url,
+          price: parseFloat(item.price),
+          quantity: item.quantity,
+          taxable: item.taxable || false
+        }));
+
+        localStorage.setItem(CART_ITEMS, JSON.stringify(formattedItems));
+        
+        dispatch({
+          type: HANDLE_CART,
+          payload: {
+            cartItems: formattedItems,
+            cartTotal: 0,
+            cartId: localStorage.getItem(CART_ID)
+          }
+        });
+        dispatch(calculateCartTotal());
+      }
+    } catch (err) {
+      console.error('Lỗi load giỏ hàng từ server:', err);
+    }
+  };
+};

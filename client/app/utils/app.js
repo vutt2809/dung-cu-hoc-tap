@@ -6,4 +6,4 @@ export const isProviderAllowed = provider =>
 export const isDisabledMerchantAccount = user =>
   user.role === ROLES.Merchant &&
   user.merchant &&
-  user.merchant.isActive === false;
+  user.merchant.is_active === false;

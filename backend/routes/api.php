@@ -32,6 +32,8 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/forgot', [AuthController::class, 'forgot']);
     Route::post('/reset', [AuthController::class, 'reset']);
+    Route::get('/google', [AuthController::class, 'redirectToGoogle']);
+    Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 });
 
 // Public product routes
@@ -87,7 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('order')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
-        Route::post('/add', [OrderController::class, 'store']);
+        Route::post('/add', [OrderController::class, 'addOrder']);
         Route::get('/me', [OrderController::class, 'myOrders']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::put('/{id}/cancel', [OrderController::class, 'cancel']);
@@ -147,7 +149,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Admin routes
         Route::middleware('role:admin')->group(function () {
-            Route::get('/order', [OrderController::class, 'allOrders']);
             Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
         });
     });

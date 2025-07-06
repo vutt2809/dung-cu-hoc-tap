@@ -19,7 +19,7 @@ const OrderMeta = props => {
 
   const renderMetaAction = () => {
     const isNotDelivered =
-      (order.products || []).filter(i => i.status === CART_ITEM_STATUS.Delivered)
+      (order.items || []).filter(i => i.status === CART_ITEM_STATUS.Delivered)
         .length < 1;
 
     if (isNotDelivered) {

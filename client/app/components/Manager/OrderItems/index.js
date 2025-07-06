@@ -18,7 +18,7 @@ const viStatus = {
   Shipped: 'Đã gửi hàng',
   Delivered: 'Đã giao',
   Cancelled: 'Đã hủy',
-  NotProcessed: 'Chưa xử lý',
+  // Notprocessed: 'Chưa xử lý',
 };
 
 const OrderItems = props => {

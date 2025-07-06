@@ -33,8 +33,6 @@ const EditProduct = props => {
     activateProduct
   } = props;
 
-  console.log('=============> brands: ', brands);
-
   const handleSubmit = event => {
     event.preventDefault();
     updateProduct();
@@ -43,7 +41,7 @@ const EditProduct = props => {
   return (
     <div className='edit-product'>
       <div className='d-flex flex-row mx-0 mb-3'>
-        <label className='mr-1'>Product link</label>
+        <label className='mr-1'>Link sản phẩm</label>
         <Link to={`/product/${product.slug}`} className='default-link'>
           {product.slug}
         </Link>
@@ -148,7 +146,7 @@ const EditProduct = props => {
               label={VI.Taxable}
               multi={false}
               name={'taxable'}
-              value={[product.taxable ? taxableSelect[0] : taxableSelect[1]]}
+              value={[product.taxable !== null && product.taxable !== undefined ? (product.taxable ? taxableSelect[0] : taxableSelect[1]) : taxableSelect[1]]}
               options={taxableSelect}
               handleSelectChange={value => {
                 productChange('taxable', value.value);
@@ -161,7 +159,7 @@ const EditProduct = props => {
               <SelectOption
                 error={formErrors['brand']}
                 label={VI['Select Brand']}
-                defaultValue={product.brand}
+                defaultValue={product.brand || null}
                 options={brands}
                 handleSelectChange={value => {
                   productChange('brand', value);
@@ -172,11 +170,11 @@ const EditProduct = props => {
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               id={`enable-product-${product.id}`}
-              name={'isActive'}
+              name={'is_active'}
               label={VI['Active?']}
-              checked={product.isActive}
+              checked={product.is_active || false}
               toggleCheckboxChange={value => {
-                productChange('isActive', value);
+                productChange('is_active', value);
                 activateProduct(product.id, value);
               }}
             />

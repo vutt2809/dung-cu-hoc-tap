@@ -29,7 +29,7 @@ class List extends React.PureComponent {
 
   componentDidMount() {
     const { user, fetchAllOrders, fetchMyOrders } = this.props;
-    if (user && user.role === 'ROLE ADMIN') {
+    if (user && user.role === ROLES.Admin) {
       fetchAllOrders();
     } else {
       fetchMyOrders();

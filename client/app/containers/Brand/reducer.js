@@ -30,7 +30,7 @@ const initialState = {
   brandFormData: {
     name: '',
     description: '',
-    isActive: true
+    is_active: true
   },
   formErrors: {},
   editFormErrors: {},
@@ -111,7 +111,7 @@ const brandReducer = (state = initialState, action) => {
         brandFormData: {
           name: '',
           description: '',
-          isActive: true
+          is_active: true
         },
         formErrors: {}
       };

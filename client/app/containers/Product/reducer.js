@@ -40,7 +40,7 @@ const initialState = {
     quantity: 1,
     price: 1,
     image: {},
-    isActive: true,
+    is_active: true,
     taxable: { value: 0, label: 'No' },
     brand: {
       value: 0,
@@ -166,7 +166,7 @@ const productReducer = (state = initialState, action) => {
           quantity: 1,
           price: 1,
           image: {},
-          isActive: true,
+          is_active: true,
           taxable: { value: 0, label: 'No' },
           brand: {
             value: 0,

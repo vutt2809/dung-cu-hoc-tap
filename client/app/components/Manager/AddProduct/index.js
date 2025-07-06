@@ -149,10 +149,10 @@ const AddProduct = props => {
           <Col xs='12' md='12' className='my-2'>
             <Switch
               id={'active-product'}
-              name={'isActive'}
+              name={'is_active'}
               label={VI['Active?']}
-              checked={productFormData.isActive}
-              toggleCheckboxChange={value => productChange('isActive', value)}
+              checked={productFormData.is_active}
+              toggleCheckboxChange={value => productChange('is_active', value)}
             />
           </Col>
         </Row>

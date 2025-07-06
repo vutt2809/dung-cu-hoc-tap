@@ -99,7 +99,7 @@ const EditCategory = props => {
           <Col xs='12' md='12'>
             <SelectOption
               error={formErrors['products']}
-              label={VI['Select Products'] || 'Select Products'}
+              label={'Chọn sản phẩm'}
               multi={true}
               defaultValue={newCategory.products}
               options={newProducts}
@@ -111,12 +111,12 @@ const EditCategory = props => {
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               style={{ width: 100 }}
-              tooltip={newCategory.isActive}
-              tooltipContent={`Disabling ${newCategory.name} will also disable all ${newCategory.name} products.`}
+              tooltip={newCategory.is_active}
+              tooltipContent={`${newCategory.name} cũng sẽ disable tất cả sản phẩm ${newCategory.name}.`}
               id={`enable-category-${newCategory.id}`}
-              name={'isActive'}
+              name={'is_active'}
               label={VI['Active?']}
-              checked={newCategory.isActive}
+              checked={newCategory.is_active}
               toggleCheckboxChange={value =>
                 activateCategory(newCategory.id, value)
               }

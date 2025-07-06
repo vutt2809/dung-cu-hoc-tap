@@ -194,7 +194,7 @@ export const VI = {
   'Shipped': 'Đã gửi hàng',
   'Delivered': 'Đã giao hàng',
   'Cancelled': 'Đã hủy',
-  'Not processed': 'Chưa xử lý',
+  // 'Notprocessed': 'Chưa xử lý',
   'You have no orders yet.': 'Bạn không có đơn hàng nào.',
   'Please Enter Your Email': 'Vui lòng nhập email của bạn',
   'Please Enter Your Password': 'Vui lòng nhập mật khẩu của bạn'

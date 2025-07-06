@@ -20,7 +20,7 @@ const initialState = {
   order: {
     _id: '',
     cartId: '',
-    products: [],
+    items: [],
     totalTax: 0,
     total: 0,
     status: ''
@@ -59,19 +59,22 @@ const orderReducer = (state = initialState, action) => {
         }
       };
     case UPDATE_ORDER_STATUS:
-      const itemIndex = (state.order.products || []).findIndex(
+      const itemIndex = (state.order.items || []).findIndex(
         item => item.id === action.payload.itemId
       );
 
-      const newProducts = [...state.order.products];
-      newProducts[itemIndex].status = action.payload.status;
-      return {
-        ...state,
-        order: {
-          ...state.order,
-          products: newProducts
-        }
-      };
+      if (itemIndex !== -1) {
+        const newItems = [...(state.order.items || [])];
+        newItems[itemIndex].status = action.payload.status;
+        return {
+          ...state,
+          order: {
+            ...state.order,
+            items: newItems
+          }
+        };
+      }
+      return state;
     case SET_ORDERS_LOADING:
       return {
         ...state,

@@ -177,7 +177,7 @@ export const disableMerchant = (merchant, value, search, page) => {
     try {
       await axios.put(`${API_URL}/merchant/${merchant_id}/active`, {
         merchant: {
-          isActive: value
+          is_active: value
         }
       });
 

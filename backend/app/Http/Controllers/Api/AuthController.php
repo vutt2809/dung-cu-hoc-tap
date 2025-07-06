@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -194,5 +195,49 @@ class AuthController extends Controller
             'success' => true,
             'user' => $request->user()
         ]);
+    }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->stateless()->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to authenticate with Google.'], 401);
+        }
+
+        $user = User::where('google_id', $googleUser->getId())
+            ->orWhere('email', $googleUser->getEmail())
+            ->first();
+
+        if (!$user) {
+            $user = User::create([
+                'email' => $googleUser->getEmail(),
+                'first_name' => $googleUser->user['given_name'] ?? '',
+                'last_name' => $googleUser->user['family_name'] ?? '',
+                'provider' => 'Google',
+                'google_id' => $googleUser->getId(),
+                'avatar' => $googleUser->getAvatar(),
+                'role' => 'member',
+            ]);
+        } else {
+            // Nếu user đã tồn tại nhưng chưa có google_id thì cập nhật
+            if (!$user->google_id) {
+                $user->google_id = $googleUser->getId();
+                $user->provider = 'Google';
+                $user->avatar = $googleUser->getAvatar();
+                $user->save();
+            }
+        }
+
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        // Redirect về frontend kèm token
+        $redirectUrl = config('app.frontend_url', 'http://localhost:3000') . '/auth-success?token=' . urlencode('Bearer ' . $token);
+        return redirect($redirectUrl);
     }
 } 

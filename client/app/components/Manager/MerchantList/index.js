@@ -23,7 +23,7 @@ const MerchantList = props => {
   const renderMerchantPopover = merchant => (
     <div className='p-2'>
       <p className='text-gray text-14'>
-        {merchant.isActive
+        {merchant.is_active
           ? "Việc vô hiệu hóa tài khoản người bán sẽ vô hiệu hóa quyền truy cập vào thương hiệu và tài khoản của người bán."
           : 'Việc kích hoạt tài khoản người bán sẽ khôi phục quyền truy cập tài khoản người bán.'}
       </p>
@@ -31,8 +31,8 @@ const MerchantList = props => {
         variant='dark'
         size='sm'
         className='w-100'
-        text={merchant.isActive ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'}
-        onClick={() => disableMerchant(merchant, !merchant.isActive)}
+        text={merchant.is_active ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'}
+        onClick={() => disableMerchant(merchant, !merchant.is_active)}
       />
     </div>
   );
@@ -84,11 +84,11 @@ const MerchantList = props => {
                   className='w-100 mt-3'
                   size='sm'
                   text={
-                    merchant.isActive ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'
+                    merchant.is_active ? 'Vô hiệu hóa người bán' : 'Kích hoạt người bán'
                   }
                   popover={true}
                   popoverTitle={`Bạn có chắc chắn muốn ${
-                    merchant.isActive ? 'vô hiệu hóa' : 'kích hoạt'
+                    merchant.is_active ? 'vô hiệu hóa' : 'kích hoạt'
                   } tài khoản của ${merchant.name} không?`}
                   popoverContent={renderMerchantPopover(merchant)}
                 />

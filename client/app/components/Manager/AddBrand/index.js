@@ -54,10 +54,10 @@ const AddBrand = props => {
           <Col xs='12' md='12' className='my-2'>
             <Switch
               id={'active-brand'}
-              name={'isActive'}
+              name={'is_active'}
               label={VI['Active?']}
-              checked={brandFormData.isActive}
-              toggleCheckboxChange={value => brandChange('isActive', value)}
+              checked={brandFormData.is_active}
+              toggleCheckboxChange={value => brandChange('is_active', value)}
             />
           </Col>
         </Row>

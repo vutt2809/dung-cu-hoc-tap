@@ -22,8 +22,7 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'address1' => 'required|string|max:255',
-            'address2' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'zip_code' => 'required|string|max:20',

@@ -201,6 +201,8 @@ export const fetchProduct = id => {
           value: brandId,
           label: brand.name
         };
+      } else {
+        response.data.product.brand = null;
       }
 
       const product = { ...response.data.product, inventory };
@@ -243,8 +245,8 @@ export const addProduct = () => {
         price: product.price,
         quantity: product.quantity,
         image: product.image,
-        isActive: product.isActive,
-        taxable: product.taxable.value,
+        is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1',
+        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
         brand:
           user.role !== ROLES.Merchant
             ? brand !== 0
@@ -321,6 +323,9 @@ export const addProduct = () => {
 export const updateProduct = () => {
   return async (dispatch, getState) => {
     try {
+      const product = getState().product.product;
+      const user = getState().account.user;
+
       const rules = {
         name: 'required',
         sku: 'required|alpha_dash',
@@ -329,10 +334,8 @@ export const updateProduct = () => {
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
-        brand: 'required'
+        brand: user.role === ROLES.Admin ? 'required' : 'nullable'
       };
-
-      const product = getState().product.product;
 
       const newProduct = {
         name: product.name,
@@ -341,9 +344,9 @@ export const updateProduct = () => {
         description: product.description,
         quantity: product.quantity,
         price: product.price,
-        taxable: product.taxable,
-        brand: product.brand.value,
-        is_active: product.is_active
+        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
+        brand: product.brand && product.brand.value ? product.brand.value : null,
+        is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1'
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -380,12 +383,13 @@ export const updateProduct = () => {
         }
       }
 
+      // Send as JSON instead of FormData to avoid empty array issue
       const response = await axios.put(
         `${API_URL}/product/${product.id}`,
-        formData,
+        newProduct,
         {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
           }
         }
       );

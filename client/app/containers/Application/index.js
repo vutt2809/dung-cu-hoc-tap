@@ -48,6 +48,7 @@ class Application extends React.PureComponent {
 
     if (token) {
       this.props.fetchProfile();
+      this.props.loadCartFromServer();
     }
 
     this.props.handleCart();

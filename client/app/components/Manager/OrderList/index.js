@@ -15,17 +15,17 @@ const OrderList = props => {
   const { orders } = props;
 
   const renderFirstItem = order => {
-    if (order.products) {
-      const product = order.products[0].product;
+    if (order.items && order.items.length > 0) {
+      const item = order.items[0];
       return (
         <img
           className='item-image'
           src={`${
-            product && (product.image_url || product.imageUrl)
-              ? (product.image_url || product.imageUrl)
+            item.product && (item.product.image_url || item.product.imageUrl)
+              ? (item.product.image_url || item.product.imageUrl)
               : '/images/placeholder-image.png'
           }`}
-          alt={product?.name || 'Product'}
+          alt={item.product?.name || 'Product'}
           onError={(e) => {
             e.target.src = '/images/placeholder-image.png';
           }}
@@ -49,8 +49,8 @@ const OrderList = props => {
                 <div className='order-details'>
                   <div className='mb-1'>
                     <span>{VI['Status']}</span>
-                    {order?.products ? (
-                      <span className='order-label order-status'>{` ${order?.products[0].status}`}</span>
+                    {order?.items ? (
+                      <span className='order-label order-status'>{` ${order?.items[0].status}`}</span>
                     ) : (
                       <span className='order-label order-status'>{` Unavailable`}</span>
                     )}

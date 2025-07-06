@@ -18,7 +18,7 @@ import {
   CLEAR_ORDERS
 } from './constants';
 
-import { clearCart, getCartId } from '../Cart/actions';
+import { clearCart, getCartId, syncCartToServer } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 import { API_URL } from '../../constants';
@@ -192,6 +192,9 @@ export const updateOrderItemStatus = (itemId, status) => {
 export const addOrder = () => {
   return async (dispatch, getState) => {
     try {
+      // Sync cart from localStorage to server first
+      await dispatch(syncCartToServer());
+      
       const cartId = localStorage.getItem('cart_id');
       const total = getState().cart.cartTotal;
 
@@ -211,12 +214,14 @@ export const addOrder = () => {
 };
 
 export const placeOrder = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const token = localStorage.getItem('token');
-
     const cartItems = getState().cart.cartItems;
 
     if (token && cartItems.length > 0) {
+      // Sync cart from localStorage to server first
+      await dispatch(syncCartToServer());
+      
       Promise.all([dispatch(getCartId())]).then(() => {
         dispatch(addOrder());
       });

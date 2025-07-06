@@ -33,7 +33,7 @@ const EditBrand = props => {
   return (
     <div className='edit-brand'>
       <div className='d-flex flex-row mx-0 mb-3'>
-        <label className='mr-1'>Brand link </label>
+        <label className='mr-1'>Link thương hiệu </label>
         <Link to={`/shop/brand/${brand.slug}`} className='default-link'>
           {brand.slug}
         </Link>
@@ -82,12 +82,12 @@ const EditBrand = props => {
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               style={{ width: 100 }}
-              tooltip={brand.isActive}
+              tooltip={brand.is_active}
               tooltipContent={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
               id={`enable-brand-${brand.id}`}
-              name={'isActive'}
+              name={'is_active'}
               label={VI['Active?']}
-              checked={brand.isActive}
+              checked={brand.is_active}
               toggleCheckboxChange={value => activateBrand(brand.id, value)}
             />
           </Col>
