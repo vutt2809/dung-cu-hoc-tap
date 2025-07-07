@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 import { VI } from '../../constants';
 
-import AddProduct from '../../components/Manager/AddProduct';
 import SubPage from '../../components/Manager/SubPage';
 
 class Add extends React.PureComponent {
@@ -36,14 +35,6 @@ class Add extends React.PureComponent {
         actionTitle={VI['Cancel']}
         handleAction={history.goBack}
       >
-        <AddProduct
-          user={user}
-          productFormData={productFormData}
-          formErrors={formErrors}
-          brands={brands}
-          productChange={productChange}
-          addProduct={addProduct}
-        />
       </SubPage>
     );
   }

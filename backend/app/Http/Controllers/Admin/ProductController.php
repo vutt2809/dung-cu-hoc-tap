@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['brand', 'category', 'merchant'])
+        $products = Product::with(['brand', 'category'])
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::with(['brand', 'category', 'merchant'])->findOrFail($id);
+        $product = Product::with(['brand', 'category'])->findOrFail($id);
         
         return view('admin.products.show', compact('product'));
     }

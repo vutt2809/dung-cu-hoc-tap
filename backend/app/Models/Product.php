@@ -22,7 +22,6 @@ class Product extends Model
         'is_active',
         'brand_id',
         'category_id',
-        'merchant_id',
     ];
 
     protected $casts = [
@@ -39,11 +38,6 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function merchant()
-    {
-        return $this->belongsTo(Merchant::class);
     }
 
     public function cart()

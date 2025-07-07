@@ -23,7 +23,6 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'password',
-        'merchant_id',
         'provider',
         'google_id',
         'facebook_id',
@@ -53,11 +52,6 @@ class User extends Authenticatable
         'reset_password_expires' => 'datetime',
     ];
 
-    public function merchant()
-    {
-        return $this->belongsTo(Merchant::class);
-    }
-
     public function addresses()
     {
         return $this->hasMany(Address::class);
@@ -86,11 +80,6 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role === 'admin';
-    }
-
-    public function isMerchant()
-    {
-        return $this->role === 'merchant';
     }
 
     public function isMember()

@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 import { ROLES } from '../../constants';
 
-import BrandList from '../../components/Manager/BrandList';
 import SubPage from '../../components/Manager/SubPage';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
@@ -34,7 +33,12 @@ class List extends React.PureComponent {
           {isLoading ? (
             <LoadingIndicator inline />
           ) : brands.length > 0 ? (
-            <BrandList brands={brands} user={user} />
+            brands.map((brand, idx) => (
+              <div key={brand.id || idx} className='brand-box'>
+                <h4>{brand.name}</h4>
+                <p>{brand.description}</p>
+              </div>
+            ))
           ) : (
             <NotFound message='No brands found.' />
           )}

@@ -10,7 +10,6 @@ import { Row, Col } from 'reactstrap';
 
 import { EMAIL_PROVIDER } from '../../../constants';
 import { VI } from '../../../constants/vi';
-import UserRole from '../UserRole';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
@@ -35,7 +34,6 @@ const AccountDetails = props => {
               </span>
             )}
           </p>
-          <UserRole user={user} />
         </div>
       </div>
       <form onSubmit={handleSubmit}>

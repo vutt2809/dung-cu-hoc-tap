@@ -47,7 +47,6 @@ class BrandController extends Controller
             'description' => 'nullable|string',
             'logo' => 'nullable|string',
             'is_active' => 'boolean',
-            'merchant_id' => 'nullable|exists:merchants,id',
         ]);
 
         if ($validator->fails()) {
@@ -61,7 +60,6 @@ class BrandController extends Controller
             'description' => $request->description,
             'logo' => $request->logo,
             'is_active' => $request->is_active ?? true,
-            'merchant_id' => $request->merchant_id,
         ]);
 
         return response()->json([
@@ -86,7 +84,6 @@ class BrandController extends Controller
             'description' => 'nullable|string',
             'logo' => 'nullable|string',
             'is_active' => 'boolean',
-            'merchant_id' => 'nullable|exists:merchants,id',
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +97,6 @@ class BrandController extends Controller
             'description' => $request->description,
             'logo' => $request->logo,
             'is_active' => $request->is_active,
-            'merchant_id' => $request->merchant_id,
         ]);
 
         return response()->json([

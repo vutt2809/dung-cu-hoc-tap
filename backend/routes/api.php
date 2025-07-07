@@ -13,7 +13,6 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ContactController;
-use App\Http\Controllers\Api\MerchantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +110,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [ReviewController::class, 'destroy']);
     });
 
-    // Admin/Merchant routes
+    // Admin routes
     Route::middleware(['auth:sanctum'])->group(function () {
         // Product management
         Route::prefix('product')->group(function () {
@@ -136,15 +135,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/{id}', [BrandController::class, 'destroy']);
             Route::put('/{id}/active', [BrandController::class, 'toggleActive']);
             Route::get('/list/select', [BrandController::class, 'listForSelect']);
-        });
-
-        // Merchant management
-        Route::prefix('merchant')->group(function () {
-            Route::get('/', [MerchantController::class, 'index']);
-            Route::post('/', [MerchantController::class, 'store']);
-            Route::put('/{id}', [MerchantController::class, 'update']);
-            Route::delete('/{id}', [MerchantController::class, 'destroy']);
-            Route::put('/{id}/active', [MerchantController::class, 'toggleActive']);
         });
 
         // Admin routes

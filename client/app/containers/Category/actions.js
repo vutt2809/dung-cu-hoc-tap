@@ -206,7 +206,7 @@ export const updateCategory = () => {
         });
       }
 
-      const response = await axios.put(`${API_URL}/category/${category_id}`, newCategory);
+      const response = await axios.put(`${API_URL}/category/${category.id}`, newCategory);
 
       const successfulOptions = {
         title: `${response.data.message}`,

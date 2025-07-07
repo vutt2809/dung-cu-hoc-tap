@@ -12,7 +12,6 @@ A full-stack ecommerce application built with MERN stack (MongoDB → MySQL, Exp
 - **Wishlist**: Save favorite products
 - **Address Management**: Multiple shipping addresses
 - **Admin Dashboard**: Complete admin panel for managing the store
-- **Merchant System**: Multi-vendor support
 - **Real-time Notifications**: Socket.io integration
 - **Payment Integration**: Ready for payment gateway integration
 - **Email Notifications**: Mailgun integration
@@ -128,7 +127,6 @@ This project has been migrated from MongoDB to MySQL. The migration includes:
 
 The MySQL database includes the following tables:
 - `users` - User accounts and authentication
-- `merchants` - Merchant information
 - `products` - Product catalog
 - `brands` - Product brands
 - `categories` - Product categories
@@ -149,9 +147,9 @@ The MySQL database includes the following tables:
 ### Products
 - `GET /api/products/list` - Get products with filters
 - `GET /api/products/item/:slug` - Get product by slug
-- `POST /api/products/add` - Add new product (Admin/Merchant)
-- `PUT /api/products/:id` - Update product (Admin/Merchant)
-- `DELETE /api/products/delete/:id` - Delete product (Admin/Merchant)
+- `POST /api/products/add` - Add new product (Admin)
+- `PUT /api/products/:id` - Update product (Admin)
+- `DELETE /api/products/delete/:id` - Delete product (Admin)
 
 ### Cart
 - `GET /api/cart` - Get user cart
@@ -239,7 +237,6 @@ If you encounter any issues or have questions, please open an issue on GitHub.
 An ecommerce store built with MERN stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
 
 1. Buyers browse the store categories, products and brands
-2. Sellers or Merchants manage their own brand component
 3. Admins manage and control the entire store components 
 
 ### Features:

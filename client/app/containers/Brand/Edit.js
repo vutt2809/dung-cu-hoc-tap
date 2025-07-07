@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import EditBrand from '../../components/Manager/EditBrand';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
 import { VI } from '../../constants';
@@ -47,15 +46,10 @@ class Edit extends React.PureComponent {
         handleAction={history.goBack}
       >
         {brand && brand.id ? (
-          <EditBrand
-            user={user}
-            brand={brand}
-            brandChange={brandEditChange}
-            formErrors={formErrors}
-            updateBrand={updateBrand}
-            deleteBrand={deleteBrand}
-            activateBrand={activateBrand}
-          />
+          <div>
+            <h2>{brand.name}</h2>
+            <p>{brand.description}</p>
+          </div>
         ) : (
           <NotFound message={VI['No brand found.'] || 'No brand found.'} />
         )}

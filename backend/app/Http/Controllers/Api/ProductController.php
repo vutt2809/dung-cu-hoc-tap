@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with(['brand', 'category', 'merchant'])->active();
+        $query = Product::with(['brand', 'category'])->active();
 
         // Filter by brand
         if ($request->has('brand') && $request->brand != 'all') {
@@ -110,7 +110,7 @@ class ProductController extends Controller
 
     public function show($id_or_slug)
     {
-        $query = Product::with(['brand', 'category', 'merchant', 'reviews.user'])->active();
+        $query = Product::with(['brand', 'category', 'reviews.user'])->active();
 
         if (is_numeric($id_or_slug)) {
             $product = $query->where('id', $id_or_slug)->first();
@@ -153,7 +153,6 @@ class ProductController extends Controller
             'taxable' => 'boolean',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
-            'merchant_id' => 'nullable|exists:merchants,id',
         ]);
 
         if ($validator->fails()) {
@@ -171,7 +170,7 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product created successfully.',
-            'product' => $product->load(['brand', 'category', 'merchant'])
+            'product' => $product->load(['brand', 'category'])
         ], 201);
     }
 
@@ -195,7 +194,6 @@ class ProductController extends Controller
             'brand' => 'nullable|exists:brands,id',
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
-            'merchant_id' => 'nullable|exists:merchants,id',
             'is_active' => 'sometimes|boolean',
         ]);
 
@@ -232,7 +230,7 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product updated successfully.',
-            'product' => $product->load(['brand', 'category', 'merchant'])
+            'product' => $product->load(['brand', 'category'])
         ]);
     }
 

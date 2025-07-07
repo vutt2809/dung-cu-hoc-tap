@@ -98,13 +98,6 @@
                             </div>
                             @endif
                             
-                            @if($product->merchant)
-                            <div class="mb-3">
-                                <strong>Người bán:</strong>
-                                <p>{{ $product->merchant->name }}</p>
-                            </div>
-                            @endif
-                            
                             <div class="mb-3">
                                 <strong>Mô tả:</strong>
                                 <p>{{ $product->description ?: 'Không có mô tả' }}</p>

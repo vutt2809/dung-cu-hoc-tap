@@ -11,11 +11,8 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 import { ROLES } from '../../constants';
 import dashboardLinks from './links.json';
-import { isDisabledMerchantAccount } from '../../utils/app';
 import Admin from '../../components/Manager/Dashboard/Admin';
-import Merchant from '../../components/Manager/Dashboard/Merchant';
 import Customer from '../../components/Manager/Dashboard/Customer';
-import DisabledMerchantAccount from '../../components/Manager/DisabledAccount/Merchant';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class Dashboard extends React.PureComponent {
@@ -26,9 +23,6 @@ class Dashboard extends React.PureComponent {
   render() {
     const { user, isLoading, isMenuOpen, toggleDashboardMenu } = this.props;
 
-    if (isDisabledMerchantAccount(user))
-      return <DisabledMerchantAccount user={user} />;
-
     return (
       <>
         {isLoading ? (
@@ -38,13 +32,6 @@ class Dashboard extends React.PureComponent {
             user={user}
             isMenuOpen={isMenuOpen}
             links={dashboardLinks[ROLES.Admin]}
-            toggleMenu={toggleDashboardMenu}
-          />
-        ) : user.role === ROLES.Merchant && user.merchant ? (
-          <Merchant
-            user={user}
-            isMenuOpen={isMenuOpen}
-            links={dashboardLinks[ROLES.Merchant]}
             toggleMenu={toggleDashboardMenu}
           />
         ) : (

@@ -7,7 +7,6 @@
 import React from 'react';
 
 import { formatDate } from '../../../utils/date';
-import UserRole from '../UserRole';
 import { VI } from '../../../constants';
 
 const UserList = props => {
@@ -29,7 +28,7 @@ const UserList = props => {
           <p>{formatDate(user?.created)}</p>
           <label className='text-black'>{VI['Role']}</label>
           <p className='mb-0'>
-            <UserRole user={user} className='d-inline-block mt-2' />
+            {/* <UserRole user={user} className='d-inline-block mt-2' /> */}
           </p>
         </div>
       ))}
