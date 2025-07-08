@@ -38,11 +38,11 @@ export const contactUs = () => {
       const contact = getState().contact.contactFormData;
 
       const { isValid, errors } = allFieldsValidation(contact, rules, {
-        'required.name': 'Name is required.',
-        'required.email': 'Email is required.',
-        'email.email': 'Email format is invalid.',
-        'required.message': 'Message is required.',
-        'min.message': 'Message must be at least 10 characters.'
+        'required.name': 'Tên là bắt buộc.',
+        'required.email': 'Email là bắt buộc.',
+        'email.email': 'Email không đúng định dạng.',
+        'required.message': 'Nội dung là bắt buộc.',
+        'min.message': 'Nội dung phải có ít nhất 10 ký tự.'
       });
 
       if (!isValid) {
@@ -52,7 +52,7 @@ export const contactUs = () => {
       const response = await axios.post(`${API_URL}/contact/add`, contact);
 
       const successfulOptions = {
-        title: `${response.data.message}`,
+        title: 'Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm nhất.',
         position: 'tr',
         autoDismiss: 1
       };
@@ -60,7 +60,11 @@ export const contactUs = () => {
       dispatch({ type: CONTACT_FORM_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
-      handleError(error, dispatch);
+      let message = error?.response?.data?.error || '';
+      if (!message) {
+        message = 'Vui lòng thử lại!';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     }
   };
 };

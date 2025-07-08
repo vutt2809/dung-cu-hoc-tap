@@ -9,19 +9,22 @@ class Review extends Model
 {
     use HasFactory;
 
+    // Status constants
+    const STATUS_APPROVED = 1;    // Duyệt
+    const STATUS_PENDING = 0;     // Đang chờ
+    const STATUS_REJECTED = -1;   // Không duyệt
+
     protected $fillable = [
         'user_id',
         'product_id',
         'title',
-        'review',
+        'comment',
         'rating',
-        'is_recommended',
-        'is_active',
+        'status',
     ];
 
     protected $casts = [
-        'is_recommended' => 'boolean',
-        'is_active' => 'boolean',
+        'status' => 'integer',
     ];
 
     public function user()
@@ -32,5 +35,47 @@ class Review extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    // Scope methods for status
+    public function scopeApproved($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('status', self::STATUS_REJECTED);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    // Helper methods
+    public function isApproved()
+    {
+        return $this->status === self::STATUS_APPROVED;
+    }
+
+    public function isPending()
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    public function isRejected()
+    {
+        return $this->status === self::STATUS_REJECTED;
+    }
+
+    public function isActive()
+    {
+        return $this->status === self::STATUS_APPROVED;
     }
 } 

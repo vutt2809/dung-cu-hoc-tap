@@ -33,12 +33,8 @@ const initialState = {
   },
   reviewFormData: {
     title: '',
-    review: '',
-    rating: 0,
-    isRecommended: {
-      value: 1,
-      label: 'Yes'
-    }
+    comment: '',
+    rating: 0
   },
   reviewFormErrors: {}
 };
@@ -70,7 +66,7 @@ const reviewReducer = (state = initialState, action) => {
         productReviews: [...state.productReviews, action.payload]
       };
     case REMOVE_REVIEW:
-      const index = state.reviews.findIndex(r => rid === action.payload);
+      const index = state.reviews.findIndex(r => r.id === action.payload);
       return {
         ...state,
         reviews: [
@@ -96,12 +92,8 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         reviewFormData: {
           title: '',
-          review: '',
-          rating: 0,
-          isRecommended: {
-            value: 1,
-            label: 'Yes'
-          }
+          comment: '',
+          rating: 0
         },
         reviewFormErrors: {}
       };

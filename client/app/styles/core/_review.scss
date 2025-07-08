@@ -66,11 +66,22 @@
   }
 
   .review-list {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background: #fafbfc;
+
     .review-box {
-      height: 100%;
-      border-radius: $border-radius-default;
-      box-shadow: $box-shadow-secondary;
-      background-color: $white;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      background: #fff;
+      margin-bottom: 40px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      &:hover {
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        border-color: #a0aec0;
+      }
 
       .avatar {
         width: 40px;

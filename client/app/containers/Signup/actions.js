@@ -73,7 +73,7 @@ export const signUp = () => {
       const response = await axios.post(`${API_URL}/auth/register`, user);
 
       const successfulOptions = {
-        title: `You have signed up successfully! You will be receiving an email as well. Thank you!`,
+        title: 'Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.',
         position: 'tr',
         autoDismiss: 1
       };
@@ -86,8 +86,14 @@ export const signUp = () => {
       dispatch(success(successfulOptions));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
-      const title = `Please try to signup again!`;
-      handleError(error, dispatch, title);
+      let message = error?.response?.data?.error || '';
+      if (message === 'The email has already been taken.') {
+        message = 'Email này đã được đăng ký.';
+      }
+      if (!message) {
+        message = 'Vui lòng thử lại!';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     } finally {
       dispatch({ type: SET_SIGNUP_SUBMITTING, payload: false });
       dispatch({ type: SET_SIGNUP_LOADING, payload: false });

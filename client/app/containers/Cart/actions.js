@@ -161,7 +161,7 @@ export const handleCart = () => {
 export const handleCheckout = () => {
   return (dispatch, getState) => {
     const successfulOptions = {
-      title: `Please Login to proceed to checkout`,
+      title: 'Vui lòng đăng nhập để tiến hành thanh toán',
       position: 'tr',
       autoDismiss: 1
     };

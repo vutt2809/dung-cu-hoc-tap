@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../utils/date';
+import { formatCurrencyVN, formatDateVN } from '../../../utils/format';
 import Button from '../../Common/Button';
 import { XIcon } from '../../Common/Icon';
 import { VI } from '../../../constants';
@@ -53,10 +53,8 @@ const WishList = props => {
             {getProductImage(item)}
             <div className='d-flex flex-column justify-content-center px-3 text-truncate'>
               <h4 className='text-truncate'>{item.product.name}</h4>
-              <p className='mb-2 price'>${item.product.price}</p>
-              <label className='text-truncate'>{`${VI['Date']} ${formatDate(
-                item.created
-              )}`}</label>
+              <p className='mb-2 price'>{formatCurrencyVN(item.product.price)}</p>
+              <label className='text-truncate'>{`Ngày ${formatDateVN(item.created)}`}</label>
             </div>
           </Link>
           <div className='remove-wishlist-box'>

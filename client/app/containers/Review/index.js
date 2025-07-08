@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import actions from '../../actions';
+import * as reviewActions from './actions';
 
 import SubPage from '../../components/Manager/SubPage';
 import ReviewList from '../../components/Manager/ReviewList';
@@ -76,4 +76,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Review);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchReviews: (page) => dispatch(reviewActions.fetchReviews(page)),
+    approveReview: (review) => dispatch(reviewActions.approveReview(review)),
+    rejectReview: (review) => dispatch(reviewActions.rejectReview(review)),
+    deleteReview: (id) => dispatch(reviewActions.deleteReview(id))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Review);

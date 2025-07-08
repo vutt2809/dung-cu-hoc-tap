@@ -33,8 +33,8 @@ export const subscribeNewsletter = () => {
       const user = getState().newsletter.newsletterFormData;
 
       const { isValid, errors } = allFieldsValidation(user, rules, {
-        'required.email': 'Email is required.',
-        'email.email': 'Email format is invalid.'
+        'required.email': 'Email là bắt buộc.',
+        'email.email': 'Email không đúng định dạng.'
       });
 
       if (!isValid) {
@@ -47,7 +47,7 @@ export const subscribeNewsletter = () => {
       );
 
       const successfulOptions = {
-        title: `${response.data.message}`,
+        title: 'Đăng ký nhận bản tin thành công!',
         position: 'tr',
         autoDismiss: 1
       };
@@ -55,7 +55,14 @@ export const subscribeNewsletter = () => {
       dispatch({ type: NEWSLETTER_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
-      handleError(error, dispatch);
+      let message = error?.response?.data?.error || '';
+      if (message === 'The email has already been taken.') {
+        message = 'Email này đã được đăng ký nhận bản tin.';
+      }
+      if (!message) {
+        message = 'Vui lòng thử lại!';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     }
   };
 };

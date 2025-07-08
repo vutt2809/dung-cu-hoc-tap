@@ -44,10 +44,10 @@ export const login = () => {
     const user = getState().login.loginFormData;
 
     const { isValid, errors } = allFieldsValidation(user, rules, {
-      'required.email': 'Email is required.',
-      'email.email': 'Email format is invalid.',
-      'required.password': 'Password is required.',
-      'min.password': 'Password must be at least 6 characters.'
+      'required.email': 'Email là bắt buộc.',
+      'email.email': 'Email không đúng định dạng.',
+      'required.password': 'Mật khẩu là bắt buộc.',
+      'min.password': 'Mật khẩu phải có ít nhất 6 ký tự.'
     });
 
     if (!isValid) {
@@ -65,7 +65,7 @@ export const login = () => {
       setToken(token);
 
       const successfulOptions = {
-        title: `Hey${userData.first_name ? ` ${userData.first_name}` : ''}, Welcome Back!`,
+        title: `Chào mừng${userData.first_name ? ` ${userData.first_name}` : ''}, đăng nhập thành công!`,
         position: 'tr',
         autoDismiss: 1
       };
@@ -75,8 +75,23 @@ export const login = () => {
       dispatch(success(successfulOptions));
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
-      const title = `Please try to login again!`;
-      handleError(error, dispatch, title);
+      let message = error?.response?.data?.error || '';
+      if (message === 'Password Incorrect') {
+        message = 'Mật khẩu không đúng.';
+      }
+      if (message === 'No user found for this email address.') {
+        message = 'Không tìm thấy tài khoản với email này.';
+      }
+      if (message === 'This account was created with a different login method.') {
+        message = 'Tài khoản này được tạo bằng phương thức đăng nhập khác.';
+      }
+      if (message === 'That email address is already in use using Google provider.') {
+        message = 'Email này đã được đăng ký bằng Google.';
+      }
+      if (!message) {
+        message = 'Vui lòng thử đăng nhập lại!';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     } finally {
       dispatch({ type: SET_LOGIN_SUBMITTING, payload: false });
       dispatch({ type: SET_LOGIN_LOADING, payload: false });

@@ -79,9 +79,9 @@ const AccountDetails = props => {
             <Input
               type={'text'}
               label={VI['Phone Number'] || 'Phone Number'}
-              name={'phoneNumber'}
+              name={'phone_number'}
               placeholder={VI['Please Enter Your Phone Number'] || 'Please Enter Your Phone Number'}
-              value={user.phoneNumber ? user.phoneNumber : ''}
+              value={user.phone_number ? user.phone_number : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}

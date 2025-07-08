@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../utils/date';
+import { formatDate, formatCurrencyVN } from '../../../utils/format';
 import { VI } from '../../../constants';
 
 const OrderList = props => {
@@ -61,11 +61,11 @@ const OrderList = props => {
                   </div>
                   <div className='mb-1'>
                     <span>{VI['Order Date']}</span>
-                    <span className='order-label'>{` ${order.created_at ? new Date(order.created_at).toLocaleString('vi-VN') : ''}`}</span>
+                    <span className='order-label'>{` ${formatDateVN(order.created_at)}`}</span>
                   </div>
                   <div className='mb-1'>
                     <span>{VI['Total']}</span>
-                    <span className='order-label'>{` ${(order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)).toLocaleString('vi-VN')}₫`}</span>
+                    <span className='order-label'>{` ${formatCurrencyVN((order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)))}₫`}</span>
                   </div>
                 </div>
               </div>

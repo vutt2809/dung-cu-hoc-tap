@@ -21,7 +21,7 @@ class ReviewController extends Controller
         }
 
         $reviews = Review::where('product_id', $product->id)
-                        ->where('is_active', true)
+                        ->active()
                         ->with('user')
                         ->orderBy('created_at', 'desc')
                         ->get();
@@ -63,7 +63,7 @@ class ReviewController extends Controller
             'title' => $request->title,
             'comment' => $request->comment,
             'rating' => $request->rating,
-            'is_active' => true
+            'status' => Review::STATUS_PENDING
         ]);
 
         return response()->json([
@@ -87,7 +87,6 @@ class ReviewController extends Controller
             'title' => 'sometimes|required|string|max:255',
             'comment' => 'sometimes|required|string',
             'rating' => 'sometimes|required|integer|min:1|max:5',
-            'is_recommended' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -143,14 +142,12 @@ class ReviewController extends Controller
     {
         $review = Review::find($id);
         if (!$review) {
-            return response()->json(['error' => 'Review '], 404);
+            return response()->json(['error' => 'Review not found.'], 404);
         }
-        if (isset($review->status)) {
-            $review->status = 'approved';
-        } else {
-            $review->is_active = true;
-        }
+        
+        $review->status = Review::STATUS_APPROVED;
         $review->save();
+        
         return response()->json(['success' => true, 'message' => 'Phê duyệt thành công.']);
     }
 
@@ -160,12 +157,10 @@ class ReviewController extends Controller
         if (!$review) {
             return response()->json(['error' => 'Review not found.'], 404);
         }
-        if (isset($review->status)) {
-            $review->status = 'rejected';
-        } else {
-            $review->is_active = false;
-        }
+        
+        $review->status = Review::STATUS_REJECTED;
         $review->save();
-        return response()->json(['success' => true, 'message' => 'Review rejected successfully.']);
+        
+        return response()->json(['success' => true, 'message' => 'Từ chối thành công.']);
     }
 } 

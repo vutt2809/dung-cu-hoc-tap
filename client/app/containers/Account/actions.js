@@ -67,7 +67,7 @@ export const updateProfile = () => {
       });
 
       const successfulOptions = {
-        title: `${response.data.message}`,
+        title: 'Cập nhật thông tin cá nhân thành công!',
         position: 'tr',
         autoDismiss: 1
       };

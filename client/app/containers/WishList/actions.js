@@ -20,7 +20,7 @@ export const updateWishlist = (isLiked, productId) => {
         });
 
         const successfulOptions = {
-          title: `${response.data.message}`,
+          title: isLiked ? 'Đã thêm vào danh sách yêu thích!' : 'Đã xóa khỏi danh sách yêu thích!',
           position: 'tr',
           autoDismiss: 1
         };
@@ -31,7 +31,7 @@ export const updateWishlist = (isLiked, productId) => {
         }
       } else {
         const retryOptions = {
-          title: `Please login to wishlist a product`,
+          title: 'Vui lòng đăng nhập để sử dụng danh sách yêu thích',
           position: 'tr',
           autoDismiss: 1
         };

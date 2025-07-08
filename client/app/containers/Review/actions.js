@@ -63,9 +63,18 @@ export const fetchReviews = (n, v) => {
 export const approveReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/approve/${review.id}`);
+      const response = await axios.put(`${API_URL}/review/approve/${review.id}`);
+      
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
 
-      dispatch(fetchReviews());
+      if (response.data.success) {
+        dispatch(success(successfulOptions));
+        dispatch(fetchReviews());
+      }
     } catch (error) {
       handleError(error, dispatch);
     }
@@ -75,9 +84,18 @@ export const approveReview = review => {
 export const rejectReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/reject/${review.id}`);
+      const response = await axios.put(`${API_URL}/review/reject/${review.id}`);
+      
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
 
-      dispatch(fetchReviews());
+      if (response.data.success) {
+        dispatch(success(successfulOptions));
+        dispatch(fetchReviews());
+      }
     } catch (error) {
       handleError(error, dispatch);
     }
@@ -88,7 +106,7 @@ export const rejectReview = review => {
 export const deleteReview = id => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.delete(`${API_URL}/review/delete/${id}`);
+      const response = await axios.delete(`${API_URL}/review/${id}`);
 
       const successfulOptions = {
         title: `${response.data.message}`,

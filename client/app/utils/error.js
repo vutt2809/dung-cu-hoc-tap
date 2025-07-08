@@ -19,20 +19,20 @@ const handleError = (err, dispatch, title = '') => {
 
   if (err.response) {
     if (err.response.status === 400) {
-      unsuccessfulOptions.title = title ? title : VI['Please Try Again!'];
+      unsuccessfulOptions.title = title ? title : 'Vui lòng thử lại!';
       unsuccessfulOptions.message = err.response.data.error;
       dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 404) {
       // unsuccessfulOptions.title =
       //   err.response.data.message ||
-      //   'Your request could not be processed. Please try again.';
+      //   'Yêu cầu của bạn không thể xử lý. Vui lòng thử lại.';
       // dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 401) {
-      unsuccessfulOptions.message = VI['Unauthorized Access! Please login again'];
+      unsuccessfulOptions.message = 'Bạn không có quyền truy cập! Vui lòng đăng nhập lại.';
       dispatch(signOut());
       dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 403) {
-      unsuccessfulOptions.message = VI['Forbidden! You are not allowed to access this resource.'];
+      unsuccessfulOptions.message = 'Bạn không được phép truy cập tài nguyên này.';
       dispatch(error(unsuccessfulOptions));
     }
   } else if (err.message) {
@@ -40,7 +40,7 @@ const handleError = (err, dispatch, title = '') => {
     dispatch(error(unsuccessfulOptions));
   } else {
     // fallback
-    unsuccessfulOptions.message = VI['Your request could not be processed. Please try again.'];
+    unsuccessfulOptions.message = 'Yêu cầu của bạn không thể xử lý. Vui lòng thử lại.';
   }
 };
 

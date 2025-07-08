@@ -82,17 +82,20 @@ export const resetAccountPassword = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
+        current_password: 'required',
         password: 'required|min:6',
-        confirmPassword: 'required|min:6'
+        confirmPassword: 'required|min:6|same:password'
       };
 
       const user = getState().resetPassword.resetFormData;
 
       const { isValid, errors } = allFieldsValidation(user, rules, {
-        'required.password': 'Password is required.',
-        'min.password': 'Password must be at least 6 characters.',
-        'required.confirmPassword': 'Confirm password is required.',
-        'min.confirmPassword': 'Confirm password must be at least 6 characters.'
+        'required.current_password': 'Vui lòng nhập mật khẩu hiện tại.',
+        'required.password': 'Vui lòng nhập mật khẩu mới.',
+        'min.password': 'Mật khẩu mới phải có ít nhất 6 ký tự.',
+        'required.confirmPassword': 'Vui lòng nhập lại mật khẩu mới.',
+        'min.confirmPassword': 'Mật khẩu xác nhận phải có ít nhất 6 ký tự.',
+        'same.confirmPassword': 'Mật khẩu xác nhận không khớp.'
       });
 
       if (!isValid) {
@@ -103,12 +106,12 @@ export const resetAccountPassword = () => {
       }
 
       const response = await axios.put(`${API_URL}/user/password`, {
-        current_password: user.currentPassword,
+        current_password: user.current_password,
         password: user.password,
         password_confirmation: user.confirmPassword
       });
       const successfulOptions = {
-        title: `${response.data.message}`,
+        title: 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại.',
         position: 'tr',
         autoDismiss: 1
       };
@@ -120,8 +123,23 @@ export const resetAccountPassword = () => {
       dispatch(success(successfulOptions));
       dispatch({ type: RESET_PASSWORD_RESET });
     } catch (error) {
-      const title = `Please try to reset again!`;
-      handleError(error, dispatch, title);
+      let message = error?.response?.data?.error || 'Có lỗi xảy ra, vui lòng thử lại!';
+      if (message === 'The current password field is required.') {
+        message = 'Vui lòng nhập mật khẩu hiện tại.';
+      }
+      if (message === 'Current password is incorrect.') {
+        message = 'Mật khẩu hiện tại không đúng.';
+      }
+      if (message === 'The password field is required.') {
+        message = 'Vui lòng nhập mật khẩu mới.';
+      }
+      if (message === 'The password confirmation does not match.') {
+        message = 'Mật khẩu xác nhận không khớp.';
+      }
+      if (message === 'Password updated successfully.') {
+        message = 'Đổi mật khẩu thành công! Vui lòng đăng nhập lại.';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     }
   };
 };

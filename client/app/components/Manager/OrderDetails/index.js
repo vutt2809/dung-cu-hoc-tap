@@ -11,6 +11,7 @@ import { Row, Col } from 'reactstrap';
 import OrderMeta from '../OrderMeta';
 import OrderItems from '../OrderItems';
 import OrderSummary from '../OrderSummary';
+import { formatCurrencyVN, formatDateVN } from '../../../utils/format';
 
 const OrderDetails = props => {
   const { order, user, cancelOrder, updateOrderItemStatus, onBack } = props;

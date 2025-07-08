@@ -34,7 +34,7 @@ export const forgotPassowrd = () => {
       const user = getState().forgotPassword.forgotFormData;
 
       const { isValid, errors } = allFieldsValidation(user, rules, {
-        'required.email': 'Email is required.'
+        'required.email': 'Email là bắt buộc.'
       });
 
       if (!isValid) {
@@ -46,7 +46,7 @@ export const forgotPassowrd = () => {
 
       const response = await axios.post(`${API_URL}/auth/forgot`, user);
       const successfulOptions = {
-        title: `${response.data.message}`,
+        title: 'Yêu cầu lấy lại mật khẩu thành công! Vui lòng kiểm tra email.',
         position: 'tr',
         autoDismiss: 1
       };
@@ -58,8 +58,14 @@ export const forgotPassowrd = () => {
 
       dispatch({ type: FORGOT_PASSWORD_RESET });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, dispatch, title);
+      let message = error?.response?.data?.error || '';
+      if (message === 'No user found for this email address.') {
+        message = 'Không tìm thấy tài khoản với email này.';
+      }
+      if (!message) {
+        message = 'Vui lòng thử lại!';
+      }
+      handleError({ response: { data: { error: message } } }, dispatch, message);
     }
   };
 };

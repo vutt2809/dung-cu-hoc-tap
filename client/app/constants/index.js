@@ -14,7 +14,8 @@ export const CART_ITEMS = 'cart_items';
 export const CART_TOTAL = 'cart_total';
 export const CART_ID = 'cart_id';
 
-export const CART_ITEM_STATUS = {
+export const ORDER_STATUS = {
+  Pending: 'Pending',
   Processing: 'Processing',
   Shipped: 'Shipped',
   Delivered: 'Delivered',
@@ -23,9 +24,9 @@ export const CART_ITEM_STATUS = {
 };
 
 export const REVIEW_STATUS = {
-  Rejected: 'Rejected',
-  Approved: 'Approved',
-  Waiting_Approval: 'Waiting Approval'
+  APPROVED: 1,      // Duyệt
+  PENDING: 0,       // Đang chờ
+  REJECTED: -1      // Không duyệt
 };
 
 export const EMAIL_PROVIDER = {
