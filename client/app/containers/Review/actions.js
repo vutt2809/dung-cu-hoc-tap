@@ -38,7 +38,7 @@ export const fetchReviews = (n, v) => {
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
 
-      const response = await axios.get(`${API_URL}/review`, {
+      const response = await axios.get(`${API_URL}/review/list`, {
         params: {
           page: v ?? 1,
           limit: 20
@@ -63,7 +63,7 @@ export const fetchReviews = (n, v) => {
 export const approveReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/approve/${reviewid}`);
+      await axios.put(`${API_URL}/review/approve/${review.id}`);
 
       dispatch(fetchReviews());
     } catch (error) {
@@ -75,7 +75,7 @@ export const approveReview = review => {
 export const rejectReview = review => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`${API_URL}/review/reject/${reviewid}`);
+      await axios.put(`${API_URL}/review/reject/${review.id}`);
 
       dispatch(fetchReviews());
     } catch (error) {

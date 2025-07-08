@@ -104,10 +104,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Review routes
     Route::prefix('review')->group(function () {
+        Route::get('/list', [ReviewController::class, 'list']);
         Route::get('/{slug}', [ReviewController::class, 'index']);
         Route::post('/', [ReviewController::class, 'store']);
         Route::put('/{id}', [ReviewController::class, 'update']);
         Route::delete('/{id}', [ReviewController::class, 'destroy']);
+        Route::put('/approve/{id}', [ReviewController::class, 'approve']);
+        Route::put('/reject/{id}', [ReviewController::class, 'reject']);
     });
 
     // Admin routes

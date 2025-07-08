@@ -33,12 +33,19 @@ class List extends React.PureComponent {
           {isLoading ? (
             <LoadingIndicator inline />
           ) : brands.length > 0 ? (
-            brands.map((brand, idx) => (
-              <div key={brand.id || idx} className='brand-box'>
-                <h4>{brand.name}</h4>
-                <p>{brand.description}</p>
-              </div>
-            ))
+            <div className='brand-list'>
+              {brands.map((brand, idx) => (
+                <div
+                  key={brand.id || idx}
+                  className='brand-box clickable'
+                  onClick={() => history.push(`/dashboard/brand/edit/${brand.id}`)}
+                  style={{ cursor: 'pointer', marginBottom: 16 }}
+                >
+                  <h4 style={{ marginBottom: 4 }}>{brand.name}</h4>
+                  <p className='brand-desc' style={{ color: '#666', margin: 0 }}>{brand.description}</p>
+                </div>
+              ))}
+            </div>
           ) : (
             <NotFound message='No brands found.' />
           )}

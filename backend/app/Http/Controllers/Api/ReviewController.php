@@ -122,4 +122,50 @@ class ReviewController extends Controller
             'message' => 'Review deleted successfully.'
         ]);
     }
+
+    public function list(Request $request)
+    {
+        $limit = $request->input('limit', 20);
+        $reviews = Review::with(['user', 'product'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($limit);
+
+        return response()->json([
+            'success' => true,
+            'reviews' => $reviews->items(),
+            'totalPages' => $reviews->lastPage(),
+            'currentPage' => $reviews->currentPage(),
+            'count' => $reviews->total()
+        ]);
+    }
+
+    public function approve($id)
+    {
+        $review = Review::find($id);
+        if (!$review) {
+            return response()->json(['error' => 'Review '], 404);
+        }
+        if (isset($review->status)) {
+            $review->status = 'approved';
+        } else {
+            $review->is_active = true;
+        }
+        $review->save();
+        return response()->json(['success' => true, 'message' => 'Phê duyệt thành công.']);
+    }
+
+    public function reject($id)
+    {
+        $review = Review::find($id);
+        if (!$review) {
+            return response()->json(['error' => 'Review not found.'], 404);
+        }
+        if (isset($review->status)) {
+            $review->status = 'rejected';
+        } else {
+            $review->is_active = false;
+        }
+        $review->save();
+        return response()->json(['success' => true, 'message' => 'Review rejected successfully.']);
+    }
 } 

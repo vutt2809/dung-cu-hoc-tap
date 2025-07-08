@@ -35,7 +35,6 @@ export const VI = {
   'Account Security': 'Bảo mật tài khoản',
   'Address': 'Địa chỉ',
   'Users': 'Người dùng',
-  'Merchants': 'Người bán',
   'Reviews': 'Đánh giá',
   'Wishlist': 'Danh sách yêu thích',
   'WishList': 'Danh sách yêu thích',
@@ -178,7 +177,6 @@ export const VI = {
   'Add Category': 'Thêm danh mục',
   'Add Review': 'Thêm đánh giá',
   'Add Product': 'Thêm sản phẩm',
-  'Add Merchant': 'Thêm người bán',
   
   // Dashboard
   'Dashboard Menu': 'Menu bảng điều khiển',
