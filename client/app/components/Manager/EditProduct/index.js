@@ -15,6 +15,7 @@ import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
+import { formatCurrencyVN } from '../../../utils/format';
 
 const taxableSelect = [
   { value: 1, label: 'Yes' },
@@ -134,10 +135,11 @@ const EditProduct = props => {
               name={'price'}
               min={1}
               placeholder={VI['Product Price']}
-              value={product.price}
+              value={product.price ? parseInt(product.price) : ''}
               onInputChange={(name, value) => {
                 productChange(name, value);
               }}
+              addonAfter={formatCurrencyVN(product.price)}
             />
           </Col>
           <Col xs='12' md='12'>

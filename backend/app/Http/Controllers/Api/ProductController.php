@@ -205,7 +205,10 @@ class ProductController extends Controller
 
         $data = $request->all();
         
-        if ($request->has('name')) {
+        // Ưu tiên lấy slug từ request, nếu không có thì tạo từ name
+        if ($request->has('slug')) {
+            $data['slug'] = $request->slug;
+        } elseif ($request->has('name')) {
             $data['slug'] = Str::slug($request->name);
         }
 

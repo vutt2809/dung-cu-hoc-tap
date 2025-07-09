@@ -44,12 +44,14 @@ class Application extends React.PureComponent {
   componentDidMount() {
     const token = localStorage.getItem('token');
 
+    // Luôn đồng bộ cart với server nếu có token
     if (token) {
       this.props.fetchProfile();
       this.props.loadCartFromServer();
+    } else {
+      // Nếu không có token thì lấy cart từ localStorage
+      this.props.handleCart();
     }
-
-    this.props.handleCart();
 
     document.addEventListener('keydown', this.handleTabbing);
     document.addEventListener('mousedown', this.handleMouseDown);
