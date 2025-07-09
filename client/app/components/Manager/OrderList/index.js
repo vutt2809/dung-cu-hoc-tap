@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatDate, formatCurrencyVN } from '../../../utils/format';
+import { formatDate, formatCurrencyVN, formatDateVN } from '../../../utils/format';
 import { VI } from '../../../constants';
 
 const OrderList = props => {

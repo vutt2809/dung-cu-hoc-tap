@@ -40,11 +40,7 @@ class Edit extends React.PureComponent {
     } = this.props;
 
     return (
-      <SubPage
-        title={VI['Edit Brand'] || 'Edit Brand'}
-        actionTitle={VI['Cancel'] || 'Cancel'}
-        handleAction={history.goBack}
-      >
+      <SubPage title='Chỉnh sửa thương hiệu' isMenuOpen={null}>
         {brand && brand.id ? (
           <div>
             <h2>{brand.name}</h2>

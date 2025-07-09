@@ -10,7 +10,6 @@ import { Row, Col } from 'reactstrap';
 
 import { formatDate } from '../../../utils/date';
 import { REVIEW_STATUS } from '../../../constants';
-import { VI } from '../../../constants/vi';
 import Button from '../../Common/Button';
 import { CheckIcon, RefreshIcon, TrashIcon, XIcon } from '../../Common/Icon';
 
@@ -21,25 +20,25 @@ const ReviewList = props => {
     switch (status) {
       case REVIEW_STATUS.APPROVED:
         return {
-          text: VI['Approved'] || 'Đã duyệt',
+          text: 'Đã duyệt',
           icon: <CheckIcon className='text-green' />,
           className: 'text-green'
         };
       case REVIEW_STATUS.PENDING:
         return {
-          text: VI['Waiting Approval'] || 'Chờ phê duyệt',
+          text: 'Chờ phê duyệt',
           icon: <RefreshIcon className='text-warning' />,
           className: 'text-warning'
         };
       case REVIEW_STATUS.REJECTED:
         return {
-          text: VI['Rejected'] || 'Đã từ chối',
+          text: 'Đã từ chối',
           icon: <XIcon className='text-red' />,
           className: 'text-red'
         };
       default:
         return {
-          text: VI['Unknown'] || 'Không xác định',
+          text: 'Không xác định',
           icon: null,
           className: 'text-muted'
         };
@@ -79,7 +78,7 @@ const ReviewList = props => {
                       <p className='mb-0'>{review.user.first_name}</p>
                     </div>
                   </div>
-                  <label className='text-black'>{`${VI['Review Added on']} ${formatDate(
+                  <label className='text-black'>{`Đánh giá được thêm vào ${formatDate(
                     review.created_at
                   )}`}</label>
                   <hr />
@@ -100,20 +99,20 @@ const ReviewList = props => {
                           className='text-uppercase mr-2'
                           variant='primary'
                           size='md'
-                          text={VI['Approve'] || 'Phê duyệt'}
+                          text='Phê duyệt'
                           onClick={() => approveReview(review)}
                         />
                         <Button
                           className='text-uppercase'
                           variant='danger'
                           size='md'
-                          text={VI['Reject'] || 'Từ chối'}
+                          text='Từ chối'
                           onClick={() => rejectReview(review)}
                         />
                       </div>
                       <Button
                         className='mt-3 mt-lg-0'
-                        text={VI['Delete']}
+                        text='Xóa'
                         icon={<TrashIcon width={15} />}
                         onClick={() => deleteReview(review.id)}
                       />
@@ -122,7 +121,7 @@ const ReviewList = props => {
                     <div className='d-flex flex-row align-items-center'>
                       <Button
                         className='mt-3 mt-lg-0'
-                        text={VI['Delete']}
+                        text='Xóa'
                         icon={<TrashIcon width={15} />}
                         onClick={() => deleteReview(review.id)}
                       />

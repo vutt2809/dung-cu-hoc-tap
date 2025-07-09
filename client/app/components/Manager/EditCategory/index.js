@@ -13,7 +13,6 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 import Switch from '../../Common/Switch';
-import { VI } from '../../../constants/vi';
 
 const EditCategory = props => {
   const {
@@ -61,9 +60,9 @@ const EditCategory = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={VI['Name']}
+              label={'Tên'}
               name={'name'}
-              placeholder={'Category Name'}
+              placeholder={'Tên danh mục'}
               value={newCategory.name}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
@@ -87,9 +86,9 @@ const EditCategory = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={VI['Description']}
+              label={'Mô tả'}
               name={'description'}
-              placeholder={'Category Description'}
+              placeholder={'Mô tả danh mục'}
               value={newCategory.description}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
@@ -115,7 +114,7 @@ const EditCategory = props => {
               tooltipContent={`${newCategory.name} cũng sẽ disable tất cả sản phẩm ${newCategory.name}.`}
               id={`enable-category-${newCategory.id}`}
               name={'is_active'}
-              label={VI['Active?']}
+              label={'Hoạt động?'}
               checked={newCategory.is_active}
               toggleCheckboxChange={value =>
                 activateCategory(newCategory.id, value)
@@ -127,12 +126,12 @@ const EditCategory = props => {
         <div className='d-flex flex-column flex-md-row'>
           <Button
             type='submit'
-            text={VI['Save']}
+            text={'Lưu'}
             className='mb-3 mb-md-0 mr-0 mr-md-3'
           />
           <Button
             variant='danger'
-            text={VI['Delete']}
+            text={'Xóa'}
             onClick={() => deleteCategory(newCategory.id)}
           />
         </div>

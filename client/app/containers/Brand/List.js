@@ -25,11 +25,7 @@ class List extends React.PureComponent {
 
     return (
       <>
-        <SubPage
-          title={user.role === ROLES.Admin ? 'Brands' : 'Brand'}
-          actionTitle={user.role === ROLES.Admin && 'Add'}
-          handleAction={() => history.push('/dashboard/brand/add')}
-        >
+        <SubPage title='Thương hiệu' isMenuOpen={null} actionTitle='Thêm' handleAction={this.handleAddBrand}>
           {isLoading ? (
             <LoadingIndicator inline />
           ) : brands.length > 0 ? (

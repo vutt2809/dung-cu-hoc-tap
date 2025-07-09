@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 import AddToWishList from '../AddToWishList';
 import './ProductList.css';
+import { formatCurrencyVN } from '../../../utils/format';
 
 const ProductList = props => {
   const { products, updateWishlist, authenticated } = props;
@@ -46,7 +47,7 @@ const ProductList = props => {
               )}
               <p className='product-desc'>{product.description}</p>
               <div className='product-footer'>
-                <span className='product-price'>{product.price.toLocaleString('vi-VN')}₫</span>
+                <span className='product-price'>{formatCurrencyVN(product.price)}</span>
                 {product.totalReviews > 0 && (
                   <span className='product-rating'>
                     <span className='fs-16 fw-normal mr-1'>

@@ -12,6 +12,7 @@ import actions from '../../actions';
 
 import AddBrand from '../../components/Manager/AddBrand';
 import SubPage from '../../components/Manager/SubPage';
+import Button from '../../components/Common/Button';
 
 class Add extends React.PureComponent {
   render() {
@@ -24,17 +25,14 @@ class Add extends React.PureComponent {
     } = this.props;
 
     return (
-      <SubPage
-        title='Thêm thương hiệu'
-        actionTitle='Hủy'
-        handleAction={() => history.goBack()}
-      >
+      <SubPage title='Thêm thương hiệu' isMenuOpen={null}>
         <AddBrand
           brandFormData={brandFormData}
           formErrors={formErrors}
           brandChange={brandChange}
           addBrand={addBrand}
         />
+        <Button type='submit' text='Lưu' />
       </SubPage>
     );
   }

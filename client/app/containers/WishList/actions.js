@@ -20,7 +20,7 @@ export const updateWishlist = (isLiked, productId) => {
         });
 
         const successfulOptions = {
-          title: isLiked ? 'Đã thêm vào danh sách yêu thích!' : 'Đã xóa khỏi danh sách yêu thích!',
+          title: !isLiked ? 'Đã xóa khỏi danh sách yêu thích!' : 'Đã thêm vào danh sách yêu thích!',
           position: 'tr',
           autoDismiss: 1
         };

@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import { ROLES } from '../../../constants';
-import { VI } from '../../../constants/vi';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
@@ -18,8 +17,8 @@ import SelectOption from '../../Common/SelectOption';
 import { formatCurrencyVN } from '../../../utils/format';
 
 const taxableSelect = [
-  { value: 1, label: 'Yes' },
-  { value: 0, label: 'No' }
+  { value: 1, label: 'Có' },
+  { value: 0, label: 'Không' }
 ];
 
 const EditProduct = props => {
@@ -54,9 +53,9 @@ const EditProduct = props => {
             <Input
               type={'text'}
               error={formErrors['name']}
-              label={VI.Name}
+              label={'Tên'}
               name={'name'}
-              placeholder={VI['Product Name']}
+              placeholder={'Tên sản phẩm'}
               value={product.name}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -78,9 +77,9 @@ const EditProduct = props => {
             <Input
               type={'text'}
               error={formErrors['sku']}
-              label={VI.Sku}
+              label={'Mã SKU'}
               name={'sku'}
-              placeholder={VI['Product Sku']}
+              placeholder={'Mã SKU sản phẩm'}
               value={product.sku}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -91,9 +90,9 @@ const EditProduct = props => {
             <Input
               type={'text'}
               error={formErrors['slug']}
-              label={VI.Slug}
+              label={'Slug'}
               name={'slug'}
-              placeholder={VI['Product Slug']}
+              placeholder={'Slug sản phẩm'}
               value={product.slug}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -104,9 +103,9 @@ const EditProduct = props => {
             <Input
               type={'textarea'}
               error={formErrors['description']}
-              label={VI.Description}
+              label={'Mô tả'}
               name={'description'}
-              placeholder={VI['Product Description']}
+              placeholder={'Mô tả sản phẩm'}
               value={product.description}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -117,10 +116,10 @@ const EditProduct = props => {
             <Input
               type={'number'}
               error={formErrors['quantity']}
-              label={VI.Quantity}
+              label={'Số lượng'}
               name={'quantity'}
               decimals={false}
-              placeholder={VI['Product Quantity']}
+              placeholder={'Số lượng sản phẩm'}
               value={product.quantity}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -131,10 +130,10 @@ const EditProduct = props => {
             <Input
               type={'number'}
               error={formErrors['price']}
-              label={VI.Price}
+              label={'Giá'}
               name={'price'}
               min={1}
-              placeholder={VI['Product Price']}
+              placeholder={'Giá sản phẩm'}
               value={product.price ? parseInt(product.price) : ''}
               onInputChange={(name, value) => {
                 productChange(name, value);
@@ -145,7 +144,7 @@ const EditProduct = props => {
           <Col xs='12' md='12'>
             <SelectOption
               error={formErrors['taxable']}
-              label={VI.Taxable}
+              label={'Chịu thuế'}
               multi={false}
               name={'taxable'}
               value={[product.taxable !== null && product.taxable !== undefined ? (product.taxable ? taxableSelect[0] : taxableSelect[1]) : taxableSelect[1]]}
@@ -160,7 +159,7 @@ const EditProduct = props => {
             <Col xs='12' md='12'>
               <SelectOption
                 error={formErrors['brand']}
-                label={VI['Select Brand']}
+                label={'Chọn thương hiệu'}
                 defaultValue={product.brand || null}
                 options={brands}
                 handleSelectChange={value => {
@@ -173,7 +172,7 @@ const EditProduct = props => {
             <Switch
               id={`enable-product-${product.id}`}
               name={'is_active'}
-              label={VI['Active?']}
+              label={'Hoạt động?'}
               checked={product.is_active || false}
               toggleCheckboxChange={value => {
                 productChange('is_active', value);
@@ -186,12 +185,12 @@ const EditProduct = props => {
         <div className='d-flex flex-column flex-md-row'>
           <Button
             type='submit'
-            text={VI.Save}
+            text={'Lưu'}
             className='mb-3 mb-md-0 mr-0 mr-md-3'
           />
           <Button
             variant='danger'
-            text={VI.Delete}
+            text={'Xóa'}
             onClick={() => deleteProduct(product.id)}
           />
         </div>
