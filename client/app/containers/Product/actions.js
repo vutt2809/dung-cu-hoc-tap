@@ -256,18 +256,18 @@ export const addProduct = () => {
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
-        'required.sku': 'Sku is required.',
+        'required.sku': 'Mã SKU là bắt buộc.',
         'alpha_dash.sku':
-          'Sku may have alpha-numeric characters, as well as dashes and underscores only.',
-        'required.name': 'Name is required.',
-        'required.description': 'Description is required.',
+          'Mã SKU chỉ được chứa ký tự chữ, số, dấu gạch ngang và gạch dưới.',
+        'required.name': 'Tên sản phẩm là bắt buộc.',
+        'required.description': 'Mô tả sản phẩm là bắt buộc.',
         'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.quantity': 'Quantity is required.',
-        'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
-        'required.image': 'Please upload files with jpg, jpeg, png format.',
-        'required.brand': 'Brand is required.'
+          'Mô tả sản phẩm không được vượt quá 200 ký tự.',
+        'required.quantity': 'Số lượng là bắt buộc.',
+        'required.price': 'Giá là bắt buộc.',
+        'required.taxable': 'Vui lòng chọn trạng thái chịu thuế.',
+        'required.image': 'Vui lòng tải lên hình ảnh sản phẩm (jpg, jpeg, png).',
+        'required.brand': 'Thương hiệu là bắt buộc.'
       });
 
       if (!isValid) {

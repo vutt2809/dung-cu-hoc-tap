@@ -12,6 +12,7 @@ import actions from '../../actions';
 import { VI } from '../../constants';
 
 import SubPage from '../../components/Manager/SubPage';
+import AddProduct from '../../components/Manager/AddProduct';
 
 class Add extends React.PureComponent {
   componentDidMount() {
@@ -35,6 +36,14 @@ class Add extends React.PureComponent {
         actionTitle={VI['Cancel']}
         handleAction={history.goBack}
       >
+        <AddProduct
+          productFormData={productFormData}
+          formErrors={formErrors}
+          brands={brands}
+          productChange={productChange}
+          addProduct={addProduct}
+          user={user}
+        />
       </SubPage>
     );
   }
