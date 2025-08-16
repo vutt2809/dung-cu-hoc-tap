@@ -20,7 +20,6 @@ class Edit extends React.PureComponent {
     this.props.resetProduct();
     const productId = this.props.match.params.id;
     this.props.fetchProduct(productId);
-    this.props.fetchBrandsSelect();
   }
 
   componentDidUpdate(prevProps) {
@@ -37,7 +36,6 @@ class Edit extends React.PureComponent {
       user,
       product,
       formErrors,
-      brands,
       productEditChange,
       updateProduct,
       deleteProduct,
@@ -55,7 +53,6 @@ class Edit extends React.PureComponent {
             user={user}
             product={product}
             formErrors={formErrors}
-            brands={brands}
             productChange={productEditChange}
             updateProduct={updateProduct}
             deleteProduct={deleteProduct}
@@ -74,7 +71,7 @@ const mapStateToProps = state => {
     user: state.account.user,
     product: state.product.product,
     formErrors: state.product.editFormErrors,
-    brands: state.brand.brandsSelect
+
   };
 };
 

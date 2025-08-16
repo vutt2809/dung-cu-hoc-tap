@@ -23,8 +23,8 @@ import Authentication from '../Authentication';
 import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
 import ResetPassword from '../ResetPassword';
-import Shop from '../Shop';
-import BrandsPage from '../BrandsPage';
+
+
 import ProductPage from '../ProductPage';
 import Contact from '../Contact';
 import OrderSuccess from '../OrderSuccess';
@@ -84,9 +84,9 @@ class Application extends React.PureComponent {
             <div className='wrapper'>
               <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route path='/shop' component={Shop} />
+
                 <Route path='/contact' component={Contact} />
-                <Route path='/brands' component={BrandsPage} />
+
                 <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/order/success/:id' component={OrderSuccess} />
                 <Route path='/order/:id' component={OrderPage} />

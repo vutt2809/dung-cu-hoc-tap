@@ -1,44 +1,204 @@
 // (Login, SignUp, forgetPassword,resetPassword) => Styles
-.signup-form {
-  .checkbox {
-    margin-bottom: 20px;
+
+// Login Form Styles
+.login-form {
+  max-width: 400px !important;
+  margin: 50px auto !important;
+  padding: 40px 30px !important;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    margin: 20px auto !important;
+    padding: 30px 20px !important;
+    max-width: 90% !important;
+  }
+  
+  h2 {
+    text-align: center !important;
+    margin-bottom: 30px !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    font-size: 28px !important;
+  }
+  
+  hr {
+    margin: 25px 0 !important;
+    border-color: #e9ecef !important;
+  }
+  
+  .form-group {
+    margin-bottom: 20px !important;
+  }
+  
+  .btn-primary {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .btn-link {
+    color: #007bff !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    
+    &:hover {
+      color: #0056b3 !important;
+      text-decoration: underline !important;
+    }
+  }
+  
+  .forgot-password-link {
+    color: #6c757d !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    
+    &:hover {
+      color: #495057 !important;
+      text-decoration: underline !important;
+    }
+  }
+  
+  // Override Bootstrap grid issues
+  .row {
+    margin: 0 !important;
+  }
+  
+  .col, .col-12, .col-md-6 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  // Input styling
+  .form-control {
+    border-radius: 6px !important;
+    border: 1px solid #ddd !important;
+    padding: 12px 15px !important;
+    font-size: 14px !important;
+    
+    &:focus {
+      border-color: #007bff !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+    }
+  }
+  
+  // Label styling
+  label {
+    font-weight: 500 !important;
+    color: #333 !important;
+    margin-bottom: 8px !important;
   }
 }
 
+// Signup Form Styles
+.signup-form {
+  max-width: 400px !important;
+  margin: 50px auto !important;
+  padding: 40px 30px !important;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    margin: 20px auto !important;
+    padding: 30px 20px !important;
+    max-width: 90% !important;
+  }
+  
+  h2 {
+    text-align: center !important;
+    margin-bottom: 30px !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    font-size: 28px !important;
+  }
+  
+  hr {
+    margin: 25px 0 !important;
+    border-color: #e9ecef !important;
+  }
+  
+  .form-group {
+    margin-bottom: 20px !important;
+  }
+  
+  .btn-primary {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .checkbox {
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    
+    .form-check-input {
+      margin-right: 8px !important;
+    }
+    
+    .form-check-label {
+      font-size: 14px !important;
+      color: #666 !important;
+    }
+  }
+  
+  .redirect-link {
+    color: #007bff !important;
+    text-decoration: none !important;
+    
+    &:hover {
+      color: #0056b3 !important;
+      text-decoration: underline !important;
+    }
+  }
+  
+  // Override Bootstrap grid issues
+  .row {
+    margin: 0 !important;
+  }
+  
+  .col, .col-12, .col-md-6 {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  // Input styling
+  .form-control {
+    border-radius: 6px !important;
+    border: 1px solid #ddd !important;
+    padding: 12px 15px !important;
+    font-size: 14px !important;
+    
+    &:focus {
+      border-color: #007bff !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+    }
+  }
+  
+  // Label styling
+  label {
+    font-weight: 500 !important;
+    color: #333 !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+// Remove old unused styles
 .signup-provider {
-  @include flex();
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  cursor: pointer;
+  display: none !important;
 }
 
 .google-btn,
 .facebook-btn {
-  @include flex();
-  -ms-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 20px;
-  width: 300px;
-  max-width: 350px;
-  border: $border-primary;
-  border-radius: $border-radius-default;
-  @include media-breakpoint-down(sm) {
-    width: 100%;
-    max-width: unset;
-  }
-
-  .btn-text {
-    margin-left: 5px;
-  }
-
-  .google-icon,
-  .facebook-icon {
-    width: 30px;
-    height: 30px;
-  }
+  display: none !important;
 }

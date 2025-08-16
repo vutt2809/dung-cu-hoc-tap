@@ -27,7 +27,6 @@ const EditProduct = props => {
     product,
     productChange,
     formErrors,
-    brands,
     updateProduct,
     deleteProduct,
     activateProduct
@@ -155,19 +154,7 @@ const EditProduct = props => {
             />
           </Col>
 
-          {user.role === ROLES.Admin && (
-            <Col xs='12' md='12'>
-              <SelectOption
-                error={formErrors['brand']}
-                label={'Chọn thương hiệu'}
-                defaultValue={product.brand || null}
-                options={brands}
-                handleSelectChange={value => {
-                  productChange('brand', value);
-                }}
-              />
-            </Col>
-          )}
+
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               id={`enable-product-${product.id}`}

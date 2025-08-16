@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -13,19 +12,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with(['brand', 'category'])->active();
-
-        // Filter by brand
-        if ($request->has('brand') && $request->brand != 'all') {
-            $brand_id_or_slug = $request->brand;
-            $query->whereHas('brand', function ($q) use ($brand_id_or_slug) {
-                if (is_numeric($brand_id_or_slug)) {
-                    $q->where('id', $brand_id_or_slug);
-                } else {
-                    $q->where('slug', $brand_id_or_slug);
-                }
-            });
-        }
+        $query = Product::with(['category'])->active();
 
         // Filter by category
         if ($request->has('category') && $request->category != 'all') {
@@ -39,18 +26,9 @@ class ProductController extends Controller
             });
         }
 
-        // Filter by price range
-        if ($request->has('min') && $request->has('max')) {
-            $query->whereBetween('price', [$request->min, $request->max]);
-        }
 
-        // Filter by rating
-        if ($request->has('rating') && $request->rating > 0) {
-            // This requires products to have at least one review
-            $query->whereHas('reviews', function ($q) use ($request) {
-                // You can add more complex logic here if needed
-            })->withAvg('reviews', 'rating')->having('reviews_avg_rating', '>=', $request->rating);
-        }
+
+
 
         // Search by name
         if ($request->has('search')) {
@@ -82,15 +60,7 @@ class ProductController extends Controller
 
         $products = $query->paginate(12);
 
-        // Add wishlist status for authenticated users
-        if ($request->user()) {
-            $userWishlistIds = $request->user()->wishlist()->pluck('product_id')->toArray();
-            
-            $products->getCollection()->transform(function ($product) use ($userWishlistIds) {
-                $product->isLiked = in_array($product->id, $userWishlistIds);
-                return $product;
-            });
-        }
+
 
         // Ensure image_url is included in the response
         $products->getCollection()->transform(function ($product) {
@@ -110,7 +80,7 @@ class ProductController extends Controller
 
     public function show($id_or_slug)
     {
-        $query = Product::with(['brand', 'category', 'reviews.user'])->active();
+        $query = Product::with(['category'])->active();
 
         if (is_numeric($id_or_slug)) {
             $product = $query->where('id', $id_or_slug)->first();
@@ -124,11 +94,7 @@ class ProductController extends Controller
             ], 404);
         }
 
-        // Add wishlist status for authenticated users
-        if (request()->user()) {
-            $isLiked = request()->user()->wishlist()->where('product_id', $product->id)->exists();
-            $product->isLiked = $isLiked;
-        }
+
 
         // Ensure image_url is included in the response
         if (!$product->image_url && $product->image_key) {
@@ -151,7 +117,6 @@ class ProductController extends Controller
             'quantity' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
             'taxable' => 'boolean',
-            'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
@@ -170,7 +135,7 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product created successfully.',
-            'product' => $product->load(['brand', 'category'])
+            'product' => $product->load(['category'])
         ], 201);
     }
 
@@ -191,8 +156,6 @@ class ProductController extends Controller
             'quantity' => 'sometimes|required|integer|min:0',
             'price' => 'sometimes|required|numeric|min:0',
             'taxable' => 'sometimes|boolean',
-            'brand' => 'nullable|exists:brands,id',
-            'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
             'is_active' => 'sometimes|boolean',
         ]);
@@ -212,11 +175,7 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($request->name);
         }
 
-        // Xử lý field brand từ frontend
-        if ($request->has('brand') && !$request->has('brand_id')) {
-            $data['brand_id'] = $request->brand;
-            unset($data['brand']);
-        }
+
 
         // Xử lý field is_active
         if ($request->has('is_active')) {
@@ -233,7 +192,7 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product updated successfully.',
-            'product' => $product->load(['brand', 'category'])
+            'product' => $product->load(['category'])
         ]);
     }
 

@@ -14,7 +14,7 @@ import actions from '../../actions';
 import { sortOptions } from '../../utils/store';
 
 import ProductsShop from '../ProductsShop';
-import BrandsShop from '../BrandsShop';
+
 import CategoryShop from '../CategoryShop';
 // import BrandShop from '../BrandShop';
 
@@ -26,6 +26,7 @@ import SelectOption from '../../components/Common/SelectOption';
 class Shop extends React.PureComponent {
   componentDidMount() {
     document.body.classList.add('shop-page');
+    this.props.fetchStoreCategories();
   }
 
   componentWillUnmount() {
@@ -33,7 +34,7 @@ class Shop extends React.PureComponent {
   }
 
   render() {
-    const { products, advancedFilters, filterProducts } = this.props;
+    const { products, advancedFilters, filterProducts, categories } = this.props;
     const { totalPages, currentPage, count, limit, order } = advancedFilters;
     const displayPagination = totalPages > 1;
     const totalProducts = products.length;
@@ -49,7 +50,7 @@ class Shop extends React.PureComponent {
             md={{ size: 12, order: 1 }}
             lg={{ size: 3, order: 1 }}
           >
-            <ProductFilter filterProducts={filterProducts} />
+            <ProductFilter filterProducts={filterProducts} categories={this.props.categories} />
           </Col>
           <Col
             xs={{ size: 12, order: 2 }}
@@ -98,7 +99,7 @@ class Shop extends React.PureComponent {
             <Switch>
               <Route exact path='/shop' component={ProductsShop} />
               <Route path='/shop/category/:id' component={CategoryShop} />
-              <Route path='/shop/brand/:id' component={BrandsShop} />
+
               <Route path='*' component={Page404} />
             </Switch>
 
@@ -120,7 +121,8 @@ class Shop extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     advancedFilters: state.product.advancedFilters,
-    products: state.product.storeProducts
+    products: state.product.storeProducts,
+    categories: state.category.storeCategories
   };
 };
 

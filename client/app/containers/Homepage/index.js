@@ -7,45 +7,60 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
-import banners from './banners.json';
-import CarouselSlider from '../../components/Common/CarouselSlider';
-import { responsiveOneItemCarousel } from '../../components/Common/CarouselSlider/utils';
+import ProductsShop from '../ProductsShop';
+import CategoryShop from '../CategoryShop';
+import ProductFilter from '../../components/Store/ProductFilter';
+import Pagination from '../../components/Common/Pagination';
+import Page404 from '../../components/Common/Page404';
 
 class Homepage extends React.PureComponent {
+  componentDidMount() {
+    this.props.fetchStoreCategories();
+    // Load products khi vào trang chủ
+    this.props.filterProducts();
+  }
+
   render() {
+    const { products, advancedFilters, filterProducts, categories } = this.props;
+    const { totalPages, currentPage } = advancedFilters;
+    const displayPagination = totalPages > 1;
+
     return (
       <div className='homepage'>
-        <Row className='flex-row'>
-          <Col xs='12' lg='6' className='order-lg-2 mb-3 px-3 px-md-2'>
-            <div className='home-carousel'>
-              <CarouselSlider
-                swipeable={true}
-                showDots={true}
-                infinite={true}
-                autoPlay={false}
-                slides={banners}
-                responsive={responsiveOneItemCarousel}
-              >
-                {banners.map((item, index) => (
-                  <img key={index} src={item.imageUrl} />
-                ))}
-              </CarouselSlider>
-            </div>
+        <Row xs='12'>
+          <Col
+            xs={{ size: 12, order: 1 }}
+            sm={{ size: 12, order: 1 }}
+            md={{ size: 12, order: 1 }}
+            lg={{ size: 3, order: 1 }}
+          >
+            <ProductFilter filterProducts={filterProducts} categories={categories} />
           </Col>
-          <Col xs='12' lg='3' className='order-lg-1 mb-3 px-3 px-md-2'>
-            <div className='d-flex flex-column h-100 justify-content-between'>
-              <img src='/images/banners/banner-2.jpg' className='mb-3' />
-              <img src='/images/banners/banner-5.jpg' />
-            </div>
-          </Col>
-          <Col xs='12' lg='3' className='order-lg-3 mb-3 px-3 px-md-2'>
-            <div className='d-flex flex-column h-100 justify-content-between'>
-              <img src='/images/banners/banner-2.jpg' className='mb-3' />
-              <img src='/images/banners/banner-6.jpg' />
-            </div>
+          <Col
+            xs={{ size: 12, order: 2 }}
+            sm={{ size: 12, order: 2 }}
+            md={{ size: 12, order: 2 }}
+            lg={{ size: 9, order: 2 }}
+          >
+
+            <Switch>
+              <Route exact path='/' component={ProductsShop} />
+              <Route path='/category/:id' component={CategoryShop} />
+              <Route path='*' component={Page404} />
+            </Switch>
+
+            {displayPagination && (
+              <div className='d-flex justify-content-center text-center mt-4'>
+                <Pagination
+                  totalPages={totalPages}
+                  onPagination={filterProducts}
+                />
+              </div>
+            )}
           </Col>
         </Row>
       </div>
@@ -54,7 +69,11 @@ class Homepage extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    advancedFilters: state.product.advancedFilters,
+    products: state.product.storeProducts,
+    categories: state.category.storeCategories
+  };
 };
 
 export default connect(mapStateToProps, actions)(Homepage);

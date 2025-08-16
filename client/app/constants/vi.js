@@ -7,7 +7,7 @@ export const VI = {
   'Call us': 'Gọi cho chúng tôi',
   'Need advice? Call us': 'Cần tư vấn? Gọi cho chúng tôi',
   'MERN Store': 'Cần Thơ Store',
-  'Brands': 'Thương hiệu',
+
   'Shop': 'Cửa hàng',
   'Welcome': 'Chào mừng',
   'Welcome!': 'Chào mừng!',
@@ -35,9 +35,6 @@ export const VI = {
   'Account Security': 'Bảo mật tài khoản',
   'Address': 'Địa chỉ',
   'Users': 'Người dùng',
-  'Reviews': 'Đánh giá',
-  'Wishlist': 'Danh sách yêu thích',
-  'WishList': 'Danh sách yêu thích',
   'Support': 'Hỗ trợ',
   
   // Buttons
@@ -56,7 +53,7 @@ export const VI = {
   'Cancel Order': 'Hủy đơn hàng',
   'Approve': 'Phê duyệt',
   'Reject': 'Từ chối',
-  'Re Approve Review': 'Phê duyệt lại đánh giá',
+
   
   // Forms
   'Name': 'Tên',
@@ -67,9 +64,7 @@ export const VI = {
   'Message': 'Tin nhắn',
   'Title': 'Tiêu đề',
   'Comment': 'Bình luận',
-  'Rating': 'Đánh giá',
   'Description': 'Mô tả',
-  'Brand': 'Thương hiệu',
   'Business': 'Kinh doanh',
   'Category': 'Danh mục',
   'Categories': 'Danh mục',
@@ -84,14 +79,11 @@ export const VI = {
   'Your Full Name': 'Họ và tên của bạn',
   'Your Email Address': 'Địa chỉ email của bạn',
   'Your Phone Number': 'Số điện thoại của bạn',
-  'Your Business Brand': 'Thương hiệu kinh doanh của bạn',
+
   'Please Describe Your Business': 'Vui lòng mô tả doanh nghiệp của bạn',
   'Please Describe Your Message': 'Vui lòng mô tả tin nhắn của bạn',
-  'Enter Review title': 'Nhập tiêu đề đánh giá',
-  'Write Review': 'Viết đánh giá',
-  'Type Email, Phone Number, Brand Or Status': 'Nhập Email, SĐT, Thương hiệu hoặc Trạng thái',
-  'Brand Name': 'Tên thương hiệu',
-  'Brand Description': 'Mô tả thương hiệu',
+
+
   'Request date': 'Ngày yêu cầu',
   'Edit Product': 'Chỉnh sửa sản phẩm',
   'Product Name': 'Tên sản phẩm',
@@ -100,7 +92,7 @@ export const VI = {
   'Product Description': 'Mô tả sản phẩm',
   'Product Quantity': 'Số lượng sản phẩm',
   'Product Price': 'Giá sản phẩm',
-  'Select Brand': 'Chọn thương hiệu',
+
   'Taxable': 'Chịu thuế',
   'Yes': 'Có',
   'No': 'Không',
@@ -110,9 +102,7 @@ export const VI = {
   'Category Description': 'Mô tả danh mục',
   'Select Products': 'Chọn sản phẩm',
   'No category found.': 'Không tìm thấy danh mục.',
-  'Edit Brand': 'Chỉnh sửa thương hiệu',
-  'Brand Slug': 'Slug thương hiệu',
-  'No brand found.': 'Không tìm thấy thương hiệu.',
+
   'Change Password': 'Đổi mật khẩu',
   'Current Password': 'Mật khẩu hiện tại',
   'New Password': 'Mật khẩu mới',
@@ -132,8 +122,7 @@ export const VI = {
   'Role': 'Vai trò',
   'Joined': 'Ngày tham gia',
   'User': 'Người dùng',
-  'No items found in your wishlist.': 'Không có sản phẩm nào trong danh sách yêu thích.',
-  'Review': 'Đánh giá',
+
   'Date': 'Ngày',
   'Type name, price or status': 'Nhập tên, giá hoặc trạng thái',
   'Order ID': 'Mã đơn hàng',
@@ -141,18 +130,16 @@ export const VI = {
   'Total': 'Tổng tiền',
   'Type order number or status': 'Nhập mã đơn hàng hoặc trạng thái',
   'Type user name or email': 'Nhập tên hoặc email người dùng',
-  'Type product name or review title': 'Nhập tên sản phẩm hoặc tiêu đề đánh giá',
-  'No reviews found': 'Không tìm thấy đánh giá nào',
-  'No wishlist found': 'Không tìm thấy danh sách yêu thích nào',
+
   
   // Messages
   'No categories found.': 'Không tìm thấy danh mục.',
   'No products found.': 'Không tìm thấy sản phẩm.',
-  'No reviews found.': 'Không tìm thấy đánh giá.',
+
   'No orders found.': 'Không tìm thấy đơn hàng.',
   'Order Details': 'Chi tiết đơn hàng',
   'Order Date': 'Ngày đặt hàng',
-  'Review Added on': 'Đánh giá được thêm vào',
+
   'Approved': 'Đã phê duyệt',
   'Rejected': 'Đã từ chối',
   'Waiting Approval': 'Chờ phê duyệt',
@@ -173,9 +160,7 @@ export const VI = {
   
   // Success
   'Subscribe': 'Đăng ký',
-  'Add Brand': 'Thêm thương hiệu',
   'Add Category': 'Thêm danh mục',
-  'Add Review': 'Thêm đánh giá',
   'Add Product': 'Thêm sản phẩm',
   
   // Dashboard

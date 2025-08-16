@@ -27,7 +27,7 @@ class CategoryShop extends React.PureComponent {
   }
 
   render() {
-    const { products, isLoading, authenticated, updateWishlist } = this.props;
+    const { products, isLoading } = this.props;
 
     return (
       <div className='category-shop'>
@@ -35,8 +35,6 @@ class CategoryShop extends React.PureComponent {
         {products && products.length > 0 && (
           <ProductList
             products={products}
-            authenticated={authenticated}
-            updateWishlist={updateWishlist}
           />
         )}
         {!isLoading && products && products.length <= 0 && (

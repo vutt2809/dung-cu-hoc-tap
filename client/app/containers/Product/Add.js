@@ -15,9 +15,7 @@ import SubPage from '../../components/Manager/SubPage';
 import AddProduct from '../../components/Manager/AddProduct';
 
 class Add extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchBrandsSelect();
-  }
+
 
   render() {
     const {
@@ -25,7 +23,6 @@ class Add extends React.PureComponent {
       user,
       productFormData,
       formErrors,
-      brands,
       productChange,
       addProduct
     } = this.props;
@@ -39,7 +36,6 @@ class Add extends React.PureComponent {
         <AddProduct
           productFormData={productFormData}
           formErrors={formErrors}
-          brands={brands}
           productChange={productChange}
           addProduct={addProduct}
           user={user}
@@ -54,7 +50,7 @@ const mapStateToProps = state => {
     user: state.account.user,
     productFormData: state.product.productFormData,
     formErrors: state.product.formErrors,
-    brands: state.brand.brandsSelect
+
   };
 };
 

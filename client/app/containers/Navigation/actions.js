@@ -9,7 +9,6 @@ import handleError from '../../utils/error';
 import {
   TOGGLE_MENU,
   TOGGLE_CART,
-  TOGGLE_BRAND,
   SEARCH_CHANGE,
   SUGGESTIONS_FETCH_REQUEST,
   SUGGESTIONS_CLEAR_REQUEST
@@ -28,11 +27,7 @@ export const toggleCart = () => {
   };
 };
 
-export const toggleBrand = () => {
-  return {
-    type: TOGGLE_BRAND
-  };
-};
+
 
 export const onSearch = v => {
   return {

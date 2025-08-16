@@ -6,12 +6,12 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\BrandController;
+
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CartController;
-use App\Http\Controllers\Api\WishlistController;
-use App\Http\Controllers\Api\ReviewController;
+
+
 use App\Http\Controllers\Api\ContactController;
 
 /*
@@ -43,9 +43,7 @@ Route::get('/product/{slug}', [ProductController::class, 'show']);
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 
-// Public brand routes
-Route::get('/brand', [BrandController::class, 'index']);
-Route::get('/brand/{id}', [BrandController::class, 'show']);
+
 
 // Public contact route
 Route::post('/contact', [ContactController::class, 'store']);
@@ -95,23 +93,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
     });
 
-    // Wishlist routes
-    Route::prefix('wishlist')->group(function () {
-        Route::get('/', [WishlistController::class, 'index']);
-        Route::post('/', [WishlistController::class, 'store']);
-        Route::delete('/{id}', [WishlistController::class, 'destroy']);
-    });
 
-    // Review routes
-    Route::prefix('review')->group(function () {
-        Route::get('/list', [ReviewController::class, 'list']);
-        Route::get('/{slug}', [ReviewController::class, 'index']);
-        Route::post('/', [ReviewController::class, 'store']);
-        Route::put('/{id}', [ReviewController::class, 'update']);
-        Route::delete('/{id}', [ReviewController::class, 'destroy']);
-        Route::put('/approve/{id}', [ReviewController::class, 'approve']);
-        Route::put('/reject/{id}', [ReviewController::class, 'reject']);
-    });
+
+
 
     // Admin routes
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -131,14 +115,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::put('/{id}/active', [CategoryController::class, 'toggleActive']);
         });
 
-        // Brand management
-        Route::prefix('brand')->group(function () {
-            Route::post('/', [BrandController::class, 'store']);
-            Route::put('/{id}', [BrandController::class, 'update']);
-            Route::delete('/{id}', [BrandController::class, 'destroy']);
-            Route::put('/{id}/active', [BrandController::class, 'toggleActive']);
-            Route::get('/list/select', [BrandController::class, 'listForSelect']);
-        });
+
 
         // Admin routes
         Route::middleware('role:admin')->group(function () {
@@ -146,6 +123,8 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 });
+
+
 
 // Catch-all route for undefined API endpoints
 Route::fallback(function () {

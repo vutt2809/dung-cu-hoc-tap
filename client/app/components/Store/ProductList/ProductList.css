@@ -93,9 +93,4 @@
   display: flex;
   align-items: center;
 }
-.add-wishlist-box {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-} 
+ 

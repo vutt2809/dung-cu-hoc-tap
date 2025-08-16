@@ -10,11 +10,8 @@
     { "to": "/address", "name": "Địa chỉ", "prefix": "/dashboard" },
     { "to": "/product", "name": "Sản phẩm", "prefix": "/dashboard" },
     { "to": "/category", "name": "Danh mục", "prefix": "/dashboard" },
-    { "to": "/brand", "name": "Thương hiệu", "prefix": "/dashboard" },
     { "to": "/users", "name": "Người dùng", "prefix": "/dashboard" },
-    { "to": "/orders", "name": "Đơn hàng", "prefix": "/dashboard" },
-    { "to": "/review", "name": "Đánh giá", "prefix": "/dashboard" },
-    { "to": "/wishlist", "name": "Danh sách yêu thích", "prefix": "/dashboard" }
+    { "to": "/orders", "name": "Đơn hàng", "prefix": "/dashboard" }
   ],
   "ROLE MEMBER": [
     { "to": "", "name": "Thông tin tài khoản", "prefix": "/dashboard" },
@@ -25,7 +22,6 @@
       "provider": ["Email"]
     },
     { "to": "/address", "name": "Địa chỉ", "prefix": "/dashboard" },
-    { "to": "/orders", "name": "Đơn hàng", "prefix": "/dashboard" },
-    { "to": "/wishlist", "name": "Danh sách yêu thích", "prefix": "/dashboard" }
+    { "to": "/orders", "name": "Đơn hàng", "prefix": "/dashboard" }
   ]
 }

@@ -56,7 +56,7 @@ class OrderSuccess extends React.PureComponent {
               <Link to='/dashboard/orders' className='btn-link'>
                 Quản lý đơn hàng
               </Link>
-              <Link to='/shop' className='btn-link shopping-btn'>
+              <Link to='/' className='btn-link shopping-btn'>
                 Tiếp tục mua hàng
               </Link>
             </div>

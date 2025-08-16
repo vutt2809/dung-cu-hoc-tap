@@ -57,10 +57,6 @@ const initialState = {
   advancedFilters: {
     name: 'all',
     category: 'all',
-    brand: 'all',
-    min: 1,
-    max: 2500,
-    rating: 0,
     order: 'created_at_desc',
     totalPages: 1,
     currentPage: 1,
@@ -200,10 +196,6 @@ const productReducer = (state = initialState, action) => {
         advancedFilters: {
           name: 'all',
           category: 'all',
-          brand: 'all',
-          min: 1,
-          max: 2500,
-          rating: 0,
           order: 'created_at_desc',
           totalPages: 1,
           currentPage: 1,

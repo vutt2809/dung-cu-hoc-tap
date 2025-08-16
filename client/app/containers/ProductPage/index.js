@@ -16,14 +16,13 @@ import Button from '../../components/Common/Button';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
 import { BagIcon } from '../../components/Common/Icon';
-import ProductReviews from '../../components/Store/ProductReviews';
+
 import SocialShare from '../../components/Store/SocialShare';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchStoreProduct(slug);
-    this.props.fetchProductReviews(slug);
     document.body.classList.add('product-page');
   }
 
@@ -47,13 +46,7 @@ class ProductPage extends React.PureComponent {
       itemInCart,
       productShopChange,
       handleAddToCart,
-      handleRemoveFromCart,
-      addProductReview,
-      reviewsSummary,
-      reviews,
-      reviewFormData,
-      reviewChange,
-      reviewFormErrors
+      handleRemoveFromCart
     } = this.props;
 
     return (
@@ -87,17 +80,7 @@ class ProductPage extends React.PureComponent {
                       </h1>
                       <p className='sku'>{product.sku}</p>
                       <hr />
-                      {product.brand && (
-                        <p className='by'>
-                          Xem thêm từ{' '}
-                          <Link
-                            to={`/shop/brand/${product.brand.slug}`}
-                            className='default-link'
-                          >
-                            {product.brand.name}
-                          </Link>
-                        </p>
-                      )}
+
                       <p className='item-desc'>{product.description}</p>
                       <p className='price'>{product.price}₫</p>
                     </div>
@@ -153,14 +136,7 @@ class ProductPage extends React.PureComponent {
                 </div>
               </Col>
             </Row>
-            <ProductReviews
-              reviewFormData={reviewFormData}
-              reviewFormErrors={reviewFormErrors}
-              reviews={reviews}
-              reviewsSummary={reviewsSummary}
-              reviewChange={reviewChange}
-              addReview={addProductReview}
-            />
+
           </>
         ) : (
           <NotFound message='Không tìm thấy sản phẩm.' />
@@ -182,10 +158,6 @@ const mapStateToProps = state => {
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     isLoading: state.product.isLoading,
-    reviews: state.review.productReviews,
-    reviewsSummary: state.review.reviewsSummary,
-    reviewFormData: state.review.reviewFormData,
-    reviewFormErrors: state.review.reviewFormErrors,
     itemInCart
   };
 };

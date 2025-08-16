@@ -31,26 +31,17 @@ import { VI } from '../../constants/vi';
 
 import Button from '../../components/Common/Button';
 import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon, UserIcon } from '../../components/Common/Icon';
-import MiniBrand from '../../components/Store//MiniBrand';
-import Menu from '../NavigationMenu';
+import { UserIcon, HomeIcon } from '../../components/Common/Icon';
+
+
 import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchStoreBrands();
     this.props.fetchStoreCategories();
   }
 
-  toggleBrand() {
-    this.props.fetchStoreBrands();
-    this.props.toggleBrand();
-  }
 
-  toggleMenu() {
-    this.props.fetchStoreCategories();
-    this.props.toggleMenu();
-  }
 
   getSuggestionValue(suggestion) {
     return suggestion.name;
@@ -113,12 +104,10 @@ class Navigation extends React.PureComponent {
       authenticated,
       user,
       cartItems,
-      brands,
       categories,
       signOut,
       isMenuOpen,
       isCartOpen,
-      isBrandOpen,
       toggleCart,
       toggleMenu,
       searchValue,
@@ -166,68 +155,45 @@ class Navigation extends React.PureComponent {
               xs={{ size: 12, order: 1 }}
               sm={{ size: 12, order: 1 }}
               md={{ size: 3, order: 1 }}
-              lg={{ size: 3, order: 1 }}
+              lg={{ size: 2, order: 1 }}
               className='pr-0'
             >
               <div className='brand'>
-                {categories && categories.length > 0 && (
-                  <Button
-                    borderless
-                    variant='empty'
-                    className='d-none d-md-block'
-                    ariaLabel='open the menu'
-                    icon={<BarsIcon />}
-                    onClick={() => this.toggleMenu()}
-                  />
-                )}
                 <Link to='/'>
-                  <h1 className='logo'>{VI['MERN Store']}</h1>
+                  <h1 className='logo'>{VI['Book Store']}</h1>
                 </Link>
               </div>
             </Col>
             <Col
-              xs={{ size: 12, order: 4 }}
-              sm={{ size: 12, order: 4 }}
-              md={{ size: 12, order: 4 }}
-              lg={{ size: 5, order: 2 }}
-              className='pt-2 pt-lg-0'
-            >
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={this.getSuggestionValue}
-                renderSuggestion={this.renderSuggestion}
-                inputProps={inputProps}
-                onSuggestionSelected={(_, item) => {
-                  history.push(`/product/${item.suggestion.slug}`);
-                }}
-              />
-            </Col>
-            <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 4, order: 1 }}
-              lg={{ size: 5, order: 3 }}
-              className='desktop-hidden'
+              md={{ size: 6, order: 2 }}
+              lg={{ size: 6, order: 2 }}
+              className='pt-2 pt-lg-0'
             >
-              <div className='header-links'>
-                <Button
-                  borderless
-                  variant='empty'
-                  ariaLabel='open the menu'
-                  icon={<BarsIcon />}
-                  onClick={() => this.toggleMenu()}
+              <div className='d-flex align-items-center search-container'>
+                <Link to='/' className='home-icon-link' title='Trang chủ' aria-label='Trang chủ'>
+                  <HomeIcon width={24} height={24} />
+                </Link>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                  onSuggestionSelected={(_, item) => {
+                    history.push(`/product/${item.suggestion.slug}`);
+                  }}
                 />
-                <CartIcon cartItems={cartItems} onClick={toggleCart} />
               </div>
             </Col>
             <Col
-              xs={{ size: 12, order: 2 }}
-              sm={{ size: 12, order: 2 }}
-              md={{ size: 9, order: 1 }}
+              xs={{ size: 12, order: 3 }}
+              sm={{ size: 12, order: 3 }}
+              md={{ size: 3, order: 3 }}
               lg={{ size: 4, order: 3 }}
-              // className='px-0'
+              className='d-flex justify-content-end'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
@@ -236,27 +202,6 @@ class Navigation extends React.PureComponent {
                   onClick={toggleCart}
                 />
                 <Nav navbar>
-                  {brands && brands.length > 0 && (
-                    <Dropdown
-                      nav
-                      inNavbar
-                      toggle={() => this.toggleBrand()}
-                      isOpen={isBrandOpen}
-                    >
-                      <DropdownToggle nav>
-                        {VI['Brands']}
-                        <span className='fa fa-chevron-down dropdown-caret'></span>
-                      </DropdownToggle>
-                      <DropdownMenu right className='nav-brand-dropdown'>
-                        <div className='mini-brand'>
-                          <MiniBrand
-                            brands={brands}
-                            toggleBrand={() => this.toggleBrand()}
-                          />
-                        </div>
-                      </DropdownMenu>
-                    </Dropdown>
-                  )}
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
@@ -312,21 +257,7 @@ class Navigation extends React.PureComponent {
           />
         </div>
 
-        {/* hidden menu drawer */}
-        <div
-          className={isMenuOpen ? 'mini-menu-open' : 'hidden-mini-menu'}
-          aria-hidden={`${isMenuOpen ? false : true}`}
-        >
-          <div className='mini-menu'>
-            <Menu />
-          </div>
-          <div
-            className={
-              isMenuOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
-            }
-            onClick={toggleMenu}
-          />
-        </div>
+
       </header>
     );
   }
@@ -334,11 +265,8 @@ class Navigation extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
-    isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
-    brands: state.brand.storeBrands,
     categories: state.category.storeCategories,
     authenticated: state.authentication.authenticated,
     user: state.account.user,

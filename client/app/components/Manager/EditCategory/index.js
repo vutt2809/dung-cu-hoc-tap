@@ -50,7 +50,7 @@ const EditCategory = props => {
     <div className='edit-category'>
       <div className='d-flex flex-row mx-0 mb-3'>
         <label className='mr-1'>Category link </label>
-        <Link to={`/shop/category/${category.slug}`} className='default-link'>
+        <Link to={`/category/${category.slug}`} className='default-link'>
           {category.slug}
         </Link>
       </div>

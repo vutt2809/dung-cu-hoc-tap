@@ -31,11 +31,7 @@ export const ORDER_STATUS = {
   Not_processed: 'Not processed'
 };
 
-export const REVIEW_STATUS = {
-  APPROVED: 1,      // Duyệt
-  PENDING: 0,       // Đang chờ
-  REJECTED: -1      // Không duyệt
-};
+
 
 export const EMAIL_PROVIDER = {
   Email: 'Email',

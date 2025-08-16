@@ -20,7 +20,6 @@ class Product extends Model
         'price',
         'taxable',
         'is_active',
-        'brand_id',
         'category_id',
     ];
 
@@ -30,10 +29,7 @@ class Product extends Model
         'is_active' => 'boolean',
     ];
 
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+
 
     public function category()
     {
@@ -45,15 +41,9 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
-    public function wishlist()
-    {
-        return $this->hasMany(Wishlist::class);
-    }
 
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+
+
 
     public function scopeActive($query)
     {

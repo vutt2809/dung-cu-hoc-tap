@@ -15,13 +15,10 @@ import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class ProductsShop extends React.PureComponent {
-  componentDidMount() {
-    const slug = this.props.match.params.slug;
-    this.props.filterProducts(slug);
-  }
+
 
   render() {
-    const { products, isLoading, authenticated, updateWishlist } = this.props;
+    const { products, isLoading } = this.props;
 
     const displayProducts = products && products.length > 0;
 
@@ -31,8 +28,6 @@ class ProductsShop extends React.PureComponent {
         {displayProducts && (
           <ProductList
             products={products}
-            authenticated={authenticated}
-            updateWishlist={updateWishlist}
           />
         )}
         {!isLoading && !displayProducts && (

@@ -175,7 +175,7 @@ export const handleCheckout = () => {
 // Continue shopping use case
 export const handleShopping = () => {
   return (dispatch, getState) => {
-    dispatch(push('/shop'));
+    dispatch(push('/'));
     dispatch(toggleCart());
   };
 };

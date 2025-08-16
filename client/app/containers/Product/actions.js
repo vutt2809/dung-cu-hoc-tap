@@ -466,70 +466,25 @@ const productsFilterOrganizer = (n, v, s) => {
       return {
         name: s.name,
         category: v,
-        brand: 'all',
-        min: s.min,
-        max: s.max,
-        rating: s.rating,
         order: s.order,
         page: s.currentPage,
         limit: s.limit
       };
-    case 'brand':
-      return {
-        name: s.name,
-        category: 'all',
-        brand: v,
-        min: s.min,
-        max: s.max,
-        rating: s.rating,
-        order: s.order,
-        page: s.currentPage,
-        limit: s.limit
-      };
+
     case 'sorting':
       return {
         name: s.name,
         category: s.category,
-        brand: s.brand,
-        min: s.min,
-        max: s.max,
-        rating: s.rating,
         order: v,
         page: s.currentPage,
         limit: s.limit
       };
-    case 'price':
-      return {
-        name: s.name,
-        category: s.category,
-        brand: s.brand,
-        min: v[0],
-        max: v[1],
-        rating: s.rating,
-        order: s.order,
-        page: s.currentPage,
-        limit: s.limit
-      };
-    case 'rating':
-      return {
-        name: s.name,
-        category: s.category,
-        brand: s.brand,
-        min: s.min,
-        max: s.max,
-        rating: v,
-        order: s.order,
-        page: s.currentPage,
-        limit: s.limit
-      };
+
+
     case 'pagination':
       return {
         name: s.name,
         category: s.category,
-        brand: s.brand,
-        min: s.min,
-        max: s.max,
-        rating: s.rating,
         order: s.order,
         page: v ?? s.currentPage,
         limit: s.limit
@@ -538,10 +493,6 @@ const productsFilterOrganizer = (n, v, s) => {
       return {
         name: s.name,
         category: 'all',
-        brand: 'all',
-        min: s.min,
-        max: s.max,
-        rating: s.rating,
         order: s.order,
         page: s.currentPage,
         limit: s.limit
