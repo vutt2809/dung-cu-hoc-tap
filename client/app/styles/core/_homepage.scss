@@ -1,16 +1,31 @@
+/* start homepage styles */
 .homepage {
-  padding: 20px 0;
-  
-  .product-filter {
-    .card {
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      
-      .card-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-        font-weight: 600;
+  .banner {
+    background-color: $white;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-default;
+    margin-bottom: 20px;
+  }
+
+  .featured-products {
+    .section-title {
+      margin-bottom: 16px;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  .category-list {
+    .category-item {
+      background-color: $white;
+      border: 1px solid $border-color-default;
+      border-radius: $border-radius-default;
+      padding: 16px;
+      margin-bottom: 12px;
+
+      &:hover {
+        background-color: $hover-bg;
       }
     }
   }
 }
+/* end homepage styles */

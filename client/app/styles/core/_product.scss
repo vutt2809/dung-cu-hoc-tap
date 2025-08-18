@@ -5,13 +5,8 @@
       height: 120px;
       max-height: 120px;
       border-radius: $border-radius-default;
-      box-shadow: $box-shadow-secondary;
-      @include transition();
-
-      &:hover {
-        background-color: $secondary-bg;
-        @include transition();
-      }
+      border: 1px solid $border-color-default;
+      background-color: $white;
 
       .item-image {
         width: 120px;
@@ -47,15 +42,13 @@
 
   .product-container {
     background-color: $white;
-    box-shadow: $box-shadow-primary;
+    border: 1px solid $border-color-default;
     border-radius: $border-radius-default;
     height: 100%;
 
     .item-box {
       height: 100%;
       position: relative;
-
-
 
       .item-link {
         display: flex;
@@ -80,8 +73,6 @@
           -ms-flex-positive: 1;
           flex-grow: 1;
           background-color: $white;
-          -webkit-filter: brightness(0.975);
-          filter: brightness(0.975);
 
           .item-image {
             position: absolute;
@@ -98,10 +89,11 @@
 
       .item-body {
         flex: 1 1 auto;
+        padding: 12px;
+        
         .item-details {
           display: flex;
           flex-direction: column;
-          // height: 100%;
 
           .item-name {
             margin-bottom: 8px;
@@ -139,36 +131,40 @@
     position: absolute;
     top: 0;
     right: 0;
-    padding: 10px;
+    padding: 8px 12px;
     background-color: $white;
+    border: 1px solid $border-color-default;
     border-bottom-left-radius: $border-radius-default;
+    font-size: $font-size-small;
   }
 
   .product-container {
     background-color: $white;
     padding: 20px;
-    box-shadow: $box-shadow-primary;
+    border: 1px solid $border-color-default;
     border-radius: $border-radius-default;
     @include flex();
     flex-direction: column;
     height: 100%;
   }
 
-
-
   .item-box {
     .item-name {
       font-size: $font-size-huge !important;
+      margin-bottom: 12px;
     }
 
     .item-details {
       .item-desc {
         color: $font-custom-color !important;
         word-break: break-all;
+        margin-bottom: 16px;
       }
 
       .price {
         font-size: $font-size-x-huge;
+        font-weight: $font-weight-medium;
+        margin-bottom: 16px;
       }
     }
 
@@ -183,12 +179,6 @@
 .item-box {
   .item-link {
     display: block;
-
-    .item-name {
-      &:hover {
-        color: $font-custom-hover-color !important;
-      }
-    }
   }
 
   .item-name {

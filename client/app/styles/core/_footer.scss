@@ -1,12 +1,13 @@
 // footer styles
 .footer {
   flex-shrink: 0;
-  border-top: $border-default;
+  border-top: 1px solid $border-color-default;
+  background-color: $white;
 }
 
 .footer-content {
   @include flex();
-  padding-top: 20px;
+  padding-top: 16px;
   margin: 0 auto;
   @include media-breakpoint-down(sm) {
     flex-direction: column;
@@ -16,8 +17,8 @@
 .footer-block {
   width: 100%;
   margin-right: 16px;
-  border-right: $border-primary;
-  padding-top: 20px;
+  border-right: 1px solid $border-color-default;
+  padding-top: 16px;
 
   &:last-child {
     margin-right: 0;
@@ -25,10 +26,10 @@
 
   @include media-breakpoint-down(sm) {
     text-align: center;
-    margin: 10px 0px;
+    margin: 8px 0px;
     border-right: none;
-    border-bottom: $border-primary;
-    padding: 20px 0px;
+    border-bottom: 1px solid $border-color-default;
+    padding: 16px 0px;
   }
 
   &:last-child {
@@ -37,7 +38,8 @@
   }
 
   .block-title {
-    padding-bottom: 10px;
+    padding-bottom: 8px;
+    font-weight: $font-weight-medium;
   }
 
   .footer-link {
@@ -45,66 +47,13 @@
 
     a {
       &:hover {
-        text-decoration: underline !important;
+        color: $primary-color !important;
       }
     }
   }
 }
 
-/*
- * Social Icons
- */
 
-.footer-social-item {
-  text-align: center;
-  span,
-  a {
-    display: inline-block;
-    vertical-align: top;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  li {
-    padding-bottom: 8px;
-    margin: 0 auto;
-    display: inline-block;
-    @include media-breakpoint-down(sm) {
-      margin: 0 4px;
-    }
-
-    a {
-      margin-left: 10px;
-      @include media-breakpoint-down(sm) {
-        display: block;
-        margin-left: 0px;
-      }
-    }
-  }
-
-  .facebook-icon {
-    @include icon($facebook, 40px, 40px);
-    background-size: 100%;
-  }
-
-  .instagram-icon {
-    @include icon($instagram, 40px, 40px);
-    background-size: 100%;
-    border-radius: 50%;
-  }
-
-  .pinterest-icon {
-    @include icon($pinterest, 40px, 40px);
-    background-size: 100%;
-  }
-
-  .twitter-icon {
-    @include icon($twitter, 40px, 40px);
-    background-size: 100%;
-  }
-}
 
 /*
  * Copyright
@@ -112,5 +61,7 @@
 
 .footer-copyright {
   text-align: center;
-  padding: 16px 0px;
+  padding: 12px 0px;
+  border-top: 1px solid $border-color-default;
+  color: $font-subtext-color;
 }

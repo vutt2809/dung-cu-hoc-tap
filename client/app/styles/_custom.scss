@@ -1,1 +1,281 @@
-// Here you can add other styles
+// Custom styles for simplified design
+
+// Override some Bootstrap styles for simplicity
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.row {
+  margin: 0 -8px;
+}
+
+.col, [class*="col-"] {
+  padding: 0 8px;
+}
+
+// Simplify card styles
+.card {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  box-shadow: none;
+  background-color: #ffffff;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dddddd;
+  padding: 12px 16px;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+// Simplify table styles
+.table {
+  border: 1px solid #dddddd;
+  
+  th, td {
+    border: 1px solid #dddddd;
+    padding: 8px 12px;
+  }
+  
+  th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+  }
+}
+
+// Simplify form styles
+.form-control {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  padding: 8px 12px;
+  
+  &:focus {
+    border-color: #2962ff;
+    box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+  }
+}
+
+// Simplify alert styles
+.alert {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  padding: 12px 16px;
+  
+  &.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+  }
+  
+  &.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+  }
+  
+  &.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+    color: #856404;
+  }
+  
+  &.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+  }
+}
+
+// Simplify modal styles
+.modal-content {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  border-bottom: 1px solid #dddddd;
+  padding: 16px;
+}
+
+.modal-body {
+  padding: 16px;
+}
+
+.modal-footer {
+  border-top: 1px solid #dddddd;
+  padding: 16px;
+}
+
+// Simplify dropdown styles
+.dropdown-menu {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+// Simplify badge styles
+.badge {
+  border-radius: 2px;
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+// Simplify progress bar styles
+.progress {
+  border-radius: 2px;
+  background-color: #f5f5f5;
+  border: 1px solid #dddddd;
+}
+
+.progress-bar {
+  border-radius: 1px;
+}
+
+// Simplify list group styles
+.list-group-item {
+  border: 1px solid #dddddd;
+  padding: 12px 16px;
+  
+  &:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+  
+  &:last-child {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+}
+
+// Simplify breadcrumb styles
+.breadcrumb {
+  background-color: #f8f9fa;
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  padding: 8px 16px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  color: #6c757d;
+}
+
+// Simplify pagination styles
+.pagination {
+  .page-link {
+    border: 1px solid #dddddd;
+    color: #333333;
+    padding: 8px 12px;
+    
+    &:hover {
+      background-color: #f5f5f5;
+      border-color: #cccccc;
+    }
+  }
+  
+  .page-item.active .page-link {
+    background-color: #2962ff;
+    border-color: #2962ff;
+    color: #ffffff;
+  }
+}
+
+// Simplify tooltip styles
+.tooltip {
+  .tooltip-inner {
+    background-color: #333333;
+    border-radius: 2px;
+    padding: 8px 12px;
+  }
+  
+  .arrow::before {
+    border-color: #333333;
+  }
+}
+
+// Simplify popover styles
+.popover {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.popover-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dddddd;
+  border-radius: 1px 1px 0 0;
+  padding: 12px 16px;
+}
+
+.popover-body {
+  padding: 12px 16px;
+}
+
+// Simplify spinner styles
+.spinner-border {
+  border-width: 2px;
+}
+
+.spinner-border-sm {
+  border-width: 1px;
+}
+
+// Simplify close button styles
+.close {
+  opacity: 0.5;
+  
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+// Simplify figure styles
+.figure {
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  padding: 8px;
+}
+
+.figure-caption {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+// Simplify code styles
+.code {
+  background-color: #f8f9fa;
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+// Simplify blockquote styles
+.blockquote {
+  border-left: 4px solid #2962ff;
+  padding-left: 16px;
+  margin: 16px 0;
+  font-style: italic;
+}
+
+.blockquote-footer {
+  color: #6c757d;
+  font-size: 14px;
+  margin-top: 8px;
+}

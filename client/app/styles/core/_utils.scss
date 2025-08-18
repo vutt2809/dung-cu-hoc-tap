@@ -3,9 +3,9 @@
 /* start not found styles */
 .not-found {
   text-align: center;
-  // text-transform: capitalize;
   font-weight: $font-weight-medium;
   color: $font-custom-color;
+  padding: 40px 20px;
 }
 /* end not found styles */
 
@@ -100,70 +100,116 @@
   word-break: break-all;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: 8px;
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+}
+
+.mb-3 {
+  margin-bottom: 24px;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-1 {
+  margin-top: 8px;
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+.mt-3 {
+  margin-top: 24px;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.p-1 {
+  padding: 8px;
+}
+
+.p-2 {
+  padding: 16px;
+}
+
+.p-3 {
+  padding: 24px;
+}
+
+.border {
+  border: 1px solid $border-color-default;
+}
+
+.border-top {
+  border-top: 1px solid $border-color-default;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border-color-default;
+}
+
+.border-left {
+  border-left: 1px solid $border-color-default;
+}
+
+.border-right {
+  border-right: 1px solid $border-color-default;
+}
+
+.rounded {
+  border-radius: $border-radius-default;
+}
+
+.shadow-sm {
+  box-shadow: $box-shadow;
+}
+
+.bg-white {
+  background-color: $white;
+}
+
+.bg-light {
+  background-color: $theme-light-white;
+}
+
 .one-line-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include text-ellipsis(1);
 }
 
 .two-line-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include text-ellipsis(2);
 }
 
 .three-line-ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include text-ellipsis(3);
 }
 
-// .text-truncate {
-//   @include text-truncate();
-// }
-
-.w-lg-auto {
-  @include media-breakpoint-up(lg) {
-    width: auto !important;
-  }
-}
-
-.box-shadow-primary {
-  box-shadow: $box-shadow-primary;
-}
-
-.box-link {
-  @include transition();
-
-  &:hover,
-  &:focus {
-    box-shadow: none !important;
-    color: $font-custom-color !important;
-    background-color: $secondary-bg;
-    @include transition();
-  }
-}
-
-// default link
-.default-link {
-  color: $font-custom-color !important;
-  font-weight: $font-weight-normal;
-
-  &:hover {
-    text-decoration: underline !important;
-  }
-}
-
-.redirect-link {
-  color: $primary-color !important;
-  font-weight: $font-weight-normal;
-  text-transform: capitalize;
+.text-truncate {
+  @include text-truncate();
 }
 
 .desktop-hidden {
@@ -176,14 +222,6 @@
 
 .fa {
   font-size: $font-size-small;
-}
-
-.drawer-backdrop {
-  @include transition();
-
-  &.dark-overflow {
-    @include transition();
-  }
 }
 
 .avatar {

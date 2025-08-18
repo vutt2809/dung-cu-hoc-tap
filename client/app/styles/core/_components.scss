@@ -2,9 +2,9 @@
 .dropdown-confirm {
   .dropdown-action {
     position: relative;
-    border: $border-default;
+    border: 1px solid $border-color-default;
     border-radius: $border-radius-default;
-    background-color: $btn-bg;
+    background-color: $white;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
 
@@ -28,7 +28,7 @@
     }
 
     &:hover {
-      background-color: $secondary-bg;
+      background-color: $hover-bg;
       color: $font-custom-color !important;
 
       .btn-text {
@@ -41,13 +41,16 @@
   .btn-group {
     &.show {
       .dropdown-action {
-        background-color: $secondary-bg;
+        background-color: $hover-bg;
       }
     }
   }
 
   .dropdown-menu {
     min-width: 250px;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-default;
+    box-shadow: $box-shadow;
   }
 
   .nav-link {
@@ -73,7 +76,18 @@
     &.active {
       .page-link {
         color: $white !important;
-        background-color: $primary-bg;
+        background-color: $primary-color;
+        border-color: $primary-color;
+      }
+    }
+
+    .page-link {
+      border: 1px solid $border-color-default;
+      color: $font-custom-color;
+
+      &:hover {
+        background-color: $hover-bg;
+        border-color: $border-hover-color;
       }
     }
   }
@@ -95,28 +109,28 @@
   }
 
   .rc-slider-track {
-    background-color: $primary-bg;
+    background-color: $primary-color;
   }
 
   .rc-slider-dot-active {
-    border-color: $primary-bg;
+    border-color: $primary-color;
   }
   .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
     box-shadow: none;
-    border-color: $primary-bg;
+    border-color: $primary-color;
   }
 
   .rc-slider-handle-click-focused:focus {
-    border-color: $primary-bg;
+    border-color: $primary-color;
   }
 
   .rc-slider-handle {
     box-shadow: none;
-    border-color: $primary-bg;
+    border-color: $primary-color;
 
     &:active,
     &:hover {
-      border-color: $primary-bg;
+      border-color: $primary-color;
     }
   }
 }

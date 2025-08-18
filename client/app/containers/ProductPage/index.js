@@ -17,8 +17,6 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
 import { BagIcon } from '../../components/Common/Icon';
 
-import SocialShare from '../../components/Store/SocialShare';
-
 class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
@@ -75,20 +73,20 @@ class ProductPage extends React.PureComponent {
                 <div className='product-container'>
                   <div className='item-box'>
                     <div className='item-details'>
-                      <h1 className='item-name one-line-ellipsis'>
+                      <h1 className='item-name'>
                         {product.name}
                       </h1>
-                      <p className='sku'>{product.sku}</p>
+                      <p className='sku text-gray mb-2'>{product.sku}</p>
                       <hr />
 
-                      <p className='item-desc'>{product.description}</p>
-                      <p className='price'>{product.price}₫</p>
+                      <p className='item-desc mb-3'>{product.description}</p>
+                      <p className='price mb-3'>{product.price}₫</p>
                     </div>
-                    <div className='item-customize'>
+                    <div className='item-customize mb-3'>
                       <Input
                         type={'number'}
                         error={shopFormErrors['quantity']}
-                        label={'Số lượng'}
+                        label={'Số lượng thêm'}
                         name={'quantity'}
                         decimals={false}
                         min={1}
@@ -103,13 +101,10 @@ class ProductPage extends React.PureComponent {
                         }}
                       />
                     </div>
-                    <div className='my-4 item-share'>
-                      <SocialShare product={product} />
-                    </div>
                     <div className='item-actions'>
                       {itemInCart ? (
                         <Button
-                          variant='primary'
+                          variant='danger'
                           disabled={
                             product.inventory <= 0 &&
                             !shopFormErrors['quantity']

@@ -19,7 +19,6 @@ body {
   padding: 0;
   position: relative;
   text-rendering: optimizeLegibility;
-  // -webkit-font-smoothing: antialiased;
 }
 
 .application {
@@ -43,10 +42,10 @@ body {
 }
 
 .wrapper {
-  padding: 260px 0px 25px;
+  padding: 20px 0px;
 
   @include media-breakpoint-up(md) {
-    padding: 25px 0px;
+    padding: 20px 0px;
   }
 }
 
@@ -65,7 +64,6 @@ p {
 
 label {
   cursor: default;
-  // text-transform: capitalize;
   margin: 0;
   font-weight: $font-weight-normal;
 }
@@ -73,16 +71,12 @@ label {
 a {
   color: $font-color !important;
   text-decoration: none !important;
-  -moz-transition: color $layout-transition-speed ease-in-out;
   -webkit-transition: color $layout-transition-speed ease-in-out;
-  -ms-transition: color $layout-transition-speed ease-in-out;
   transition: color $layout-transition-speed ease-in-out;
 
   &:hover {
     color: $font-hover-color !important;
-    -moz-transition: color $layout-transition-speed ease-in-out;
     -webkit-transition: color $layout-transition-speed ease-in-out;
-    -ms-transition: color $layout-transition-speed ease-in-out;
     transition: color $layout-transition-speed ease-in-out;
   }
 
@@ -112,12 +106,11 @@ h6,
   font-family: $font-family-heading;
   font-size: $font-size-heading-medium !important;
   line-height: $line-height !important;
-  // text-transform: capitalize;
 }
 
 h1,
 .h1 {
-  font-size: 2em !important;
+  font-size: 1.8em !important;
   font-weight: $font-weight-bold;
 }
 
@@ -129,49 +122,45 @@ h2,
 
 h3,
 .h3 {
-  font-size: 1.27em !important;
+  font-size: 1.2em !important;
   font-weight: $font-weight-medium;
 }
 
 h4,
 .h4 {
-  font-size: 1.18em !important;
+  font-size: 1.1em !important;
   font-weight: $font-weight-medium;
 }
 
 h5,
 .h5 {
-  font-size: 1.12em !important;
+  font-size: 1em !important;
   font-weight: $font-weight-normal;
 }
 
 h6,
 .h6 {
-  font-size: 1em !important;
+  font-size: 0.9em !important;
   font-weight: $font-weight-normal;
 }
 
 /* scrollbar styles */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $white;
-  border-left: $border-default;
-  border-color: $theme-light-white;
+  background: $border-color-default;
+  border-radius: $border-radius-default;
 }
 
 ::-webkit-scrollbar-track {
-  background: $theme-dark-gray;
+  background: $theme-light-white;
 }
 /* scrollbar styles */
 
 body.user-is-tabbing *:focus {
-  // outline: 2px solid $outline-color !important;
-  // outline: 2px auto -webkit-focus-ring-color !important;
-  // outline: 1px dotted !important;
   outline: none;
   box-shadow: $outline-box-shadow;
   border-radius: $border-radius-default;

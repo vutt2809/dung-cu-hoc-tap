@@ -8,8 +8,7 @@
   height: 100%;
   width: 370px;
   z-index: 1000;
-  // -webkit-box-shadow: $box-shadow;
-  // box-shadow: $box-shadow;
+  border-right: 1px solid $border-color-default;
   @include transition($layout-transition-higher-speed);
 
   @include media-breakpoint-down(xs) {
@@ -37,12 +36,12 @@
 
 .navigation-menu {
   height: 100%;
-  background-color: $theme-white;
+  background-color: $white;
 
   .menu-header {
-    border-bottom: $border-default;
+    border-bottom: 1px solid $border-color-default;
     text-align: right;
-    padding-right: 5px;
+    padding: 12px;
     align-items: center;
     justify-content: flex-end;
     height: 50px;
@@ -50,11 +49,12 @@
   }
 
   .menu-title {
-    padding: 10px 0px 10px 30px;
+    padding: 12px 0px 12px 20px;
+    font-weight: $font-weight-medium;
   }
 
   .menu-body {
-    margin-top: 20px;
+    margin-top: 16px;
 
     .menu-list {
       .menu-item {
@@ -63,13 +63,13 @@
           font-weight: $font-weight-normal;
           text-transform: capitalize;
           display: block;
-          padding: 10px 30px 10px 30px;
-          border-left: 3px solid transparent;
+          padding: 12px 20px;
+          border-left: 2px solid transparent;
           @include transition();
 
           &:hover {
-            background-color: $white;
-            border-left: 3px solid $primary-color;
+            background-color: $hover-bg;
+            border-left: 2px solid $primary-color;
             color: $primary-color !important;
             @include transition();
           }
@@ -77,13 +77,13 @@
           &:focus {
             outline: none;
             box-shadow: none;
-            background-color: $white;
-            border-left: 3px solid $primary-color;
+            background-color: $hover-bg;
+            border-left: 2px solid $primary-color;
           }
 
           &.active-line {
             font-weight: $font-weight-medium;
-            background-color: $white;
+            background-color: $hover-bg;
             color: $primary-color !important;
             border-color: $primary-color;
             @include transition();

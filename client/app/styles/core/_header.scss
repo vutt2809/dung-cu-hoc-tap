@@ -1,6 +1,6 @@
 // header styles
 .header-info {
-  padding: 10px 0px;
+  padding: 8px 0px;
   background-color: $theme-light-black;
 
   .fa,
@@ -14,12 +14,7 @@
 
 .header {
   background-color: $white;
-  border-bottom: $border-primary;
-
-  .logo {
-    font-size: $font-size-heading-large !important;
-    font-weight: $font-weight-normal;
-  }
+  border-bottom: 1px solid $border-color-default;
 }
 
 .fixed-mobile-header {
@@ -33,20 +28,15 @@
 }
 
 .top-header {
-  // margin-top: 10px;
-  // margin-bottom: 10px;
-  // height: 95px;
-  padding: 16px 0px;
+  padding: 12px 0px;
 
   @include media-breakpoint-up(lg) {
-    // height: 60px;
-
-    padding: 22px ​0px;
+    padding: 16px 0px;
   }
 
   .bars-icon {
     &:hover {
-      opacity: 0.5;
+      opacity: 0.7;
     }
   }
 
@@ -55,17 +45,15 @@
     line-height: 100%;
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.7;
     }
   }
 
   .fa {
     cursor: pointer;
     color: $theme-dark-gray;
-    font-size: $font-size-x-huge !important;
+    font-size: $font-size-huge !important;
   }
-  
-  
 
   .search-container {
     justify-content: center;
@@ -81,155 +69,22 @@
     justify-content: center;
     color: $theme-dark-gray;
     text-decoration: none;
-    transition: color 0.3s ease;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: $border-radius-default;
     background: transparent;
-    transition: all 0.3s ease;
     margin-right: 12px;
     flex-shrink: 0;
 
     &:hover {
       color: $primary-color;
       text-decoration: none;
-      background: rgba($primary-color, 0.1);
-      transform: scale(1.05);
+      background: $hover-bg;
     }
 
     .home-icon {
-      width: 24px;
-      height: 24px;
-      stroke: currentColor;
-      stroke-width: 2;
+      font-size: $font-size-huge;
     }
-
-    @include media-breakpoint-down(sm) {
-      width: 36px;
-      height: 36px;
-      margin-right: 8px;
-
-      .home-icon {
-        width: 20px;
-        height: 20px;
-      }
-    }
-  }
-
-  .col-no-padding {
-    @include media-breakpoint-down(sm) {
-      padding-right: 15px;
-      padding-left: 15px;
-    }
-  }
-
-  .navbar {
-    background-color: $white !important;
-    justify-content: flex-end;
-    padding: 0;
-    margin: 0;
-
-    @include media-breakpoint-down(sm) {
-      padding-top: 0;
-      padding-bottom: 0.5rem;
-      justify-content: center;
-    }
-
-    .nav {
-      align-items: center;
-      gap: 15px;
-    }
-
-    .cart-icon {
-      .bag-icon {
-        vertical-align: text-bottom;
-      }
-    }
-  }
-
-  .navbar-nav {
-    flex-direction: row;
-    @include media-breakpoint-up(md) {
-      margin-left: 20px;
-    }
-
-    .nav-link {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      &.active {
-        color: $font-hover-color !important;
-      }
-    }
-
-    a,
-    span {
-      &:hover {
-        color: $font-hover-color !important;
-      }
-    }
-
-    .dropdown-toggle.nav-link {
-      text-transform: capitalize;
-    }
-
-    .dropdown-menu {
-      &.nav-brand-dropdown {
-        padding: 0;
-        @include media-breakpoint-down(sm) {
-          left: -30px;
-          min-width: 270px;
-        }
-      }
-    }
-
-    .nav-item {
-      position: relative;
-      @include media-breakpoint-down(sm) {
-        margin-right: 15px;
-      }
-    }
-  }
-
-  .brand {
-    @include flex();
-    flex-wrap: wrap;
-    align-items: center;
-    @include media-breakpoint-down(sm) {
-      margin-top: 10px;
-      justify-content: center;
-    }
-
-    .logo {
-      margin: 0px;
-      color: $font-custom-color !important;
-      @include media-breakpoint-up(md) {
-        margin-left: 15px;
-      }
-    }
-  }
-
-  .cart-badge {
-    border-radius: 100%;
-    font-size: 0.6rem;
-    font-weight: 600;
-    position: absolute;
-    top: -12px;
-    right: -14px;
-    text-align: center;
-    width: 20px;
-    height: 20px;
-    background-color: $primary-bg;
-    color: $white;
-    @include flex();
-    justify-content: center;
-    align-items: center;
-  }
-
-  .header-links {
-    @include flex();
-    flex-wrap: wrap;
-    justify-content: space-between;
   }
 }
 

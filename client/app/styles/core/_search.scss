@@ -4,10 +4,16 @@
 
   .react-autosuggest__input {
     height: 40px;
-    padding: 10px 20px;
-    border: $border-default;
-    border-radius: 4px;
+    padding: 8px 12px;
+    border: 1px solid $border-color-default;
+    border-radius: $border-radius-default;
+    background-color: $white;
     -webkit-appearance: none;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba(41, 98, 255, 0.1);
+    }
   }
 
   .react-autosuggest__input::-ms-clear {
@@ -28,11 +34,13 @@
     position: absolute;
     width: 100%;
     font-weight: 300;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: $border-radius-default;
+    border-bottom-right-radius: $border-radius-default;
     z-index: 2;
-    border: $border-default;
+    border: 1px solid $border-color-default;
+    border-top: none;
     background-color: $white;
+    box-shadow: $box-shadow;
   }
 
   .react-autosuggest__suggestions-list {
@@ -40,39 +48,40 @@
     padding: 0;
     list-style-type: none;
     overflow: auto;
-    max-height: 400px;
+    max-height: 300px;
   }
 
   .react-autosuggest__suggestion {
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 8px 12px;
+    border-bottom: 1px solid $border-color-default;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: $hover-bg;
+    }
   }
 
   .react-autosuggest__suggestion--highlighted {
-    background-color: $theme-gray;
+    background-color: $hover-bg;
   }
 
   .react-autosuggest__section-container--first {
     border-top: 0;
   }
 
-  .react-autosuggest__suggestions-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    overflow: auto;
-    max-height: 400px;
-  }
-
   .react-autosuggest__suggestion-match {
-    color: $black;
-    font-weight: $font-weight-normal;
+    color: $font-custom-color;
+    font-weight: $font-weight-medium;
   }
 
   .item-image {
-    width: 50px;
-    height: 50px;
-    border-radius: $border-radius-primary;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-default;
   }
 }
 
