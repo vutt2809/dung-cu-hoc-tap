@@ -9,7 +9,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { VI } from '../../constants';
 
 import SubPage from '../../components/Manager/SubPage';
 import AddProduct from '../../components/Manager/AddProduct';
@@ -29,8 +28,8 @@ class Add extends React.PureComponent {
 
     return (
       <SubPage
-        title={VI['Add Product']}
-        actionTitle={VI['Cancel']}
+        title={"Thêm sản phẩm"}
+        actionTitle={"Hủy"}
         handleAction={history.goBack}
       >
         <AddProduct

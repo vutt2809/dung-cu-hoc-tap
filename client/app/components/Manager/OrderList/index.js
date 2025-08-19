@@ -9,7 +9,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { formatDate, formatCurrencyVN, formatDateVN } from '../../../utils/format';
-import { VI } from '../../../constants';
 
 const OrderList = props => {
   const { orders } = props;
@@ -48,7 +47,7 @@ const OrderList = props => {
               <div className='d-flex flex-column flex-xl-row justify-content-between flex-1 ml-lg-2 mr-xl-4 p-3'>
                 <div className='order-details'>
                   <div className='mb-1'>
-                    <span>{VI['Status']}</span>
+                    <span>{"Trạng thái"}</span>
                     {order?.items ? (
                       <span className='order-label order-status'>{` ${order?.items[0].status}`}</span>
                     ) : (
@@ -56,15 +55,15 @@ const OrderList = props => {
                     )}
                   </div>
                   <div className='mb-1'>
-                    <span>{VI['Order ID']}</span>
+                    <span>{"Mã đơn hàng"}</span>
                     <span className='order-label'>{` ${order.id}`}</span>
                   </div>
                   <div className='mb-1'>
-                    <span>{VI['Order Date']}</span>
+                    <span>{"Ngày đặt hàng"}</span>
                     <span className='order-label'>{` ${formatDateVN(order.created_at)}`}</span>
                   </div>
                   <div className='mb-1'>
-                    <span>{VI['Total']}</span>
+                    <span>{"Tổng tiền"}</span>
                     <span className='order-label'>{` ${formatCurrencyVN((order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)))}₫`}</span>
                   </div>
                 </div>

@@ -136,7 +136,9 @@ class AuthController extends Controller
             'reset_password_expires' => now()->addHour()
         ]);
 
-        // TODO: Send email with reset token
+        // TODO: Implement email sending functionality for password reset
+        // This should send an email to the user with the reset token
+        // Consider using Laravel's built-in Mail facade or a service like Mailgun
 
         return response()->json([
             'success' => true,

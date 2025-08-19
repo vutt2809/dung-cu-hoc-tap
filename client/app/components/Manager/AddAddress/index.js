@@ -11,7 +11,6 @@ import { Row, Col } from 'reactstrap';
 import Checkbox from '../../Common/Checkbox';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
-import { VI } from '../../../constants';
 
 const AddAddress = props => {
   const { addressFormData, formErrors, addressChange, addAddress } = props;
@@ -29,7 +28,7 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['address']}
-              label={VI['Address']}
+              label={"Địa chỉ"}
               name={'address'}
               placeholder={'Address: Street, House No / Apartment No'}
               value={addressFormData.address}
@@ -42,9 +41,9 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['city']}
-              label={VI['City']}
+              label={"Thành phố"}
               name={'city'}
-              placeholder={VI['City']}
+              placeholder={"Thành phố"}
               value={addressFormData.city}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -55,9 +54,9 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['state']}
-              label={VI['State']}
+              label={"Tỉnh/Bang"}
               name={'state'}
-              placeholder={VI['State']}
+              placeholder={"Tỉnh/Bang"}
               value={addressFormData.state}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -68,7 +67,7 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['country']}
-              label={VI['Country']}
+              label={"Quốc gia"}
               name={'country'}
               placeholder={'Please Enter Your country'}
               value={addressFormData.country}
@@ -81,7 +80,7 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['zip_code']}
-              label={VI['Zip Code']}
+              label={"Mã bưu điện"}
               name={'zip_code'}
               placeholder={'Please Enter Your zip_code'}
               value={addressFormData.zip_code}
@@ -93,7 +92,7 @@ const AddAddress = props => {
           <Col xs='12' md='12'>
             <Checkbox
               id={'default'}
-              label={VI['Set as default']}
+              label={"Đặt làm mặc định"}
               name={'isDefault'}
               checked={addressFormData.isDefault}
               onChange={(name, value) => {
@@ -104,7 +103,7 @@ const AddAddress = props => {
         </Row>
         <hr />
         <div className='add-address-actions'>
-          <Button type='submit' text={VI['Add Address']} />
+          <Button type='submit' text={"Thêm địa chỉ"} />
         </div>
       </form>
     </div>

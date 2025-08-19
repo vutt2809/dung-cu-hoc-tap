@@ -22,7 +22,6 @@ const UserList = props => {
               borderless
               text={u.name}
               onClick={() => _selectUser(u)}
-              // disabled={!isOnline}
               iconDirection='right'
               icon={
                 <span
@@ -35,44 +34,6 @@ const UserList = props => {
       })}
     </ul>
   );
-
-  // return (
-  //   <>
-  //     {users.filter(x => xid !== userid).length === 0 && (
-  //       <MessageBox>No Online User Found</MessageBox>
-  //     )}
-  //     <ul>
-  //       {users
-  //         .filter(x => xid !== userid)
-  //         .map((user, index) => (
-  //           <li
-  //             style={{ animationDelay: `0.2s` }}
-  //             key={index}
-  //             className={
-  //               userid === selectedUser?.id
-  //                 ? `chatlist-item active `
-  //                 : 'chatlist-item'
-  //             }
-  //           >
-  //             <button
-  //               className='block'
-  //               type='button'
-  //               onClick={() => selectUser(user)}
-  //             >
-  //               {user.name}
-  //             </button>
-  //             <div>
-  //               <span
-  //                 className={
-  //                   user.unread ? 'unread' : user.online ? 'online' : 'offline'
-  //                 }
-  //               />
-  //             </div>
-  //           </li>
-  //         ))}
-  //     </ul>
-  //   </>
-  // );
 };
 
 export default UserList;

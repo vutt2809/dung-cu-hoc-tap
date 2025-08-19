@@ -11,7 +11,6 @@ import actions from '../../actions';
 
 import AccountDetails from '../../components/Manager/AccountDetails';
 import SubPage from '../../components/Manager/SubPage';
-import { VI } from '../../constants/vi';
 
 class Account extends React.PureComponent {
   componentDidMount() {

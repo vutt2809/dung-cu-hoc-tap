@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 
 import mapDispatchToProps from '../../actions';
-import { VI } from '../../constants/vi';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
@@ -41,9 +40,9 @@ class Newsletter extends React.PureComponent {
               <Input
                 type={'text'}
                 error={formErrors['email']}
-                label={VI['Email Address']}
+                label="Địa chỉ email"
                 name={'email'}
-                placeholder={VI['Your Email Address']}
+                placeholder="Địa chỉ email của bạn"
                 value={newsletterFormData.email}
                 onInputChange={(name, value) => {
                   newsletterChange(name, value);
@@ -52,7 +51,7 @@ class Newsletter extends React.PureComponent {
             </Col>
           </Row>
           <div className='newsletter-actions'>
-            <Button type='submit' variant='primary' text={VI['Subscribe']} />
+            <Button type='submit' variant='primary' text="Đăng ký" />
           </div>
         </form>
       </div>

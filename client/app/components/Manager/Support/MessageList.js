@@ -25,7 +25,7 @@ const MessagesList = props => {
       <Message
         key={message.id}
         message={message}
-        isMe={message.from === userid}
+        isMe={message.from === user.id}
         noHeader={message.noHeader}
       />
     ));

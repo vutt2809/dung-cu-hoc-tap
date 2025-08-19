@@ -27,7 +27,6 @@ import {
 } from 'reactstrap';
 
 import actions from '../../actions';
-import { VI } from '../../constants/vi';
 
 import Button from '../../components/Common/Button';
 import CartIcon from '../../components/Common/CartIcon';
@@ -118,7 +117,7 @@ class Navigation extends React.PureComponent {
     } = this.props;
 
     const inputProps = {
-      placeholder: VI['Search Products'],
+      placeholder: "Tìm kiếm sản phẩm",
       value: searchValue,
       onChange: (_, { newValue }) => {
         onSearch(newValue);
@@ -132,19 +131,19 @@ class Navigation extends React.PureComponent {
             <Row>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-truck' />
-                <span>{VI['Free Shipping']}</span>
+                <span>{"Miễn phí vận chuyển"}</span>
               </Col>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-credit-card' />
-                <span>{VI['Payment Methods']}</span>
+                <span>{"Phương thức thanh toán"}</span>
               </Col>
               <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-phone' />
-                <span>{VI['Call us']} 0123456789</span>
+                <span>{"Gọi cho chúng tôi"} 0123456789</span>
               </Col>
               <Col xs='12' className='text-center d-block d-md-none'>
                 <i className='fa fa-phone' />
-                <span> {VI['Need advice? Call us']} 0123456789</span>
+                <span> {"Cần tư vấn? Gọi cho chúng tôi"} 0123456789</span>
               </Col>
             </Row>
           </Container>
@@ -160,7 +159,7 @@ class Navigation extends React.PureComponent {
             >
               <div className='brand'>
                 <Link to='/'>
-                  <h1 className='logo'>{VI['Book Store']}</h1>
+                  <h1 className='logo'>{"Cần Thơ Store"}</h1>
                 </Link>
               </div>
             </Col>
@@ -213,9 +212,9 @@ class Navigation extends React.PureComponent {
                         <DropdownItem
                           onClick={() => history.push('/dashboard')}
                         >
-                          {VI['Dashboard']}
+                          {"Bảng điều khiển"}
                         </DropdownItem>
-                        <DropdownItem onClick={signOut}>{VI['Sign Out']}</DropdownItem>
+                        <DropdownItem onClick={signOut}>{"Đăng xuất"}</DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   ) : (
@@ -227,10 +226,10 @@ class Navigation extends React.PureComponent {
                       </DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem onClick={() => history.push('/login')}>
-                          {VI['Login']}
+                          {"Đăng nhập"}
                         </DropdownItem>
                         <DropdownItem onClick={() => history.push('/register')}>
-                          {VI['Sign Up']}
+                          {"Đăng ký"}
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>

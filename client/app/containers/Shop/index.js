@@ -16,7 +16,6 @@ import { sortOptions } from '../../utils/store';
 import ProductsShop from '../ProductsShop';
 
 import CategoryShop from '../CategoryShop';
-// import BrandShop from '../BrandShop';
 
 import Page404 from '../../components/Common/Page404';
 import ProductFilter from '../../components/Store/ProductFilter';

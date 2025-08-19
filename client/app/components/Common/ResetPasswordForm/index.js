@@ -10,7 +10,6 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
 import Button from '../Button';
-import { VI } from '../../../constants';
 
 const ResetPasswordForm = props => {
   const {
@@ -35,9 +34,9 @@ const ResetPasswordForm = props => {
               <Input
                 type={'password'}
                 error={formErrors['current_password']}
-                label={VI['Current Password'] || 'Mật khẩu hiện tại'}
+                label={'Mật khẩu hiện tại'}
                 name={'current_password'}
-                placeholder={VI['Current Password'] || 'Mật khẩu hiện tại'}
+                placeholder={'Mật khẩu hiện tại'}
                 value={resetFormData.current_password || ''}
                 onInputChange={(name, value) => {
                   resetPasswordChange(name, value);
@@ -49,9 +48,9 @@ const ResetPasswordForm = props => {
             <Input
               type={'password'}
               error={formErrors['password']}
-              label={VI['Password']}
+              label={'Mật khẩu mới'}
               name={'password'}
-              placeholder={isToken ? VI['Password'] : VI['New Password'] || 'Mật khẩu mới'}
+              placeholder={'Mật khẩu mới'}
               value={resetFormData.password}
               onInputChange={(name, value) => {
                 resetPasswordChange(name, value);
@@ -62,9 +61,9 @@ const ResetPasswordForm = props => {
             <Input
               type={'password'}
               error={formErrors['confirmPassword']}
-              label={VI['Confirm Password']}
+              label={'Xác nhận mật khẩu mới'}
               name={'confirmPassword'}
-              placeholder={VI['Confirm New Password']}
+              placeholder={'Xác nhận mật khẩu mới'}
               value={resetFormData.confirmPassword}
               onInputChange={(name, value) => {
                 resetPasswordChange(name, value);
@@ -74,7 +73,7 @@ const ResetPasswordForm = props => {
         </Row>
         <hr />
         <div className='reset-actions'>
-          <Button type='submit' text={VI['Change Password']} />
+          <Button type='submit' text={'Thay đổi mật khẩu'} />
         </div>
       </form>
     </div>

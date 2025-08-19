@@ -15,7 +15,6 @@ import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
-import { VI } from '../../constants';
 
 class Login extends React.PureComponent {
   render() {
@@ -43,16 +42,16 @@ class Login extends React.PureComponent {
     return (
       <div className='login-form'>
         {isLoading && <LoadingIndicator />}
-        <h2>{VI.Login}</h2>
+        <h2>Đăng nhập</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <div className='form-group'>
             <Input
               type={'text'}
               error={formErrors['email']}
-              label={VI['Email Address']}
+              label="Địa chỉ email"
               name={'email'}
-              placeholder={VI['Please Enter Your Email']}
+              placeholder="Vui lòng nhập email của bạn"
               value={loginFormData.email}
               onInputChange={(name, value) => {
                 loginChange(name, value);
@@ -63,9 +62,9 @@ class Login extends React.PureComponent {
             <Input
               type={'password'}
               error={formErrors['password']}
-              label={VI.Password}
+              label="Mật khẩu"
               name={'password'}
-              placeholder={VI['Please Enter Your Password']}
+              placeholder="Vui lòng nhập mật khẩu của bạn"
               value={loginFormData.password}
               onInputChange={(name, value) => {
                 loginChange(name, value);
@@ -78,12 +77,12 @@ class Login extends React.PureComponent {
               <Button
                 type='submit'
                 variant='primary'
-                text={VI.Login}
+                text="Đăng nhập"
                 disabled={isSubmitting}
                 className='mb-3'
               />
               <Button
-                text={VI['Create an account']}
+                text="Tạo một tài khoản"
                 variant='link'
                 onClick={registerLink}
               />
@@ -92,7 +91,7 @@ class Login extends React.PureComponent {
               className='redirect-link forgot-password-link'
               to={'/forgot-password'}
             >
-              {VI['Forgot Password?']}
+              Quên mật khẩu?
             </Link>
           </div>
         </form>

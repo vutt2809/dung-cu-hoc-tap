@@ -8,8 +8,6 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import { EMAIL_PROVIDER } from '../../../constants';
-import { VI } from '../../../constants/vi';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
@@ -30,7 +28,7 @@ const AccountDetails = props => {
               user.email
             ) : (
               <span className='provider-email'>
-                {VI['Logged In With'] || 'Logged in With'} {user.provider}
+                Đăng nhập với {user.provider}
               </span>
             )}
           </p>
@@ -41,9 +39,9 @@ const AccountDetails = props => {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
-              label={VI['First Name'] || 'First Name'}
+              label={'Tên'}
               name={'first_name'}
-              placeholder={VI['Please Enter Your First Name'] || 'Please Enter Your First Name'}
+              placeholder={'Vui lòng nhập tên của bạn'}
               value={user.first_name ? user.first_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -53,9 +51,9 @@ const AccountDetails = props => {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
-              label={VI['Last Name'] || 'Last Name'}
+              label={'Họ'}
               name={'last_name'}
-              placeholder={VI['Please Enter Your Last Name'] || 'Please Enter Your Last Name'}
+              placeholder={'Vui lòng nhập họ của bạn'}
               value={user.last_name ? user.last_name : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -78,9 +76,9 @@ const AccountDetails = props => {
           <Col xs='12' md='12'>
             <Input
               type={'text'}
-              label={VI['Phone Number'] || 'Phone Number'}
+              label={'Số điện thoại'}
               name={'phone_number'}
-              placeholder={VI['Please Enter Your Phone Number'] || 'Please Enter Your Phone Number'}
+              placeholder={'Vui lòng nhập số điện thoại của bạn'}
               value={user.phone_number ? user.phone_number : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
@@ -93,7 +91,7 @@ const AccountDetails = props => {
           <Button
             type='submit'
             variant='secondary'
-            text={VI['Save Changes'] || 'Save Changes'}
+            text={'Lưu thay đổi'}
           />
         </div>
       </form>

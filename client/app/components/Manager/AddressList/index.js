@@ -9,7 +9,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { AddressIcon, CheckIcon } from '../../Common/Icon';
-import { VI } from '../../../constants';
 
 const AddressList = props => {
   const { addresses } = props;
@@ -30,12 +29,12 @@ const AddressList = props => {
               {address.isDefault ? (
                 <div className='d-flex align-items-center justify-content-between mb-2'>
                   <h4 className='mb-0 mr-2 one-line-ellipsis'>
-                    {VI['Default Delivery Address']}
+                    {"Địa chỉ giao hàng mặc định"}
                   </h4>
                   <CheckIcon className='text-green' />
                 </div>
               ) : (
-                <h4 className='mb-0'>{VI['Address']}</h4>
+                <h4 className='mb-0'>{"Địa chỉ"}</h4>
               )}
               <p className='mb-2 address-desc'>
                 {`${address?.address} ${address?.city}, ${address?.country}, ${address?.zip_code}`}

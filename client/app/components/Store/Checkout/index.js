@@ -7,7 +7,6 @@
 import React from 'react';
 
 import Button from '../../Common/Button';
-import { VI } from '../../../constants/vi';
 
 const Checkout = props => {
   const { authenticated, handleShopping, handleCheckout, placeOrder } = props;
@@ -17,19 +16,19 @@ const Checkout = props => {
       <div className='checkout-actions'>
         <Button
           variant='primary'
-          text={VI['Continue shopping']}
+          text="Tiếp tục mua sắm"
           onClick={() => handleShopping()}
         />
         {authenticated ? (
           <Button
             variant='primary'
-            text={VI['Place Order']}
+            text="Đặt hàng"
             onClick={() => placeOrder()}
           />
         ) : (
           <Button
             variant='primary'
-            text={VI['Proceed To Checkout']}
+            text="Tiến hành thanh toán"
             onClick={() => handleCheckout()}
           />
         )}

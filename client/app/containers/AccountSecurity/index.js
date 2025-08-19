@@ -11,7 +11,6 @@ import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
 import ResetPasswordForm from '../../components/Common/ResetPasswordForm';
-import { VI } from '../../constants';
 
 class AccountSecurity extends React.PureComponent {
   componentDidMount() {}
@@ -26,9 +25,9 @@ class AccountSecurity extends React.PureComponent {
 
     return (
       <div className='account-security'>
-        <SubPage title={VI['Account Security']} isMenuOpen={null}>
+        <SubPage title={"Bảo mật tài khoản"} isMenuOpen={null}>
           <div className='reset-form'>
-            <h4>{VI['Change Password']}</h4>
+            <h4>{"Đổi mật khẩu"}</h4>
             <ResetPasswordForm
               resetFormData={resetFormData}
               formErrors={formErrors}

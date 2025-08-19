@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
-import { VI } from '../../constants/vi';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
@@ -42,9 +41,9 @@ class Contact extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['name']}
-                  label={VI['Name']}
+                  label="Tên"
                   name={'name'}
-                  placeholder={VI['Your Full Name']}
+                  placeholder="Họ và tên của bạn"
                   value={contactFormData.name}
                   onInputChange={(name, value) => {
                     contactChange(name, value);
@@ -55,9 +54,9 @@ class Contact extends React.PureComponent {
                 <Input
                   type={'text'}
                   error={formErrors['email']}
-                  label={VI['Email Address']}
+                  label="Địa chỉ email"
                   name={'email'}
-                  placeholder={VI['Your Email Address']}
+                  placeholder="Địa chỉ email của bạn"
                   value={contactFormData.email}
                   onInputChange={(name, value) => {
                     contactChange(name, value);
@@ -68,9 +67,9 @@ class Contact extends React.PureComponent {
                 <Input
                   type={'textarea'}
                   error={formErrors['message']}
-                  label={VI['Message']}
+                  label="Tin nhắn"
                   name={'message'}
-                  placeholder={VI['Please Describe Your Message']}
+                  placeholder="Vui lòng mô tả tin nhắn của bạn"
                   value={contactFormData.message}
                   onInputChange={(name, value) => {
                     contactChange(name, value);
@@ -80,7 +79,7 @@ class Contact extends React.PureComponent {
             </Row>
             <hr />
             <div className='contact-actions'>
-              <Button type='submit' text={VI['Submit']} />
+              <Button type='submit' text="Gửi" />
             </div>
           </form>
         </div>

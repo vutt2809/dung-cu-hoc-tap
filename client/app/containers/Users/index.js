@@ -17,7 +17,6 @@ import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import Pagination from '../../components/Common/Pagination';
-import { VI } from '../../constants';
 
 class Users extends React.PureComponent {
   constructor(props) {
@@ -61,7 +60,7 @@ class Users extends React.PureComponent {
 
     return (
       <div className='users-dashboard'>
-        <SubPage title={VI['Users']} />
+        <SubPage title="Người dùng" />
         <UserSearch
           onSearch={this.handleUserSearch}
           onSearchSubmit={searchUsers}
@@ -76,13 +75,13 @@ class Users extends React.PureComponent {
               />
             )}
             <SearchResultMeta
-              label={VI['Users'].toLowerCase()}
+              label="người dùng"
               count={isSearch ? filteredUsers.length : advancedFilters.count}
             />
             <UserList users={filteredUsers} />
           </>
         )}
-        {!isLoading && !displayUsers && <NotFound message={VI['No users found.']} />}
+        {!isLoading && !displayUsers && <NotFound message="Không tìm thấy người dùng." />}
       </div>
     );
   }

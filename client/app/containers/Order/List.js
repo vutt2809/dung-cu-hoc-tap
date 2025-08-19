@@ -9,7 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { ROLES, VI } from '../../constants';
+import { ROLES } from '../../constants';
 import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
@@ -66,8 +66,8 @@ class List extends React.PureComponent {
     return (
       <div className='order-dashboard'>
         <SubPage
-          title={VI['Orders']}
-          actionTitle={user.role === ROLES.Admin && VI['Customer Orders']}
+          title="Đơn hàng"
+          actionTitle={user.role === ROLES.Admin && "Đơn hàng khách hàng"}
           handleAction={() =>
             user.role === ROLES.Admin &&
             history.push('/dashboard/orders/customers')
@@ -90,14 +90,14 @@ class List extends React.PureComponent {
               )}
 
               <SearchResultMeta
-                label={VI['Orders'].toLowerCase()}
+                label="đơn hàng"
                 count={filteredOrders.length}
               />
               <OrderList orders={filteredOrders} />
             </>
           )}
           {!isLoading && !displayOrders && (
-            <NotFound message={VI['No orders found.']} />
+            <NotFound message="Không tìm thấy đơn hàng." />
           )}
         </SubPage>
       </div>

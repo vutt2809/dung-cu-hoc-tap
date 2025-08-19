@@ -9,7 +9,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { VI } from '../../constants/vi';
 
 import CategoryList from '../../components/Manager/CategoryList';
 import SubPage from '../../components/Manager/SubPage';
@@ -27,8 +26,8 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title={VI['Categories']}
-          actionTitle={VI['Add']}
+          title={"Danh mục"}
+          actionTitle="Thêm"
           handleAction={() => history.push('/dashboard/category/add')}
         >
           {isLoading ? (
@@ -36,7 +35,7 @@ class List extends React.PureComponent {
           ) : categories.length > 0 ? (
             <CategoryList categories={categories} />
           ) : (
-            <NotFound message={VI['No categories found.']} />
+            <NotFound message={"Không tìm thấy danh mục."} />
           )}
         </SubPage>
       </>
