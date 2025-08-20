@@ -42,19 +42,19 @@ const OrderList = props => {
         <div key={index} className='order-box'>
           <Link to={`/order/${order.id}`} className='d-block box-link'>
             <div className='d-flex flex-column flex-lg-row mb-3'>
-              <div className='order-first-item p-lg-3'>
+              {/* <div className='order-first-item p-lg-3'>
                 {renderFirstItem(order)}
-              </div>
+              </div> */}
               <div className='d-flex flex-column flex-xl-row justify-content-between flex-1 ml-lg-2 mr-xl-4 p-3'>
                 <div className='order-details'>
-                  <div className='mb-1'>
+                  {/* <div className='mb-1'>
                     <span>{"Trạng thái"}</span>
                     {order?.items ? (
                       <span className='order-label order-status'>{` ${CART_ITEM_STATUS[order?.items[0].status] || order?.items[0].status}`}</span>
                     ) : (
                       <span className='order-label order-status'>{` Không có sẵn`}</span>
                     )}
-                  </div>
+                  </div> */}
                   <div className='mb-1'>
                     <span>{"Mã đơn hàng"}</span>
                     <span className='order-label'>{` ${order.id}`}</span>
@@ -67,6 +67,18 @@ const OrderList = props => {
                     <span>{"Tổng tiền"}</span>
                     <span className='order-label'>{` ${formatCurrencyVN((order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)))}₫`}</span>
                   </div>
+                  {order.shipping_name && (
+                    <div className='mb-1'>
+                      <span>{"Người nhận"}</span>
+                      <span className='order-label'>{` ${order.shipping_name}`}</span>
+                    </div>
+                  )}
+                  {order.shipping_address && (
+                    <div className='mb-1'>
+                      <span>{"Địa chỉ giao hàng"}</span>
+                      <span className='order-label' style={{fontSize: '12px'}}>{` ${order.shipping_address}`}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

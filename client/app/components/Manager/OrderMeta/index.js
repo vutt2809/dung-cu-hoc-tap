@@ -57,6 +57,46 @@ const OrderMeta = props => {
               <span className='order-label one-line-ellipsis'>{` ${formatDateVN(order.created_at || order.created)}`}</span>
             </Col>
           </Row>
+          {order.shipping_name && (
+            <Row>
+              <Col xs='4'>
+                <p className='one-line-ellipsis'>Người nhận</p>
+              </Col>
+              <Col xs='8'>
+                <span className='order-label one-line-ellipsis'>{` ${order.shipping_name}`}</span>
+              </Col>
+            </Row>
+          )}
+          {order.shipping_phone && (
+            <Row>
+              <Col xs='4'>
+                <p className='one-line-ellipsis'>Số điện thoại</p>
+              </Col>
+              <Col xs='8'>
+                <span className='order-label one-line-ellipsis'>{` ${order.shipping_phone}`}</span>
+              </Col>
+            </Row>
+          )}
+          {order.shipping_address && (
+            <Row>
+              <Col xs='4'>
+                <p className='one-line-ellipsis'>Địa chỉ giao hàng</p>
+              </Col>
+              <Col xs='8'>
+                <span className='order-label' style={{fontSize: '13px', lineHeight: '1.4'}}>{` ${order.shipping_address}`}</span>
+              </Col>
+            </Row>
+          )}
+          {order.shipping_note && (
+            <Row>
+              <Col xs='4'>
+                <p className='one-line-ellipsis'>Ghi chú</p>
+              </Col>
+              <Col xs='8'>
+                <span className='order-label' style={{fontSize: '13px', lineHeight: '1.4'}}>{` ${order.shipping_note}`}</span>
+              </Col>
+            </Row>
+          )}
         </Col>
         <Col xs='12' md='4' className='text-left text-md-right'>
           {renderMetaAction()}

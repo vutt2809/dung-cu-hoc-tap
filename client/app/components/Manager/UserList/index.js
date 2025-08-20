@@ -21,13 +21,13 @@ const UserList = props => {
           </p>
           <label className='text-black'>Địa chỉ email</label>
           <p>{user?.email ?? '-'}</p>
-          <label className='text-black'>Provider</label>
-          <p>{user?.provider}</p>
+          {/* <label className='text-black'>Provider</label>
+          <p>{user?.provider}</p> */}
           <label className='text-black'>Ngày tham gia</label>
-          <p>{formatDate(user?.created)}</p>
+          <p>{formatDate(user?.created_at)}</p>
           <label className='text-black'>Vai trò</label>
           <p className='mb-0'>
-            {/* <UserRole user={user} className='d-inline-block mt-2' /> */}
+            {user?.role}
           </p>
         </div>
       ))}

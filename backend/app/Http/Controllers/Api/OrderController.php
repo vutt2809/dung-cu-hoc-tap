@@ -236,6 +236,7 @@ class OrderController extends Controller
             'shipping_phone' => 'nullable|string|max:20',
             'shipping_address' => 'nullable|string',
             'shipping_note' => 'nullable|string',
+            'save_address' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -281,13 +282,37 @@ class OrderController extends Controller
             'order_number' => 'ORD-' . strtoupper(Str::random(8)),
             'total' => $finalTotal,
             'status' => 'pending',
-            'notes' => json_encode([
-                'shipping_name' => $request->shipping_name,
-                'shipping_phone' => $request->shipping_phone,
-                'shipping_address' => $request->shipping_address,
-                'shipping_note' => $request->shipping_note,
-            ]),
+            'shipping_name' => $request->shipping_name,
+            'shipping_phone' => $request->shipping_phone,
+            'shipping_address' => $request->shipping_address,
+            'shipping_note' => $request->shipping_note,
         ]);
+
+        // Lưu địa chỉ mới nếu user yêu cầu hoặc chưa có địa chỉ nào
+        if ($request->shipping_address && ($request->save_address || $request->user()->addresses()->count() === 0)) {
+            // Parse địa chỉ từ shipping_address để tạo address mới
+            $addressParts = explode(',', $request->shipping_address);
+            if (count($addressParts) >= 3) {
+                $address = trim($addressParts[0]);
+                $city = trim($addressParts[1]);
+                $stateCountry = trim($addressParts[2]);
+                
+                // Tách state và country
+                $stateCountryParts = explode(' ', trim($stateCountry));
+                $zipCode = end($stateCountryParts);
+                $state = implode(' ', array_slice($stateCountryParts, 0, -1));
+                
+                $request->user()->addresses()->create([
+                    'address' => $address,
+                    'city' => $city,
+                    'state' => $state,
+                    'country' => 'Vietnam',
+                    'zip_code' => $zipCode,
+                    'phone_number' => $request->shipping_phone,
+                    'is_default' => $request->user()->addresses()->count() === 0, // Chỉ set default nếu chưa có địa chỉ nào
+                ]);
+            }
+        }
 
         // Lưu từng sản phẩm vào order_items
         $orderItemsCount = 0;

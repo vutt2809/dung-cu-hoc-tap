@@ -65,7 +65,7 @@ class Users extends React.PureComponent {
           onSearch={this.handleUserSearch}
           onSearchSubmit={searchUsers}
         />
-        {isLoading && <LoadingIndicator />}
+        {/* {isLoading && <LoadingIndicator />} */}
         {displayUsers && (
           <>
             {!isSearch && displayPagination && (

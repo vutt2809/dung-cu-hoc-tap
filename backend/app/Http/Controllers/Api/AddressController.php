@@ -11,7 +11,7 @@ class AddressController extends Controller
 {
     public function index(Request $request)
     {
-        $addresses = $request->user()->addresses;
+        $addresses = $request->user()->addresses()->with('user')->get();
 
         return response()->json([
             'success' => true,
