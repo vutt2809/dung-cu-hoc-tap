@@ -13,29 +13,23 @@ import { ROLES, CART_ITEM_STATUS } from '../../../constants';
 import Button from '../../Common/Button';
 import DropdownConfirm from '../../Common/DropdownConfirm';
 
-const viStatus = {
-  Processing: 'Đang xử lý',
-  Shipped: 'Đã gửi hàng',
-  Delivered: 'Đã giao',
-  Cancelled: 'Đã hủy',
-  // Notprocessed: 'Chưa xử lý',
-};
+// Sử dụng CART_ITEM_STATUS từ constants thay vì định nghĩa riêng
 
 const OrderItems = props => {
   const { order, user, updateOrderItemStatus } = props;
 
   const renderPopoverContent = item => {
-    const statuses = Object.values(CART_ITEM_STATUS);
+    const statusKeys = Object.keys(CART_ITEM_STATUS);
 
     return (
       <div className='d-flex flex-column align-items-center justify-content-center'>
-        {statuses.map((s, i) => (
+        {statusKeys.map((key, i) => (
           <DropdownItem
-            key={`${s}-${i}`}
-            className={s === item?.status ? 'active' : ''}
-            onClick={() => updateOrderItemStatus(item.id, s)}
+            key={`${key}-${i}`}
+            className={key === item?.status ? 'active' : ''}
+            onClick={() => updateOrderItemStatus(item.id, key)}
           >
-            {viStatus[s]}
+            {CART_ITEM_STATUS[key]}
           </DropdownItem>
         ))}
       </div>
@@ -55,7 +49,7 @@ const OrderItems = props => {
           Đánh giá sản phẩm
         </Link>
       );
-    } else if (item.status !== 'Cancelled') {
+    } else if (item.status !== CART_ITEM_STATUS.Cancelled) {
       if (!isAdmin) {
         return (
           <DropdownConfirm label='Hủy'>
@@ -76,7 +70,7 @@ const OrderItems = props => {
       } else {
         return (
           <DropdownConfirm
-            label={item.product && viStatus[item.status]}
+            label={item.product && CART_ITEM_STATUS[item.status]}
             className={isAdmin ? 'admin' : ''}
           >
             {renderPopoverContent(item)}
@@ -132,7 +126,7 @@ const OrderItems = props => {
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
                       <p className='mb-1 mr-4'>
                         Trạng thái
-                        <span className='order-label order-status'>{` ${item.status}`}</span>
+                        <span className='order-label order-status'>{` ${CART_ITEM_STATUS[item.status] || item.status}`}</span>
                       </p>
                       <p className='mb-1 mr-4'>
                         Số lượng
@@ -148,7 +142,7 @@ const OrderItems = props => {
 
                 <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
-                    <p className='order-label order-status'>{`${item.status}`}</p>
+                    <p className='order-label order-status'>{`${CART_ITEM_STATUS[item.status] || item.status}`}</p>
                     <p>Trạng thái</p>
                   </div>
 

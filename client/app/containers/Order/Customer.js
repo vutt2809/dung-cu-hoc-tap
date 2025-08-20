@@ -88,14 +88,14 @@ class Customer extends React.PureComponent {
               )}
 
               <SearchResultMeta
-                label='orders'
+                label='đơn hàng'
                 count={isSearch ? filteredOrders.length : advancedFilters.count}
               />
               <OrderList orders={filteredOrders} />
             </>
           )}
           {!isLoading && !displayOrders && (
-            <NotFound message='No orders found.' />
+            <NotFound message='Không tìm thấy đơn hàng.' />
           )}
         </SubPage>
       </div>

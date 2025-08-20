@@ -54,7 +54,7 @@ const OrderMeta = props => {
               <p className='one-line-ellipsis'>Ngày đặt hàng</p>
             </Col>
             <Col xs='8'>
-              <span className='order-label one-line-ellipsis'>{` ${formatDateVN(order.created)}`}</span>
+              <span className='order-label one-line-ellipsis'>{` ${formatDateVN(order.created_at || order.created)}`}</span>
             </Col>
           </Row>
         </Col>

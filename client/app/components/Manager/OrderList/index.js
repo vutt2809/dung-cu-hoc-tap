@@ -9,6 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { formatDate, formatCurrencyVN, formatDateVN } from '../../../utils/format';
+import { CART_ITEM_STATUS } from '../../../constants';
 
 const OrderList = props => {
   const { orders } = props;
@@ -49,9 +50,9 @@ const OrderList = props => {
                   <div className='mb-1'>
                     <span>{"Trạng thái"}</span>
                     {order?.items ? (
-                      <span className='order-label order-status'>{` ${order?.items[0].status}`}</span>
+                      <span className='order-label order-status'>{` ${CART_ITEM_STATUS[order?.items[0].status] || order?.items[0].status}`}</span>
                     ) : (
-                      <span className='order-label order-status'>{` Unavailable`}</span>
+                      <span className='order-label order-status'>{` Không có sẵn`}</span>
                     )}
                   </div>
                   <div className='mb-1'>
