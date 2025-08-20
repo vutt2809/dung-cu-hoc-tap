@@ -60,7 +60,7 @@ class Users extends React.PureComponent {
 
     return (
       <div className='users-dashboard'>
-        <SubPage title="Người dùng" />
+        <SubPage title="Danh sách người dùng" />
         <UserSearch
           onSearch={this.handleUserSearch}
           onSearchSubmit={searchUsers}
