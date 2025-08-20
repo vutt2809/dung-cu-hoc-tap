@@ -39,13 +39,13 @@ export const resetPassword = token => {
       const user = getState().resetPassword.resetFormData;
 
       const { isValid, errors } = allFieldsValidation(user, rules, {
-        'required.password': 'Password is required.',
-        'min.password': 'Password must be at least 6 characters.',
-        'required.confirmPassword': 'Confirm password is required.',
+        'required.password': 'Mật khẩu là bắt buộc.',
+        'min.password': 'Mật khẩu phải có ít nhất 6 ký tự.',
+        'required.confirmPassword': 'Xác nhận mật khẩu là bắt buộc.',
         'min.confirmPassword':
-          'Confirm password must be at least 6 characters.',
+          'Xác nhận mật khẩu phải có ít nhất 6 ký tự.',
         'same.confirmPassword':
-          'Confirm password and password fields must match.'
+          'Xác nhận mật khẩu và mật khẩu phải khớp nhau.'
       });
 
       if (!isValid) {
@@ -72,7 +72,7 @@ export const resetPassword = token => {
       dispatch(success(successfulOptions));
       dispatch({ type: RESET_PASSWORD_RESET });
     } catch (error) {
-      const title = `Please try to reset again!`;
+      const title = `Vui lòng thử đặt lại mật khẩu!`;
       handleError(error, dispatch, title);
     }
   };

@@ -10,6 +10,7 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import { EMAIL_PROVIDER } from '../../../constants';
 
 const AccountDetails = props => {
   const { user, accountChange, updateProfile } = props;
@@ -66,7 +67,7 @@ const AccountDetails = props => {
               type={'text'}
               label={'Email'}
               name={'email'}
-              placeholder={'Please Enter Your Email'}
+              placeholder={'Vui lòng nhập email của bạn'}
               value={user.email ? user.email : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);

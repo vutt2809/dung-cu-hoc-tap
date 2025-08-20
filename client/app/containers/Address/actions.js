@@ -104,11 +104,11 @@ export const addAddress = () => {
       const isDefault = getState().address.isDefault;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.address': 'Address is required.',
-        'required.city': 'City is required.',
-        'required.state': 'State is required.',
-        'required.country': 'Country is required.',
-        'required.zip_code': 'zip_code is required.'
+        'required.address': 'Địa chỉ là bắt buộc.',
+        'required.city': 'Thành phố là bắt buộc.',
+        'required.state': 'Tỉnh/Thành là bắt buộc.',
+        'required.country': 'Quốc gia là bắt buộc.',
+        'required.zip_code': 'Mã bưu điện là bắt buộc.'
       });
 
       if (!isValid) {
@@ -158,11 +158,11 @@ export const updateAddress = () => {
       const newAddress = getState().address.address;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.address': 'Address is required.',
-        'required.city': 'City is required.',
-        'required.state': 'State is required.',
-        'required.country': 'Country is required.',
-        'required.zip_code': 'zip_code is required.'
+        'required.address': 'Địa chỉ là bắt buộc.',
+        'required.city': 'Thành phố là bắt buộc.',
+        'required.state': 'Tỉnh/Thành là bắt buộc.',
+        'required.country': 'Quốc gia là bắt buộc.',
+        'required.zip_code': 'Mã bưu điện là bắt buộc.'
       });
 
       if (!isValid) {

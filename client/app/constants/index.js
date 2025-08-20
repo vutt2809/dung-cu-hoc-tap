@@ -15,20 +15,20 @@ export const CART_TOTAL = 'cart_total';
 export const CART_ID = 'cart_id';
 
 export const CART_ITEM_STATUS = {
-  Processing: 'Processing',
-  Shipped: 'Shipped',
-  Delivered: 'Delivered',
-  Cancelled: 'Cancelled',
-  Not_processed: 'Not processed'
+  Processing: 'Đang xử lý',
+  Shipped: 'Đã gửi hàng',
+  Delivered: 'Đã giao hàng',
+  Cancelled: 'Đã hủy',
+  Not_processed: 'Chưa xử lý'
 };
 
 export const ORDER_STATUS = {
-  Pending: 'Pending',
-  Processing: 'Processing',
-  Shipped: 'Shipped',
-  Delivered: 'Delivered',
-  Cancelled: 'Cancelled',
-  Not_processed: 'Not processed'
+  Pending: 'Chờ xử lý',
+  Processing: 'Đang xử lý',
+  Shipped: 'Đã gửi hàng',
+  Delivered: 'Đã giao hàng',
+  Cancelled: 'Đã hủy',
+  Not_processed: 'Chưa xử lý'
 };
 
 
@@ -40,5 +40,3 @@ export const EMAIL_PROVIDER = {
 };
 
 export const JWT_COOKIE = 'x-jwt-cookie';
-
-export * from './vi';

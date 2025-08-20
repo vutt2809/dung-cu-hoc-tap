@@ -134,11 +134,11 @@ export const addCategory = () => {
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
-        'required.name': 'Name is required.',
-        'required.description': 'Description is required.',
+        'required.name': 'Tên danh mục là bắt buộc.',
+        'required.description': 'Mô tả là bắt buộc.',
         'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+          'Mô tả không được lớn hơn 200 ký tự.',
+        'required.products': 'Sản phẩm là bắt buộc.'
       });
 
       if (!isValid) {
@@ -189,14 +189,14 @@ export const updateCategory = () => {
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
-        'required.name': 'Name is required.',
-        'required.slug': 'Slug is required.',
+        'required.name': 'Tên danh mục là bắt buộc.',
+        'required.slug': 'Slug là bắt buộc.',
         'alpha_dash.slug':
-          'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
-        'required.description': 'Description is required.',
+          'Slug chỉ được chứa ký tự chữ, số, dấu gạch ngang và gạch dưới.',
+        'required.description': 'Mô tả là bắt buộc.',
         'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+          'Mô tả không được lớn hơn 200 ký tự.',
+        'required.products': 'Sản phẩm là bắt buộc.'
       });
 
       if (!isValid) {

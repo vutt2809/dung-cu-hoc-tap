@@ -32,7 +32,7 @@ const AddMessage = props => {
         autoComplete='off'
         type={'text'}
         name={'message'}
-        placeholder='type message'
+        placeholder='Nhập tin nhắn'
         value={message}
         onInputChange={(_, value) => setMessage(value)}
         inlineElement={<SendButton disabled={!message} />}
@@ -42,7 +42,7 @@ const AddMessage = props => {
 };
 
 const SendButton = ({ disabled }) => (
-  <Button type='submit' disabled={disabled} variant='primary' text='Send' />
+  <Button type='submit' disabled={disabled} variant='primary' text='Gửi' />
 );
 
 export default AddMessage;
