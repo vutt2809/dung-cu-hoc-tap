@@ -25,7 +25,7 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title="Địa chỉ"
+          title="Danh sách địa chỉ"
           actionTitle="Thêm"
           handleAction={() => history.push('/dashboard/address/add')}
         >

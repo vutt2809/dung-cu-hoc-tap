@@ -23,7 +23,7 @@ const AddressList = props => {
         >
           <div className='d-flex align-items-center mb-3 address-box'>
             <div className='mx-3'>
-              <AddressIcon />
+              {/* <AddressIcon /> */}
             </div>
             <div className='flex-1 p-3 p-lg-4'>
               {address.isDefault ? (
