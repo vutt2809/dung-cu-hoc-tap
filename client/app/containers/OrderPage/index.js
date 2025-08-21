@@ -12,7 +12,7 @@ import actions from '../../actions';
 
 import OrderDetails from '../../components/Manager/OrderDetails';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {
@@ -39,9 +39,7 @@ class OrderPage extends React.PureComponent {
 
     return (
       <div className='order-page'>
-        {isLoading ? (
-          <LoadingIndicator backdrop />
-        ) : (order.id || order._id) ? (
+        {(order.id || order._id) ? (
           <OrderDetails
             order={order}
             user={user}

@@ -13,7 +13,7 @@ import { ROLES } from '../../constants';
 import dashboardLinks from './links.json';
 import Admin from '../../components/Manager/Dashboard/Admin';
 import Customer from '../../components/Manager/Dashboard/Customer';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 
 class Dashboard extends React.PureComponent {
   componentDidMount() {
@@ -25,9 +25,7 @@ class Dashboard extends React.PureComponent {
 
     return (
       <>
-        {isLoading ? (
-          <LoadingIndicator inline />
-        ) : user.role === ROLES.Admin ? (
+        {user.role === ROLES.Admin ? (
           <Admin
             user={user}
             isMenuOpen={isMenuOpen}

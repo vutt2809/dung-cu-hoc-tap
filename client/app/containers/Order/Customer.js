@@ -15,7 +15,7 @@ import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
 import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import Pagination from '../../components/Common/Pagination';
 
 class Customer extends React.PureComponent {
@@ -77,7 +77,6 @@ class Customer extends React.PureComponent {
             onSearch={this.handleOrderSearch}
             onSearchSubmit={searchOrders}
           />
-          {isLoading && <LoadingIndicator />}
           {displayOrders && (
             <>
               {!isSearch && displayPagination && (

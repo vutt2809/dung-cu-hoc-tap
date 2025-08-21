@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import actions from '../../actions';
 
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 
 class OrderSuccess extends React.PureComponent {
   componentDidMount() {
@@ -33,9 +33,7 @@ class OrderSuccess extends React.PureComponent {
 
     return (
       <div className='order-success'>
-        {isLoading ? (
-          <LoadingIndicator />
-        ) : orderId ? (
+        {orderId ? (
           <div className='order-message'>
             <h2>Cảm ơn bạn đã đặt hàng.</h2>
             <p>

@@ -15,7 +15,7 @@ import UserSearch from '../../components/Manager/UserSearch';
 import SubPage from '../../components/Manager/SubPage';
 import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import Pagination from '../../components/Common/Pagination';
 
 class Users extends React.PureComponent {

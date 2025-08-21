@@ -31,7 +31,7 @@ const EditAddress = props => {
               error={formErrors['address']}
               label={"Địa chỉ"}
               name={'address'}
-              placeholder={'Address: Street, House No / Apartment No'}
+              placeholder={'Địa chỉ: Số nhà, tên đường'}
               value={address.address}
               onInputChange={(name, value) => {
                 addressChange(name, value);

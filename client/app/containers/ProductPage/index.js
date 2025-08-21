@@ -13,7 +13,7 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import NotFound from '../../components/Common/NotFound';
 import { BagIcon } from '../../components/Common/Icon';
 
@@ -49,9 +49,7 @@ class ProductPage extends React.PureComponent {
 
     return (
       <div className='product-shop'>
-        {isLoading ? (
-          <LoadingIndicator />
-        ) : Object.keys(product).length > 0 ? (
+        {Object.keys(product).length > 0 ? (
           <>
             <Row className='flex-row'>
               <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>

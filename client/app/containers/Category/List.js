@@ -12,7 +12,7 @@ import actions from '../../actions';
 
 import CategoryList from '../../components/Manager/CategoryList';
 import SubPage from '../../components/Manager/SubPage';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
@@ -30,9 +30,7 @@ class List extends React.PureComponent {
           actionTitle="Thêm"
           handleAction={() => history.push('/dashboard/category/add')}
         >
-          {isLoading ? (
-            <LoadingIndicator inline />
-          ) : categories.length > 0 ? (
+          {categories.length > 0 ? (
             <CategoryList categories={categories} />
           ) : (
             <NotFound message={"Không tìm thấy danh mục."} />

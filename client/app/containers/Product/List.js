@@ -12,7 +12,7 @@ import actions from '../../actions';
 
 import ProductList from '../../components/Manager/ProductList';
 import SubPage from '../../components/Manager/SubPage';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
@@ -30,9 +30,7 @@ class List extends React.PureComponent {
           actionTitle='Thêm sản phẩm'
           handleAction={() => history.push('/dashboard/product/add')}
         >
-          {isLoading ? (
-            <LoadingIndicator inline />
-          ) : products.length > 0 ? (
+          {products.length > 0 ? (
             <ProductList products={products} />
           ) : (
             <NotFound message='Không tìm thấy sản phẩm.' />

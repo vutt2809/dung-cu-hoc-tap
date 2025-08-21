@@ -223,7 +223,7 @@ export const clearCart = () => {
     // --- Clear trên server ---
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`${API_URL}/cart/clear`, {}, {
+      await axios.delete(`${API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) {
@@ -269,7 +269,7 @@ export const syncCartToServer = () => {
 
     try {
       // Clear server cart first
-      await axios.post(`${API_URL}/cart/clear`, {}, {
+      await axios.delete(`${API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -294,18 +294,22 @@ export const syncCartToServer = () => {
 export const loadCartFromServer = () => {
   return async (dispatch, getState) => {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!token) {
+      console.log('No token found, skipping server cart load');
+      return;
+    }
 
     try {
       const response = await axios.get(`${API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+      console.log('Cart response from server:', response.data);
       const serverCartItems = response.data.cart;
-      const localCartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]');
-
-      // If server has more items, use server data
-      if (serverCartItems.length > localCartItems.length) {
+      
+      // Luôn sử dụng dữ liệu từ server khi user đã đăng nhập
+      if (serverCartItems && serverCartItems.length > 0) {
+        console.log('Server cart items:', serverCartItems);
         const formattedItems = serverCartItems.map(item => ({
           id: item.product.id,
           name: item.product.name,
@@ -316,6 +320,7 @@ export const loadCartFromServer = () => {
           taxable: item.taxable || false
         }));
 
+        console.log('Formatted items:', formattedItems);
         localStorage.setItem(CART_ITEMS, JSON.stringify(formattedItems));
         
         dispatch({
@@ -327,9 +332,23 @@ export const loadCartFromServer = () => {
           }
         });
         dispatch(calculateCartTotal());
+      } else {
+        // Nếu server không có dữ liệu, clear localStorage
+        console.log('Server cart is empty, clearing localStorage');
+        localStorage.removeItem(CART_ITEMS);
+        dispatch({
+          type: HANDLE_CART,
+          payload: {
+            cartItems: [],
+            cartTotal: 0,
+            cartId: localStorage.getItem(CART_ID)
+          }
+        });
+        dispatch(calculateCartTotal());
       }
     } catch (err) {
       console.error('Lỗi load giỏ hàng từ server:', err);
+      console.error('Error response:', err.response?.data);
     }
   };
 };

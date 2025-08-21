@@ -11,7 +11,7 @@ import actions from '../../actions';
 
 import ProductList from '../../components/Store/ProductList';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 
 class CategoryShop extends React.PureComponent {
   componentDidMount() {
@@ -31,7 +31,6 @@ class CategoryShop extends React.PureComponent {
 
     return (
       <div className='category-shop'>
-        {isLoading && <LoadingIndicator />}
         {products && products.length > 0 && (
           <ProductList
             products={products}

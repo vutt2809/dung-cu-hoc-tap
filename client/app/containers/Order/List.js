@@ -15,7 +15,7 @@ import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
 import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+
 import Pagination from '../../components/Common/Pagination';
 
 class List extends React.PureComponent {
@@ -79,7 +79,6 @@ class List extends React.PureComponent {
             onSearchSubmit={this.handleOrderSearch}
           />
 
-          {isLoading && <LoadingIndicator />}
           {displayOrders && (
             <>
               {!isSearch && displayPagination && (
