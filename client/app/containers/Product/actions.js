@@ -234,7 +234,7 @@ export const addProduct = () => {
 
       const product = getState().product.productFormData;
       const user = getState().account.user;
-      const brands = getState().brand.brandsSelect;
+      const brands = getState().brand?.brandsSelect || [];
 
       const brand = unformatSelectOptions([product.brand]);
 
@@ -252,7 +252,7 @@ export const addProduct = () => {
             ? brand !== 0
               ? brand
               : null
-            : brands[1].value
+            : brands[1]?.value || null
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -334,7 +334,7 @@ export const updateProduct = () => {
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
-        brand: user.role === ROLES.Admin ? 'required' : 'nullable'
+        brand: 'nullable'
       };
 
       const newProduct = {
