@@ -42,11 +42,11 @@ class AuthController extends Controller
         }
 
         // Check if user is using email provider (case-insensitive)
-        if ($user->provider && strtolower($user->provider) !== 'email') {
-            return response()->json([
-                'error' => "That email address is already in use using {$user->provider} provider."
-            ], 400);
-        }
+        // if ($user->provider && strtolower($user->provider) !== 'email') {
+        //     return response()->json([
+        //         'error' => "That email address is already in use using {$user->provider} provider."
+        //     ], 400);
+        // }
 
         if (!Hash::check($request->password, $user->password)) {
             return response()->json([
@@ -90,7 +90,7 @@ class AuthController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'password' => Hash::make($request->password),
-            'provider' => 'Email',
+            // 'provider' => 'Email',
             'role' => 'ROLE MEMBER'
         ]);
 
@@ -221,7 +221,7 @@ class AuthController extends Controller
                 'email' => $googleUser->getEmail(),
                 'first_name' => $googleUser->user['given_name'] ?? '',
                 'last_name' => $googleUser->user['family_name'] ?? '',
-                'provider' => 'Google',
+                // 'provider' => 'Google',
                 'google_id' => $googleUser->getId(),
                 'avatar' => $googleUser->getAvatar(),
                 'role' => 'member',

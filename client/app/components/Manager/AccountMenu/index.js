@@ -17,7 +17,7 @@ const AccountMenu = props => {
   const getAllowedProvider = link => {
     if (!link.provider) return true;
 
-    const userProvider = user.provider ?? '';
+    const userProvider = user?.provider ?? '';
     if (!userProvider) return true;
 
     return link.provider.includes(userProvider);

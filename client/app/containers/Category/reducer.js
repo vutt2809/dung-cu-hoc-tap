@@ -26,9 +26,7 @@ const initialState = {
   },
   categoryFormData: {
     name: '',
-    description: '',
-    products: [],
-    is_active: true
+    description: ''
   },
   formErrors: {},
   editFormErrors: {},
@@ -99,9 +97,7 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categoryFormData: {
           name: '',
-          description: '',
-          products: [],
-          is_active: true
+          description: ''
         },
         category: {
           _id: ''

@@ -40,12 +40,7 @@ const initialState = {
     quantity: 1,
     price: 1,
     image: {},
-    is_active: true,
-    taxable: { value: 0, label: 'No' },
-    brand: {
-      value: 0,
-      label: 'No Options Selected'
-    }
+    is_active: true
   },
   isLoading: false,
   productShopData: {
@@ -100,6 +95,7 @@ const productReducer = (state = initialState, action) => {
     case FETCH_PRODUCTS_SELECT:
       return { ...state, productsSelect: action.payload };
     case ADD_PRODUCT:
+      console.log('ADD_PRODUCT payload:', action.payload);
       return {
         ...state,
         products: [...state.products, action.payload]
@@ -162,12 +158,7 @@ const productReducer = (state = initialState, action) => {
           quantity: 1,
           price: 1,
           image: {},
-          is_active: true,
-          taxable: { value: 0, label: 'No' },
-          brand: {
-            value: 0,
-            label: 'No Options Selected'
-          }
+          is_active: true
         },
         product: {
           _id: ''

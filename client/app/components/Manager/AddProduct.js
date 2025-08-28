@@ -6,10 +6,7 @@ import Button from '../Common/Button';
 import SelectOption from '../Common/SelectOption';
 import { formatCurrencyVN } from '../../utils/format';
 
-const taxableSelect = [
-  { value: 1, label: 'Có' },
-  { value: 0, label: 'Không' }
-];
+
 
 const AddProduct = props => {
   const {
@@ -22,6 +19,8 @@ const AddProduct = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    console.log('AddProduct form submitted, calling addProduct action');
+    console.log('addProduct function:', addProduct);
     addProduct();
   };
 
@@ -121,25 +120,7 @@ const AddProduct = props => {
               addonAfter={formatCurrencyVN(productFormData.price)}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <SelectOption
-              error={formErrors['taxable']}
-              label={'Chịu thuế'}
-              multi={false}
-              name={'taxable'}
-              value={[
-                productFormData.taxable !== null && productFormData.taxable !== undefined
-                  ? productFormData.taxable
-                    ? taxableSelect[0]
-                    : taxableSelect[1]
-                  : taxableSelect[1]
-              ]}
-              options={taxableSelect}
-              handleSelectChange={value => {
-                productChange('taxable', value.value);
-              }}
-            />
-          </Col>
+
 
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch

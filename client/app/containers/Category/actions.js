@@ -118,33 +118,36 @@ export const fetchCategory = id => {
 // add category api
 export const addCategory = () => {
   return async (dispatch, getState) => {
+    console.log('addCategory action called');
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200',
-        products: 'required'
+        description: 'required|max:200'
       };
 
       const category = getState().category.categoryFormData;
+      console.log('category form data:', category);
 
       const newCategory = {
         name: category.name,
-        description: category.description,
-        products: unformatSelectOptions(category.products)
+        description: category.description
       };
 
+      console.log('newCategory for validation:', newCategory);
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Tên danh mục là bắt buộc.',
         'required.description': 'Mô tả là bắt buộc.',
         'max.description':
-          'Mô tả không được lớn hơn 200 ký tự.',
-        'required.products': 'Sản phẩm là bắt buộc.'
+          'Mô tả không được lớn hơn 200 ký tự.'
       });
 
+      console.log('Validation result:', { isValid, errors });
       if (!isValid) {
         return dispatch({ type: SET_CATEGORY_FORM_ERRORS, payload: errors });
       }
 
+      console.log('Sending request to:', `${API_URL}/category`);
+      console.log('Request data:', newCategory);
       const response = await axios.post(`${API_URL}/category`, newCategory);
 
       const successfulOptions = {

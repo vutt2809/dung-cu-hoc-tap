@@ -18,6 +18,7 @@ const AddCategory = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    console.log('Form submitted, calling addCategory');
     addCategory();
   };
 
@@ -51,26 +52,7 @@ const AddCategory = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <SelectOption
-              label={'Sản phẩm'}
-              name={'products'}
-              value={categoryFormData.products}
-              options={categoryFormData.products}
-              handleSelectChange={value => {
-                categoryChange('products', value);
-              }}
-            />
-          </Col>
-          <Col xs='12' md='12' className='my-2'>
-            <Switch
-              id={'active-category'}
-              name={'is_active'}
-              label={'Hoạt động?'}
-              checked={categoryFormData.is_active}
-              toggleCheckboxChange={value => categoryChange('is_active', value)}
-            />
-          </Col>
+
         </Row>
         <hr />
         <div className='add-category-actions'>

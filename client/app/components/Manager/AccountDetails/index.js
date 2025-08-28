@@ -25,11 +25,11 @@ const AccountDetails = props => {
       <div className='info'>
         <div className='desc'>
           <p className='one-line-ellipsis mr-3'>
-            {user.provider === EMAIL_PROVIDER.Email ? (
-              user.email
+            {user?.provider === EMAIL_PROVIDER.Email ? (
+              user?.email
             ) : (
               <span className='provider-email'>
-                Đăng nhập với {user.provider}
+                Đăng nhập với {user?.provider}
               </span>
             )}
           </p>

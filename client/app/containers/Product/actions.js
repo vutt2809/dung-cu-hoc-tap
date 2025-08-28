@@ -220,6 +220,8 @@ export const fetchProduct = id => {
 // add product api
 export const addProduct = () => {
   return async (dispatch, getState) => {
+    console.log('addProduct action called');
+    console.log('API_URL:', API_URL);
     try {
       const rules = {
         sku: 'required|alpha_dash',
@@ -227,14 +229,22 @@ export const addProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
-        image: 'required',
-        brand: 'required'
+        image: 'required'
       };
 
       const product = getState().product.productFormData;
       const user = getState().account.user;
       const brands = getState().brand?.brandsSelect || [];
+      
+      console.log('Product form data:', product);
+      console.log('User:', user);
+      console.log('Brands:', brands);
+      
+      // Check if user exists
+      if (!user) {
+        console.error('User is undefined');
+        return;
+      }
 
       const brand = unformatSelectOptions([product.brand]);
 
@@ -245,15 +255,10 @@ export const addProduct = () => {
         price: product.price,
         quantity: product.quantity,
         image: product.image,
-        is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1',
-        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
-        brand:
-          user.role !== ROLES.Merchant
-            ? brand !== 0
-              ? brand
-              : null
-            : brands[1]?.value || null
+        is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1'
       };
+      
+      console.log('New product object:', newProduct);
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.sku': 'Mã SKU là bắt buộc.',
@@ -265,15 +270,16 @@ export const addProduct = () => {
           'Mô tả sản phẩm không được vượt quá 200 ký tự.',
         'required.quantity': 'Số lượng là bắt buộc.',
         'required.price': 'Giá là bắt buộc.',
-        'required.taxable': 'Vui lòng chọn trạng thái chịu thuế.',
-        'required.image': 'Vui lòng tải lên hình ảnh sản phẩm (jpg, jpeg, png).',
-        'required.brand': 'Thương hiệu là bắt buộc.'
+        'required.image': 'Vui lòng tải lên hình ảnh sản phẩm (jpg, jpeg, png).'
       });
 
       if (!isValid) {
+        console.log('Validation failed:', errors);
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
       }
       const formData = new FormData();
+      console.log('Image object:', newProduct.image);
+      
       if (newProduct.image) {
         for (const key in newProduct) {
           if (newProduct.hasOwnProperty(key)) {
@@ -284,8 +290,16 @@ export const addProduct = () => {
             }
           }
         }
+      } else {
+        console.error('Image is required but not provided');
+        return dispatch({ 
+          type: SET_PRODUCT_FORM_ERRORS, 
+          payload: { image: ['Vui lòng tải lên hình ảnh sản phẩm'] } 
+        });
       }
 
+      console.log('Sending request to:', `${API_URL}/product`);
+      console.log('FormData:', formData);
       const response = await axios.post(`${API_URL}/product`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -298,14 +312,17 @@ export const addProduct = () => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-        const brand = response.data.product.brand;
-        const brandId = response.data.product.brand_id;
-        if (brand && brandId) {
+        
+        console.log('Response data:', response.data);
+        
+        // Safely handle brand data
+        if (response.data.product && response.data.product.brand && response.data.product.brand_id) {
           response.data.product.brand = {
-            value: brandId,
-            label: brand.name
+            value: response.data.product.brand_id,
+            label: response.data.product.brand.name
           };
         }
+        
         dispatch({
           type: ADD_PRODUCT,
           payload: response.data.product
@@ -324,6 +341,12 @@ export const updateProduct = () => {
   return async (dispatch, getState) => {
     try {
       const product = getState().product.product;
+      
+      // Check if product exists and has id
+      if (!product || !product.id) {
+        console.error('Product is undefined or missing id');
+        return;
+      }
       const user = getState().account.user;
 
       const rules = {
@@ -333,7 +356,6 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
         brand: 'nullable'
       };
 
@@ -344,7 +366,6 @@ export const updateProduct = () => {
         description: product.description,
         quantity: product.quantity,
         price: product.price,
-        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
         brand: product.brand && product.brand.value ? product.brand.value : null,
         is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1'
       };
@@ -362,7 +383,6 @@ export const updateProduct = () => {
           'Mô tả không được lớn hơn 200 ký tự.',
         'required.quantity': 'Số lượng là bắt buộc.',
         'required.price': 'Giá là bắt buộc.',
-        'required.taxable': 'Thuế là bắt buộc.',
         'required.brand': 'Thương hiệu là bắt buộc.'
       });
 

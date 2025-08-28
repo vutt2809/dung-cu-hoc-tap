@@ -14,14 +14,10 @@ import AddCategory from '../../components/Manager/AddCategory';
 import SubPage from '../../components/Manager/SubPage';
 
 class Add extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchProductsSelect();
-  }
 
   render() {
     const {
       history,
-      products,
       categoryFormData,
       formErrors,
       categoryChange,
@@ -35,7 +31,6 @@ class Add extends React.PureComponent {
         handleAction={() => history.goBack()}
       >
         <AddCategory
-          products={products}
           categoryFormData={categoryFormData}
           formErrors={formErrors}
           categoryChange={categoryChange}
@@ -48,7 +43,6 @@ class Add extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.productsSelect,
     categoryFormData: state.category.categoryFormData,
     formErrors: state.category.formErrors
   };
