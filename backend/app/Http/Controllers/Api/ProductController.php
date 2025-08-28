@@ -112,12 +112,12 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'sku' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
+            'sku' => 'required|string|max:255',
+            'description' => 'required|string',
             'quantity' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
-            'taxable' => 'boolean',
-            'category_id' => 'nullable|exists:categories,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_active' => 'nullable|in:true,false,1,0,"true","false","1","0"',
         ]);
 
         if ($validator->fails()) {
@@ -128,7 +128,20 @@ class ProductController extends Controller
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->name);
-        $data['is_active'] = true;
+        $data['is_active'] = $request->has('is_active') ? filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN) : true;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::slug($request->name) . '.' . $image->getClientOriginalExtension();
+            
+            // Store image in storage/app/public/products
+            $imagePath = $image->storeAs('products', $imageName, 'public');
+            
+            // Set image_url to the public URL
+            $data['image_url'] = 'http://localhost:3000/storage/' . $imagePath;
+            $data['image_key'] = $imagePath;
+        }
 
         $product = Product::create($data);
 
@@ -151,13 +164,12 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|string|max:255',
-            'sku' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
+            'sku' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
             'quantity' => 'sometimes|required|integer|min:0',
             'price' => 'sometimes|required|numeric|min:0',
-            'taxable' => 'sometimes|boolean',
-            'category_id' => 'nullable|exists:categories,id',
-            'is_active' => 'sometimes|boolean',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_active' => 'sometimes|nullable|in:true,false,1,0,"true","false","1","0"',
         ]);
 
         if ($validator->fails()) {
@@ -175,16 +187,22 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($request->name);
         }
 
-
-
         // Xử lý field is_active
         if ($request->has('is_active')) {
             $data['is_active'] = filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN);
         }
 
-        // Xử lý field taxable
-        if ($request->has('taxable')) {
-            $data['taxable'] = filter_var($request->taxable, FILTER_VALIDATE_BOOLEAN);
+        // Handle image upload if new image is provided
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::slug($request->name ?? $product->name) . '.' . $image->getClientOriginalExtension();
+            
+            // Store image in storage/app/public/products
+            $imagePath = $image->storeAs('products', $imageName, 'public');
+            
+            // Set image_url to the public URL
+            $data['image_url'] = config('app.url') . '/storage/' . $imagePath;
+            $data['image_key'] = $imagePath;
         }
 
         $product->update($data);

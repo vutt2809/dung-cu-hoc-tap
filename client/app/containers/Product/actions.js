@@ -234,11 +234,12 @@ export const addProduct = () => {
 
       const product = getState().product.productFormData;
       const user = getState().account.user;
-      const brands = getState().brand?.brandsSelect || [];
+      // Brands no longer needed since brand field was removed
+      // const brands = getState().brand?.brandsSelect || [];
       
       console.log('Product form data:', product);
       console.log('User:', user);
-      console.log('Brands:', brands);
+      // console.log('Brands:', brands);
       
       // Check if user exists
       if (!user) {
@@ -246,7 +247,8 @@ export const addProduct = () => {
         return;
       }
 
-      const brand = unformatSelectOptions([product.brand]);
+      // Brand has been removed, no need to process it
+      // const brand = unformatSelectOptions([product.brand]);
 
       const newProduct = {
         sku: product.sku,
@@ -258,8 +260,12 @@ export const addProduct = () => {
         is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1'
       };
       
+      console.log('is_active value from form:', product.is_active);
+      console.log('is_active processed value:', newProduct.is_active);
+      
       console.log('New product object:', newProduct);
 
+      console.log('About to validate with rules:', rules);
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.sku': 'Mã SKU là bắt buộc.',
         'alpha_dash.sku':
@@ -277,17 +283,15 @@ export const addProduct = () => {
         console.log('Validation failed:', errors);
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
       }
+      
+      console.log('Validation passed, proceeding to create FormData');
       const formData = new FormData();
       console.log('Image object:', newProduct.image);
       
       if (newProduct.image) {
         for (const key in newProduct) {
           if (newProduct.hasOwnProperty(key)) {
-            if (key === 'brand' && newProduct[key] === null) {
-              continue;
-            } else {
-              formData.set(key, newProduct[key]);
-            }
+            formData.set(key, newProduct[key]);
           }
         }
       } else {
@@ -300,10 +304,13 @@ export const addProduct = () => {
 
       console.log('Sending request to:', `${API_URL}/product`);
       console.log('FormData:', formData);
+      
+      console.log('About to make axios request');
       const response = await axios.post(`${API_URL}/product`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
+      console.log('Response received:', response);
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
@@ -314,14 +321,15 @@ export const addProduct = () => {
         dispatch(success(successfulOptions));
         
         console.log('Response data:', response.data);
+        console.log('Response data.product:', response.data.product);
         
-        // Safely handle brand data
-        if (response.data.product && response.data.product.brand && response.data.product.brand_id) {
-          response.data.product.brand = {
-            value: response.data.product.brand_id,
-            label: response.data.product.brand.name
-          };
-        }
+        // Brand field has been removed, no need to handle brand data
+        // if (response.data.product && response.data.product.brand && response.data.product.brand_id) {
+        //   response.data.product.brand = {
+        //     value: response.data.product.brand_id,
+        //     label: response.data.product.brand.name
+        //   };
+        // }
         
         dispatch({
           type: ADD_PRODUCT,
@@ -331,6 +339,9 @@ export const addProduct = () => {
         dispatch(goBack());
       }
     } catch (error) {
+      console.log('Error caught in addProduct:', error);
+      console.log('Error message:', error.message);
+      console.log('Error response:', error.response);
       handleError(error, dispatch);
     }
   };
