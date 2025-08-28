@@ -142,18 +142,18 @@ const OrderItems = props => {
 
                 <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
-                    <p className='order-label order-status'>{`${CART_ITEM_STATUS[item.status] || item.status}`}</p>
                     <p>Trạng thái</p>
+                    <p className='order-label order-status'>{`${CART_ITEM_STATUS[item.status] || item.status}`}</p>
                   </div>
 
                   <div className='text-center'>
-                    <p className='order-label'>{` ${item.quantity}`}</p>
                     <p>Số lượng</p>
+                    <p className='order-label'>{` ${item.quantity}`}</p>
                   </div>
 
                   <div className='text-center'>
-                    <p className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</p>
                     <p>Thành tiền</p>
+                    <p className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</p>
                   </div>
                 </div>
               </div>
