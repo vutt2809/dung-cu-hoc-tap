@@ -534,11 +534,23 @@ const productsFilterOrganizer = (n, v, s) => {
         page: v ?? s.currentPage,
         limit: s.limit
       };
+    case 'name':
+      return {
+        name: v,
+        category: s.category,
+        brand: s.brand,
+        min: s.min,
+        max: s.max,
+        rating: s.rating,
+        order: s.order,
+        page: s.currentPage,
+        limit: s.limit
+      };
     default:
       return {
         name: s.name,
-        category: 'all',
-        brand: 'all',
+        category: s.category,
+        brand: s.brand,
         min: s.min,
         max: s.max,
         rating: s.rating,

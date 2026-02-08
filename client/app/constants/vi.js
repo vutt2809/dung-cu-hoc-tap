@@ -22,7 +22,7 @@ export const VI = {
   'Subscribe to newsletter': 'Đăng ký nhận bản tin',
   'Forgot Password?': 'Quên mật khẩu?',
   'Create an account': 'Tạo một tài khoản',
-  
+
   // Footer
   'Customer Service': 'Dịch vụ khách hàng',
   'Contact Us': 'Liên hệ chúng tôi',
@@ -39,7 +39,7 @@ export const VI = {
   'Wishlist': 'Danh sách yêu thích',
   'WishList': 'Danh sách yêu thích',
   'Support': 'Hỗ trợ',
-  
+
   // Buttons
   'Submit': 'Gửi',
   'Cancel': 'Hủy',
@@ -57,7 +57,7 @@ export const VI = {
   'Approve': 'Phê duyệt',
   'Reject': 'Từ chối',
   'Re Approve Review': 'Phê duyệt lại đánh giá',
-  
+
   // Forms
   'Name': 'Tên',
   'Email Address': 'Địa chỉ email',
@@ -79,7 +79,7 @@ export const VI = {
   'Total': 'Tổng cộng',
   'Status': 'Trạng thái',
   'Active?': 'Hoạt động?',
-  
+
   // Placeholders
   'Your Full Name': 'Họ và tên của bạn',
   'Your Email Address': 'Địa chỉ email của bạn',
@@ -144,7 +144,7 @@ export const VI = {
   'Type product name or review title': 'Nhập tên sản phẩm hoặc tiêu đề đánh giá',
   'No reviews found': 'Không tìm thấy đánh giá nào',
   'No wishlist found': 'Không tìm thấy danh sách yêu thích nào',
-  
+
   // Messages
   'No categories found.': 'Không tìm thấy danh mục.',
   'No products found.': 'Không tìm thấy sản phẩm.',
@@ -156,13 +156,13 @@ export const VI = {
   'Approved': 'Đã phê duyệt',
   'Rejected': 'Đã từ chối',
   'Waiting Approval': 'Chờ phê duyệt',
-  
+
   // Errors
   'Please Try Again!': 'Vui lòng thử lại!',
   'Unauthorized Access! Please login again': 'Truy cập không được phép! Vui lòng đăng nhập lại',
   'Forbidden! You are not allowed to access this resource.': 'Bị cấm! Bạn không được phép truy cập tài nguyên này.',
   'Your request could not be processed. Please try again.': 'Yêu cầu của bạn không thể xử lý. Vui lòng thử lại.',
-  
+
   // Validation
   'Name is required.': 'Tên là bắt buộc.',
   'Email is required.': 'Email là bắt buộc.',
@@ -170,14 +170,14 @@ export const VI = {
   'Description is required.': 'Mô tả là bắt buộc.',
   'Products are required.': 'Sản phẩm là bắt buộc.',
   'Description may not be greater than 200 characters.': 'Mô tả không được vượt quá 200 ký tự.',
-  
+
   // Success
   'Subscribe': 'Đăng ký',
   'Add Brand': 'Thêm thương hiệu',
   'Add Category': 'Thêm danh mục',
   'Add Review': 'Thêm đánh giá',
   'Add Product': 'Thêm sản phẩm',
-  
+
   // Dashboard
   'Dashboard Menu': 'Menu bảng điều khiển',
   'Account': 'Tài khoản',
@@ -186,7 +186,7 @@ export const VI = {
   'Please Enter Your Last Name': 'Vui lòng nhập họ của bạn',
   'Please Enter Your Phone Number': 'Vui lòng nhập số điện thoại của bạn',
   'Save Changes': 'Lưu thay đổi',
-  
+
   // Status
   'Processing': 'Đang xử lý',
   'Shipped': 'Đã gửi hàng',

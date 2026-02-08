@@ -34,7 +34,7 @@ class SearchBar extends React.Component {
         if (this.props.onSearch) {
           this.props.onSearch({ name, value });
         }
-      }, 1000)
+      }, 300)
     });
   }
 
@@ -71,9 +71,8 @@ class SearchBar extends React.Component {
     const { value } = this.state;
 
     const styles = `search-box${inlineBtn ? ` inline-btn-box` : ''}`;
-    const classNames = `input-text search-box${`${
-      className && ` ${className}`
-    }`}`;
+    const classNames = `input-text search-box${`${className && ` ${className}`
+      }`}`;
 
     return (
       <form onSubmit={e => this._handleSubmit(e)} noValidate>

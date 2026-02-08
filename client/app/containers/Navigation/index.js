@@ -82,11 +82,10 @@ class Navigation extends React.PureComponent {
         <div className='d-flex'>
           <img
             className='item-image'
-            src={`${
-              suggestion.imageUrl
+            src={`${suggestion.imageUrl
                 ? suggestion.imageUrl
                 : '/images/placeholder-image.png'
-            }`}
+              }`}
           />
           <div>
             <Container>
@@ -227,7 +226,7 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 2 }}
               md={{ size: 9, order: 1 }}
               lg={{ size: 4, order: 3 }}
-              // className='px-0'
+            // className='px-0'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
@@ -260,7 +259,7 @@ class Navigation extends React.PureComponent {
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        <UserIcon style={{marginRight: 6, verticalAlign: 'middle'}} width={20} height={20} />
+                        <UserIcon style={{ marginRight: 6, verticalAlign: 'middle' }} width={20} height={20} />
                         <span className='d-none d-md-inline'>{user.first_name ? user.first_name : ''}</span>
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
@@ -276,7 +275,7 @@ class Navigation extends React.PureComponent {
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        <UserIcon style={{marginRight: 6, verticalAlign: 'middle'}} width={20} height={20} />
+                        <UserIcon style={{ marginRight: 6, verticalAlign: 'middle' }} width={20} height={20} />
                         <span className='d-none d-md-inline'></span>
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>

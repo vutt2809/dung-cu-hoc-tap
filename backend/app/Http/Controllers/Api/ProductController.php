@@ -52,9 +52,16 @@ class ProductController extends Controller
             })->withAvg('reviews', 'rating')->having('reviews_avg_rating', '>=', $request->rating);
         }
 
-        // Search by name
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+        // Search by name, SKU, or description
+        if ($request->has('search') || $request->has('name')) {
+            $search = $request->get('search', $request->get('name'));
+            if ($search && $search != 'all') {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                      ->orWhere('sku', 'like', '%' . $search . '%')
+                      ->orWhere('description', 'like', '%' . $search . '%');
+                });
+            }
         }
 
         // Sort - Use 'order' from request, which seems to be numeric
