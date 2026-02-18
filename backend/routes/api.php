@@ -35,9 +35,11 @@ Route::prefix('auth')->group(function () {
     Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 });
 
-// Public product routes
-Route::get('/product', [ProductController::class, 'index']);
-Route::get('/product/{slug}', [ProductController::class, 'show']);
+// Public product routes (rate limit cao hơn vì là public search)
+Route::middleware('throttle:product')->group(function () {
+    Route::get('/product', [ProductController::class, 'index']);
+    Route::get('/product/{slug}', [ProductController::class, 'show']);
+});
 
 // Public category routes
 Route::get('/category', [CategoryController::class, 'index']);
@@ -105,6 +107,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Review routes
     Route::prefix('review')->group(function () {
         Route::get('/list', [ReviewController::class, 'list']);
+        Route::get('/me', [ReviewController::class, 'me']);
+        Route::get('/check/{productId}', [ReviewController::class, 'checkEligibility']);
         Route::get('/{slug}', [ReviewController::class, 'index']);
         Route::post('/', [ReviewController::class, 'store']);
         Route::put('/{id}', [ReviewController::class, 'update']);

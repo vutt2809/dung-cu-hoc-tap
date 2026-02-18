@@ -10,6 +10,7 @@ import DOMPurify from 'dompurify';
 
 import {
   FETCH_REVIEWS,
+  FETCH_USER_REVIEWS,
   SET_REVIEWS_LOADING,
   ADD_REVIEW,
   REMOVE_REVIEW,
@@ -17,7 +18,8 @@ import {
   REVIEW_CHANGE,
   RESET_REVIEW,
   SET_REVIEW_FORM_ERRORS,
-  SET_ADVANCED_FILTERS
+  SET_ADVANCED_FILTERS,
+  SET_REVIEW_ELIGIBILITY
 } from './constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation, santizeFields } from '../../utils/validation';
@@ -60,11 +62,56 @@ export const fetchReviews = (n, v) => {
   };
 };
 
+export const fetchUserReviews = (n, v) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: true });
+
+      const response = await axios.get(`${API_URL}/review/me`, {
+        params: {
+          page: v ?? 1,
+          limit: 10
+        }
+      });
+
+      const { reviews, totalPages, currentPage, count } = response.data;
+
+      dispatch({ type: FETCH_USER_REVIEWS, payload: reviews });
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: { totalPages, currentPage, count }
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_REVIEWS_LOADING, payload: false });
+    }
+  };
+};
+
+export const checkReviewEligibility = productId => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`${API_URL}/review/check/${productId}`);
+      dispatch({
+        type: SET_REVIEW_ELIGIBILITY,
+        payload: response.data
+      });
+    } catch (error) {
+      // If error occurs, assume not eligible for safety
+      dispatch({
+        type: SET_REVIEW_ELIGIBILITY,
+        payload: { eligible: false }
+      });
+    }
+  };
+};
+
 export const approveReview = review => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.put(`${API_URL}/review/approve/${review.id}`);
-      
+
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
@@ -85,7 +132,7 @@ export const rejectReview = review => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.put(`${API_URL}/review/reject/${review.id}`);
-      
+
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
@@ -178,10 +225,10 @@ export const addProductReview = () => {
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
-        'required.title': 'Title is required.',
-        'required.comment': 'Comment is required.',
-        'required.rating': 'Rating is required.',
-        'min.rating': 'Rating is required.'
+        'required.title': 'Tiêu đề là bắt buộc.',
+        'required.comment': 'Bình luận là bắt buộc.',
+        'required.rating': 'Vui lòng chọn mức độ đánh giá.',
+        'min.rating': 'Vui lòng chọn mức độ đánh giá.'
       });
 
       if (!isValid) {
@@ -202,6 +249,8 @@ export const addProductReview = () => {
         dispatch(success(successfulOptions));
         dispatch(fetchProductReviews(product.slug));
         dispatch({ type: RESET_REVIEW });
+        // Refresh eligibility status (will be ineligible now as already reviewed)
+        dispatch(checkReviewEligibility(product.id));
       }
     } catch (error) {
       handleError(error, dispatch);

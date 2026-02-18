@@ -19,22 +19,31 @@ import { VI } from '../../constants';
 
 class Review extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchReviews();
+    if (this.props.user.role === 'ROLE ADMIN') {
+      this.props.fetchReviews();
+    } else {
+      this.props.fetchUserReviews();
+    }
   }
 
   render() {
     const {
+      user,
       reviews,
+      userReviews,
       isLoading,
       advancedFilters,
       fetchReviews,
+      fetchUserReviews,
       approveReview,
       rejectReview,
       deleteReview
     } = this.props;
 
     const displayPagination = advancedFilters.totalPages > 1;
-    const displayReviews = reviews && reviews.length > 0;
+    const isMember = user.role === 'ROLE MEMBER';
+    const data = isMember ? userReviews : reviews;
+    const displayReviews = data && data.length > 0;
 
     return (
       <div className='review-dashboard'>
@@ -44,17 +53,18 @@ class Review extends React.PureComponent {
           {displayPagination && (
             <Pagination
               totalPages={advancedFilters.totalPages}
-              onPagination={fetchReviews}
+              onPagination={isMember ? fetchUserReviews : fetchReviews}
             />
           )}
           {displayReviews && (
             <>
               <SearchResultMeta label={VI['Reviews'].toLowerCase()} count={advancedFilters.count} />
               <ReviewList
-                reviews={reviews}
+                reviews={data}
                 approveReview={approveReview}
                 rejectReview={rejectReview}
                 deleteReview={deleteReview}
+                isMember={isMember}
               />
             </>
           )}
@@ -70,7 +80,9 @@ class Review extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    user: state.account.user,
     reviews: state.review.reviews,
+    userReviews: state.review.userReviews,
     isLoading: state.review.isLoading,
     advancedFilters: state.review.advancedFilters
   };
@@ -78,7 +90,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchReviews: (page) => dispatch(reviewActions.fetchReviews(page)),
+    fetchReviews: (page) => dispatch(reviewActions.fetchReviews(null, page)),
+    fetchUserReviews: (page) => dispatch(reviewActions.fetchUserReviews(null, page)),
     approveReview: (review) => dispatch(reviewActions.approveReview(review)),
     rejectReview: (review) => dispatch(reviewActions.rejectReview(review)),
     deleteReview: (id) => dispatch(reviewActions.deleteReview(id))

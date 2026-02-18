@@ -30,6 +30,20 @@ class Product extends Model
         'is_active' => 'boolean',
     ];
 
+    /**
+     * Trả về URL ảnh: ưu tiên image_url, nếu không có thì build từ image_key (client load từ backend).
+     */
+    public function getImageUrlAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+        if ($this->attributes['image_key'] ?? null) {
+            return rtrim(config('app.url'), '/') . '/storage/' . $this->attributes['image_key'];
+        }
+        return null;
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);

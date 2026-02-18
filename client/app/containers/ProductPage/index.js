@@ -31,6 +31,11 @@ class ProductPage extends React.PureComponent {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
       const slug = this.props.match.params.slug;
       this.props.fetchStoreProduct(slug);
+      this.props.fetchProductReviews(slug);
+    }
+
+    if (this.props.product.id !== prevProps.product.id && this.props.authenticated) {
+      this.props.checkReviewEligibility(this.props.product.id);
     }
   }
 
@@ -48,12 +53,14 @@ class ProductPage extends React.PureComponent {
       productShopChange,
       handleAddToCart,
       handleRemoveFromCart,
+      authenticated,
       addProductReview,
       reviewsSummary,
       reviews,
       reviewFormData,
       reviewChange,
-      reviewFormErrors
+      reviewFormErrors,
+      reviewEligibility
     } = this.props;
 
     return (
@@ -160,6 +167,8 @@ class ProductPage extends React.PureComponent {
               reviewsSummary={reviewsSummary}
               reviewChange={reviewChange}
               addReview={addProductReview}
+              authenticated={authenticated}
+              reviewEligibility={reviewEligibility}
             />
           </>
         ) : (
@@ -182,10 +191,12 @@ const mapStateToProps = state => {
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     isLoading: state.product.isLoading,
+    authenticated: state.authentication.authenticated,
     reviews: state.review.productReviews,
     reviewsSummary: state.review.reviewsSummary,
     reviewFormData: state.review.reviewFormData,
     reviewFormErrors: state.review.reviewFormErrors,
+    reviewEligibility: state.review.reviewEligibility,
     itemInCart
   };
 };

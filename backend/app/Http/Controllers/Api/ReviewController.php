@@ -32,6 +32,64 @@ class ReviewController extends Controller
         ]);
     }
 
+    public function me(Request $request)
+    {
+        $limit = $request->input('limit', 10);
+        $reviews = $request->user()->reviews()
+            ->with('product')
+            ->orderBy('created_at', 'desc')
+            ->paginate($limit);
+
+        return response()->json([
+            'success' => true,
+            'reviews' => $reviews->items(),
+            'totalPages' => $reviews->lastPage(),
+            'currentPage' => $reviews->currentPage(),
+            'count' => $reviews->total()
+        ]);
+    }
+
+    public function checkEligibility(Request $request, $productId)
+    {
+        $user = $request->user();
+        
+        // Check if already reviewed
+        $hasReviewed = $user->reviews()->where('product_id', $productId)->exists();
+        if ($hasReviewed) {
+            return response()->json([
+                'eligible' => false,
+                'message' => 'Bạn đã đánh giá sản phẩm này rồi.'
+            ]);
+        }
+
+        // Check if purchased and completed: có order item chứa sản phẩm này với trạng thái Delivered/Shipped (hoặc order completed)
+        $hasPurchased = $user->orders()
+            ->where(function ($q) use ($productId) {
+                $q->whereHas('items', function ($query) use ($productId) {
+                    $query->where('product_id', $productId)
+                        ->whereIn('status', ['Delivered', 'Shipped']);
+                })
+                ->orWhere(function ($q2) use ($productId) {
+                    $q2->where('status', 'completed')
+                        ->whereHas('items', function ($query) use ($productId) {
+                            $query->where('product_id', $productId);
+                        });
+                });
+            })
+            ->exists();
+
+        if (!$hasPurchased) {
+            return response()->json([
+                'eligible' => false,
+                'message' => 'Bạn cần mua sản phẩm này và hoàn thành đơn hàng mới có thể đánh giá.'
+            ]);
+        }
+
+        return response()->json([
+            'eligible' => true
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -47,19 +105,41 @@ class ReviewController extends Controller
             ], 400);
         }
 
-        $existingReview = $request->user()->reviews()
-                                        ->where('product_id', $request->product_id)
-                                        ->first();
+        $user = $request->user();
+        $productId = $request->product_id;
 
-        if ($existingReview) {
+        // Verify eligibility
+        $hasReviewed = $user->reviews()->where('product_id', $productId)->exists();
+        if ($hasReviewed) {
             return response()->json([
-                'error' => 'You have already reviewed this product.'
+                'error' => 'Bạn đã đánh giá sản phẩm này rồi.'
+            ], 400);
+        }
+
+        $hasPurchased = $user->orders()
+            ->where(function ($q) use ($productId) {
+                $q->whereHas('items', function ($query) use ($productId) {
+                    $query->where('product_id', $productId)
+                        ->whereIn('status', ['Delivered', 'Shipped']);
+                })
+                ->orWhere(function ($q2) use ($productId) {
+                    $q2->where('status', 'completed')
+                        ->whereHas('items', function ($query) use ($productId) {
+                            $query->where('product_id', $productId);
+                        });
+                });
+            })
+            ->exists();
+
+        if (!$hasPurchased) {
+            return response()->json([
+                'error' => 'Bạn cần chọn mua sản phẩm này và hoàn thành đơn hàng mới có thể đánh giá.'
             ], 400);
         }
 
         $review = Review::create([
-            'user_id' => $request->user()->id,
-            'product_id' => $request->product_id,
+            'user_id' => $user->id,
+            'product_id' => $productId,
             'title' => $request->title,
             'comment' => $request->comment,
             'rating' => $request->rating,
@@ -68,7 +148,7 @@ class ReviewController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Review added successfully.',
+            'message' => 'Đánh giá đã được gửi thành công và đang chờ phê duyệt.',
             'review' => $review->load('user')
         ], 201);
     }

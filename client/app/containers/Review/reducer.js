@@ -6,18 +6,21 @@
 
 import {
   FETCH_REVIEWS,
+  FETCH_USER_REVIEWS,
+  FETCH_PRODUCT_REVIEWS,
+  SET_REVIEWS_LOADING,
   ADD_REVIEW,
   REMOVE_REVIEW,
-  FETCH_PRODUCT_REVIEWS,
   REVIEW_CHANGE,
-  SET_REVIEWS_LOADING,
   RESET_REVIEW,
   SET_REVIEW_FORM_ERRORS,
-  SET_ADVANCED_FILTERS
+  SET_ADVANCED_FILTERS,
+  SET_REVIEW_ELIGIBILITY
 } from './constants';
 
 const initialState = {
   reviews: [],
+  userReviews: [],
   isLoading: false,
   advancedFilters: {
     totalPages: 1,
@@ -36,6 +39,10 @@ const initialState = {
     comment: '',
     rating: 0
   },
+  reviewEligibility: {
+    eligible: false,
+    message: ''
+  },
   reviewFormErrors: {}
 };
 
@@ -45,6 +52,11 @@ const reviewReducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload
+      };
+    case FETCH_USER_REVIEWS:
+      return {
+        ...state,
+        userReviews: action.payload
       };
     case SET_ADVANCED_FILTERS:
       return {
@@ -102,7 +114,11 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         reviewFormErrors: action.payload
       };
-
+    case SET_REVIEW_ELIGIBILITY:
+      return {
+        ...state,
+        reviewEligibility: action.payload
+      };
     default:
       return state;
   }
