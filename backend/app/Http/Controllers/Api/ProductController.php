@@ -8,6 +8,7 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -143,7 +144,9 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'taxable' => 'boolean',
             'brand_id' => 'nullable|exists:brands,id',
+            'brand' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -155,6 +158,17 @@ class ProductController extends Controller
         $data = $request->all();
         $data['slug'] = Str::slug($request->name);
         $data['is_active'] = true;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $data['image_key'] = $path;
+            $data['image_url'] = rtrim(config('app.url'), '/') . ':3000/storage/' . $path;
+        }
+
+        if ($request->has('brand') && !$request->has('brand_id')) {
+            $data['brand_id'] = $request->brand;
+            unset($data['brand']);
+        }
 
         $product = Product::create($data);
 
@@ -186,6 +200,7 @@ class ProductController extends Controller
             'brand_id' => 'nullable|exists:brands,id',
             'category_id' => 'nullable|exists:categories,id',
             'is_active' => 'sometimes|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -212,6 +227,15 @@ class ProductController extends Controller
         // Xử lý field is_active
         if ($request->has('is_active')) {
             $data['is_active'] = filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        if ($request->hasFile('image')) {
+            if ($product->image_key) {
+                Storage::disk('public')->delete($product->image_key);
+            }
+            $path = $request->file('image')->store('products', 'public');
+            $data['image_key'] = $path;
+            $data['image_url'] = rtrim(config('app.url'), '/') . '/storage/' . $path;
         }
 
         // Xử lý field taxable

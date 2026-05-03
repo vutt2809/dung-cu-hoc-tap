@@ -15,9 +15,14 @@ import SubPage from '../../components/Manager/SubPage';
 import Button from '../../components/Common/Button';
 
 class Add extends React.PureComponent {
+  componentDidMount() {
+    this.props.fetchProductsSelect();
+  }
+
   render() {
     const {
       history,
+      products,
       brandFormData,
       formErrors,
       brandChange,
@@ -27,12 +32,13 @@ class Add extends React.PureComponent {
     return (
       <SubPage title='Thêm thương hiệu' isMenuOpen={null}>
         <AddBrand
+          products={products}
           brandFormData={brandFormData}
           formErrors={formErrors}
           brandChange={brandChange}
           addBrand={addBrand}
         />
-        <Button type='submit' text='Lưu' />
+        <Button onClick={addBrand} type='button' text='Lưu' />
       </SubPage>
     );
   }
@@ -40,6 +46,7 @@ class Add extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    products: state.product.productsSelect,
     brandFormData: state.brand.brandFormData,
     formErrors: state.brand.formErrors
   };

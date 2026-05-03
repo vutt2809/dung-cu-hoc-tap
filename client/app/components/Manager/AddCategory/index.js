@@ -14,12 +14,19 @@ import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 
 const AddCategory = props => {
-  const { categoryFormData, formErrors, categoryChange, addCategory } = props;
+  const { products, categoryFormData, formErrors, categoryChange, addCategory } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
     addCategory();
   };
+
+  const newProducts = products.map(p => {
+    return {
+      value: p.id,
+      label: p.name
+    };
+  });
 
   return (
     <div className='add-category'>
@@ -53,10 +60,12 @@ const AddCategory = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
+              error={formErrors['products']}
               label={'Sản phẩm'}
               name={'products'}
+              multi={true}
               value={categoryFormData.products}
-              options={categoryFormData.products}
+              options={newProducts}
               handleSelectChange={value => {
                 categoryChange('products', value);
               }}

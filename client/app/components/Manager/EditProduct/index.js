@@ -16,10 +16,7 @@ import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 import { formatCurrencyVN } from '../../../utils/format';
 
-const taxableSelect = [
-  { value: 1, label: 'Có' },
-  { value: 0, label: 'Không' }
-];
+
 
 const EditProduct = props => {
   const {
@@ -141,19 +138,7 @@ const EditProduct = props => {
               addonAfter={formatCurrencyVN(product.price)}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <SelectOption
-              error={formErrors['taxable']}
-              label={'Chịu thuế'}
-              multi={false}
-              name={'taxable'}
-              value={[product.taxable !== null && product.taxable !== undefined ? (product.taxable ? taxableSelect[0] : taxableSelect[1]) : taxableSelect[1]]}
-              options={taxableSelect}
-              handleSelectChange={value => {
-                productChange('taxable', value.value);
-              }}
-            />
-          </Col>
+
 
           {user.role === ROLES.Admin && (
             <Col xs='12' md='12'>

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
+import EditBrand from '../../components/Manager/EditBrand';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
 import { VI } from '../../constants';
@@ -18,6 +19,7 @@ class Edit extends React.PureComponent {
   componentDidMount() {
     const brand_id = this.props.match.params.id;
     this.props.fetchBrand(brand_id);
+    this.props.fetchProductsSelect();
   }
 
   componentDidUpdate(prevProps) {
@@ -32,6 +34,7 @@ class Edit extends React.PureComponent {
       history,
       user,
       brand,
+      products,
       formErrors,
       brandEditChange,
       updateBrand,
@@ -42,10 +45,15 @@ class Edit extends React.PureComponent {
     return (
       <SubPage title='Chỉnh sửa thương hiệu' isMenuOpen={null}>
         {brand && brand.id ? (
-          <div>
-            <h2>{brand.name}</h2>
-            <p>{brand.description}</p>
-          </div>
+          <EditBrand
+            products={products}
+            brand={brand}
+            brandChange={brandEditChange}
+            formErrors={formErrors}
+            updateBrand={updateBrand}
+            deleteBrand={deleteBrand}
+            activateBrand={activateBrand}
+          />
         ) : (
           <NotFound message={VI['No brand found.'] || 'No brand found.'} />
         )}
@@ -58,6 +66,7 @@ const mapStateToProps = state => {
   return {
     user: state.account.user,
     brand: state.brand.brand,
+    products: state.product.productsSelect,
     formErrors: state.brand.editFormErrors
   };
 };

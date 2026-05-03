@@ -97,8 +97,8 @@ class Shop extends React.PureComponent {
             </Row>
             <Switch>
               <Route exact path='/shop' component={ProductsShop} />
-              <Route path='/shop/category/:id' component={CategoryShop} />
-              <Route path='/shop/brand/:id' component={BrandsShop} />
+              <Route path='/shop/category/:slug' component={CategoryShop} />
+              <Route path='/shop/brand/:slug' component={BrandsShop} />
               <Route path='*' component={Page404} />
             </Switch>
 

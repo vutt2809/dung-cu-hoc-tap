@@ -57,7 +57,7 @@ class List extends React.PureComponent {
     const { search } = this.state;
     const isSearch = search.length > 0;
     const filteredOrders = search
-      ? orders.filter(o => o.id.includes(search))
+      ? orders.filter(o => String(o.id).includes(search))
       : orders;
 
     const displayPagination = advancedFilters.totalPages > 1;

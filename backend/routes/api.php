@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // User routes
     Route::prefix('user')->group(function () {
         Route::get('/', [UserController::class, 'index']);
+        Route::get('/search', [UserController::class, 'search']);
         Route::get('/{id}', [UserController::class, 'show']);
         Route::put('/', [UserController::class, 'update']);
         Route::put('/password', [UserController::class, 'updatePassword']);

@@ -24,7 +24,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formatSelectOptions } from '../../utils/select';
+import { formatSelectOptions, unformatSelectOptions } from '../../utils/select';
 import { allFieldsValidation } from '../../utils/validation';
 import { API_URL } from '../../constants';
 
@@ -52,7 +52,9 @@ export const brandEditChange = (name, value) => {
 export const fetchStoreBrands = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`${API_URL}/brand`);
+      const response = await axios.get(`${API_URL}/brand`, {
+        params: { is_active: true }
+      });
 
       dispatch({
         type: FETCH_STORE_BRANDS,
@@ -89,6 +91,10 @@ export const fetchBrand = brand_id => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`${API_URL}/brand/${brand_id}`);
+
+      response.data.brand.products = formatSelectOptions(
+        response.data.brand.products
+      );
 
       dispatch({
         type: FETCH_BRAND,
@@ -147,7 +153,17 @@ export const addBrand = () => {
         return dispatch({ type: SET_BRAND_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post(`${API_URL}/brand`, brand);
+      const newBrand = {
+        name: brand.name,
+        description: brand.description,
+        is_active: brand.is_active
+      };
+
+      if (brand.products && brand.products.length > 0) {
+        newBrand.products = unformatSelectOptions(brand.products);
+      }
+
+      const response = await axios.post(`${API_URL}/brand`, newBrand);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -186,8 +202,13 @@ export const updateBrand = () => {
       const newBrand = {
         name: brand.name,
         slug: brand.slug,
-        description: brand.description
+        description: brand.description,
+        is_active: brand.is_active
       };
+
+      if (brand.products && brand.products.length > 0) {
+        newBrand.products = unformatSelectOptions(brand.products);
+      }
 
       const { isValid, errors } = allFieldsValidation(newBrand, rules, {
         'required.name': 'Name is required.',

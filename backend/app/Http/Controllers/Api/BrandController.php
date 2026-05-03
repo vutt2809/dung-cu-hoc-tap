@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $brands = Brand::where('is_active', true)
-            ->orderBy('name')
-            ->get();
+        $query = Brand::orderBy('name');
+
+        if ($request->has('is_active')) {
+            $query->where('is_active', filter_var($request->is_active, FILTER_VALIDATE_BOOLEAN));
+        }
+
+        $brands = $query->get();
 
         return response()->json([
             'success' => true,
@@ -57,10 +61,16 @@ class BrandController extends Controller
 
         $brand = Brand::create([
             'name' => $request->name,
+            'slug' => \Illuminate\Support\Str::slug($request->name),
             'description' => $request->description,
             'logo' => $request->logo,
             'is_active' => $request->is_active ?? true,
         ]);
+
+        // Sync products
+        if ($request->has('products') && is_array($request->products)) {
+            \App\Models\Product::whereIn('id', $request->products)->update(['brand_id' => $brand->id]);
+        }
 
         return response()->json([
             'success' => true,
@@ -98,6 +108,12 @@ class BrandController extends Controller
             'logo' => $request->logo,
             'is_active' => $request->is_active,
         ]);
+
+        // Sync products
+        \App\Models\Product::where('brand_id', $brand->id)->update(['brand_id' => null]);
+        if ($request->has('products') && is_array($request->products)) {
+            \App\Models\Product::whereIn('id', $request->products)->update(['brand_id' => $brand->id]);
+        }
 
         return response()->json([
             'success' => true,

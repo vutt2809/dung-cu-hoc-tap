@@ -60,10 +60,16 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'name' => $request->name,
+            'slug' => \Illuminate\Support\Str::slug($request->name),
             'description' => $request->description,
             'parent_id' => $request->parent_id,
             'is_active' => $request->is_active ?? true
         ]);
+
+        // Sync products
+        if ($request->has('products') && is_array($request->products)) {
+            \App\Models\Product::whereIn('id', $request->products)->update(['category_id' => $category->id]);
+        }
 
         return response()->json([
             'success' => true,
@@ -96,6 +102,12 @@ class CategoryController extends Controller
         }
 
         $category->update($request->all());
+
+        // Sync products
+        \App\Models\Product::where('category_id', $category->id)->update(['category_id' => null]);
+        if ($request->has('products') && is_array($request->products)) {
+            \App\Models\Product::whereIn('id', $request->products)->update(['category_id' => $category->id]);
+        }
 
         return response()->json([
             'success' => true,

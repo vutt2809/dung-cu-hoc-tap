@@ -317,7 +317,7 @@ export const loadCartFromServer = () => {
         }));
 
         localStorage.setItem(CART_ITEMS, JSON.stringify(formattedItems));
-        
+
         dispatch({
           type: HANDLE_CART,
           payload: {

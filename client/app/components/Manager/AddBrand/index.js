@@ -9,16 +9,24 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import SelectOption from '../../Common/SelectOption';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 
 const AddBrand = props => {
-  const { brandFormData, formErrors, brandChange, addBrand } = props;
+  const { products, brandFormData, formErrors, brandChange, addBrand } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
     addBrand();
   };
+
+  const newProducts = products ? products.map(p => {
+    return {
+      value: p.id,
+      label: p.name
+    };
+  }) : [];
 
   return (
     <div className='add-brand'>
@@ -47,6 +55,19 @@ const AddBrand = props => {
               value={brandFormData.description}
               onInputChange={(name, value) => {
                 brandChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <SelectOption
+              error={formErrors['products']}
+              label={'Sản phẩm'}
+              name={'products'}
+              multi={true}
+              value={brandFormData.products}
+              options={newProducts}
+              handleSelectChange={value => {
+                brandChange('products', value);
               }}
             />
           </Col>

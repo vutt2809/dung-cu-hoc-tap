@@ -20,6 +20,22 @@ class UserController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $term = $request->get('search', '');
+
+        $users = User::where(function ($q) use ($term) {
+            $q->where('first_name', 'like', "%{$term}%")
+              ->orWhere('last_name', 'like', "%{$term}%")
+              ->orWhere('email', 'like', "%{$term}%");
+        })->latest()->limit(20)->get();
+
+        return response()->json([
+            'success' => true,
+            'users' => $users
+        ]);
+    }
+
     public function show($id)
     {
         $user = User::find($id);

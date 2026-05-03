@@ -153,7 +153,12 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`${API_URL}/product`);
 
-      const formattedProducts = formatSelectOptions(response.data.products);
+      let productsData = response.data.products;
+      if (productsData && productsData.data && Array.isArray(productsData.data)) {
+        productsData = productsData.data;
+      }
+
+      const formattedProducts = formatSelectOptions(productsData);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
@@ -227,7 +232,7 @@ export const addProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
+
         image: 'required',
         brand: 'required'
       };
@@ -235,8 +240,6 @@ export const addProduct = () => {
       const product = getState().product.productFormData;
       const user = getState().account.user;
       const brands = getState().brand.brandsSelect;
-
-      const brand = unformatSelectOptions([product.brand]);
 
       const newProduct = {
         sku: product.sku,
@@ -246,11 +249,10 @@ export const addProduct = () => {
         quantity: product.quantity,
         image: product.image,
         is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1',
-        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
         brand:
           user.role !== ROLES.Merchant
-            ? brand !== 0
-              ? brand
+            ? product.brand && product.brand.value && product.brand.value !== 0
+              ? product.brand.value
               : null
             : brands[1].value
       };
@@ -265,7 +267,7 @@ export const addProduct = () => {
           'Mô tả sản phẩm không được vượt quá 200 ký tự.',
         'required.quantity': 'Số lượng là bắt buộc.',
         'required.price': 'Giá là bắt buộc.',
-        'required.taxable': 'Vui lòng chọn trạng thái chịu thuế.',
+
         'required.image': 'Vui lòng tải lên hình ảnh sản phẩm (jpg, jpeg, png).',
         'required.brand': 'Thương hiệu là bắt buộc.'
       });
@@ -333,7 +335,6 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
         brand: user.role === ROLES.Admin ? 'required' : 'nullable'
       };
 
@@ -344,7 +345,6 @@ export const updateProduct = () => {
         description: product.description,
         quantity: product.quantity,
         price: product.price,
-        taxable: product.taxable === true || product.taxable === 1 || product.taxable === 'true' || product.taxable === '1',
         brand: product.brand && product.brand.value ? product.brand.value : null,
         is_active: product.is_active === true || product.is_active === 1 || product.is_active === 'true' || product.is_active === '1'
       };
@@ -362,7 +362,7 @@ export const updateProduct = () => {
           'Mô tả không được lớn hơn 200 ký tự.',
         'required.quantity': 'Số lượng là bắt buộc.',
         'required.price': 'Giá là bắt buộc.',
-        'required.taxable': 'Thuế là bắt buộc.',
+
         'required.brand': 'Thương hiệu là bắt buộc.'
       });
 

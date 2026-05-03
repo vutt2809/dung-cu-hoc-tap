@@ -19,6 +19,10 @@ class List extends React.PureComponent {
   componentDidMount() {
     this.props.fetchBrands();
   }
+  handleAddBrand = () => {
+    this.props.history.push('/dashboard/brand/add');
+  };
+
 
   render() {
     const { history, brands, isLoading, user } = this.props;
