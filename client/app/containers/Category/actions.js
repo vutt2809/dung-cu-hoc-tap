@@ -121,24 +121,24 @@ export const addCategory = () => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200',
-        products: 'required'
+        description: 'required|max:200'
       };
 
       const category = getState().category.categoryFormData;
 
       const newCategory = {
         name: category.name,
-        description: category.description,
-        products: unformatSelectOptions(category.products)
+        description: category.description
       };
+
+      if (category.products && category.products.length > 0) {
+        newCategory.products = unformatSelectOptions(category.products);
+      }
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
-        'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {
@@ -175,8 +175,7 @@ export const updateCategory = () => {
       const rules = {
         name: 'required',
         slug: 'required|alpha_dash',
-        description: 'required|max:200',
-        products: 'required'
+        description: 'required|max:200'
       };
 
       const category = getState().category.category;
@@ -184,9 +183,12 @@ export const updateCategory = () => {
       const newCategory = {
         name: category.name,
         slug: category.slug,
-        description: category.description,
-        products: category.products && unformatSelectOptions(category.products)
+        description: category.description
       };
+
+      if (category.products && category.products.length > 0) {
+        newCategory.products = unformatSelectOptions(category.products);
+      }
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
@@ -194,9 +196,7 @@ export const updateCategory = () => {
         'alpha_dash.slug':
           'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.description': 'Description is required.',
-        'max.description':
-          'Description may not be greater than 200 characters.',
-        'required.products': 'Products are required.'
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {
