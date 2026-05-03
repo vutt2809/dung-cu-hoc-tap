@@ -19,6 +19,22 @@ class AddressController extends Controller
         ]);
     }
 
+    public function show(Request $request, $id)
+    {
+        $address = $request->user()->addresses()->find($id);
+
+        if (!$address) {
+            return response()->json([
+                'error' => 'Address not found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'address' => $address,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

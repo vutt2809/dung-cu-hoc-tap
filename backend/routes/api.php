@@ -72,9 +72,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('address')->group(function () {
         Route::get('/', [AddressController::class, 'index']);
         Route::post('/', [AddressController::class, 'store']);
+        Route::put('/{id}/default', [AddressController::class, 'setDefault']);
+        Route::get('/{id}', [AddressController::class, 'show']);
         Route::put('/{id}', [AddressController::class, 'update']);
         Route::delete('/{id}', [AddressController::class, 'destroy']);
-        Route::put('/{id}/default', [AddressController::class, 'setDefault']);
     });
 
     // Cart routes

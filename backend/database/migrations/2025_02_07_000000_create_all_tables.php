@@ -184,23 +184,9 @@ return new class extends Migration
                 $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             });
         }
-        
-        // 11. Personal Access Tokens (Sanctum)
-        if (!Schema::hasTable('personal_access_tokens')) {
-            Schema::create('personal_access_tokens', function (Blueprint $table) {
-                $table->id();
-                $table->morphs('tokenable');
-                $table->string('name');
-                $table->string('token', 64)->unique();
-                $table->text('abilities')->nullable();
-                $table->timestamp('last_used_at')->nullable();
-                $table->timestamp('expires_at')->nullable();
-                $table->timestamps();
-            });
-        }
 
-        // 12. Password Resets
-         if (!Schema::hasTable('password_resets')) {
+        // 11. Password Resets (personal_access_tokens: migration 2019_12_14_000001)
+        if (!Schema::hasTable('password_resets')) {
             Schema::create('password_resets', function (Blueprint $table) {
                 $table->string('email')->index();
                 $table->string('token');
@@ -216,7 +202,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
         Schema::dropIfExists('password_resets');
         Schema::dropIfExists('reviews');
         Schema::dropIfExists('wishlists');
