@@ -21,7 +21,7 @@ class Review extends React.PureComponent {
   hasFetched = false;
 
   fetchByRoleIfReady = () => {
-    const role = this.props.user?.role;
+    const role = this.props.userRole ?? this.props.user?.role;
     if (!role || this.hasFetched) return;
 
     if (role === 'ROLE ADMIN') {
@@ -38,12 +38,15 @@ class Review extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.user?.role !== this.props.user?.role) {
+    if (prevProps.userRole !== this.props.userRole) {
       this.fetchByRoleIfReady();
     }
   }
 
   render() {
+    // Ensure fetch happens even if lifecycle updates are skipped
+    this.fetchByRoleIfReady();
+
     const {
       user,
       reviews,
@@ -98,6 +101,7 @@ class Review extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     user: state.account.user,
+    userRole: state.account.user?.role,
     reviews: state.review.reviews,
     userReviews: state.review.userReviews,
     isLoading: state.review.isLoading,

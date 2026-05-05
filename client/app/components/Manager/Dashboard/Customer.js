@@ -16,6 +16,7 @@ import Account from '../../../containers/Account';
 import AccountSecurity from '../../../containers/AccountSecurity';
 import Address from '../../../containers/Address';
 import Order from '../../../containers/Order';
+import Review from '../../../containers/Review';
 import Wishlist from '../../../containers/WishList';
 
 const Customer = props => {
@@ -34,6 +35,7 @@ const Customer = props => {
               <Route path='/dashboard/security' component={AccountSecurity} />
               <Route path='/dashboard/address' component={Address} />
               <Route path='/dashboard/orders' component={Order} />
+              <Route path='/dashboard/review' component={Review} />
               <Route path='/dashboard/wishlist' component={Wishlist} />
               <Route path='*' component={Page404} />
             </Switch>
