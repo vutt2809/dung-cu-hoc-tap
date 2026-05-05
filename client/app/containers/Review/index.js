@@ -18,11 +18,28 @@ import Pagination from '../../components/Common/Pagination';
 import { VI } from '../../constants';
 
 class Review extends React.PureComponent {
-  componentDidMount() {
-    if (this.props.user.role === 'ROLE ADMIN') {
+  hasFetched = false;
+
+  fetchByRoleIfReady = () => {
+    const role = this.props.user?.role;
+    if (!role || this.hasFetched) return;
+
+    if (role === 'ROLE ADMIN') {
       this.props.fetchReviews();
     } else {
       this.props.fetchUserReviews();
+    }
+
+    this.hasFetched = true;
+  };
+
+  componentDidMount() {
+    this.fetchByRoleIfReady();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user?.role !== this.props.user?.role) {
+      this.fetchByRoleIfReady();
     }
   }
 
