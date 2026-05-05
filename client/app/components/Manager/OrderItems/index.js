@@ -21,6 +21,15 @@ const viStatus = {
   // Notprocessed: 'Chưa xử lý',
 };
 
+const getViStatusForDetail = status => {
+  // In order detail, fallback should be "Đang xử lý"
+  if (!status) return viStatus.Processing;
+  const normalized = String(status).trim();
+  const key =
+    normalized.charAt(0).toUpperCase() + normalized.slice(1).toLowerCase();
+  return viStatus[normalized] || viStatus[key] || viStatus.Processing;
+};
+
 const OrderItems = props => {
   const { order, user, updateOrderItemStatus } = props;
 
@@ -132,7 +141,7 @@ const OrderItems = props => {
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
                       <p className='mb-1 mr-4'>
                         Trạng thái
-                        <span className='order-label order-status'>{` ${viStatus[item.status] || item.status}`}</span>
+                        <span className='order-label order-status'>{` ${getViStatusForDetail(item.status)}`}</span>
                       </p>
                       <p className='mb-1 mr-4'>
                         Số lượng
@@ -149,7 +158,7 @@ const OrderItems = props => {
                 <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
                     <p>Trạng thái</p>
-                    <p className='order-label order-status'>{`${viStatus[item.status] || item.status}`}</p>
+                    <p className='order-label order-status'>{`${getViStatusForDetail(item.status)}`}</p>
                   </div>
 
                   <div className='text-center'>

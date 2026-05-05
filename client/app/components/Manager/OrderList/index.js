@@ -48,14 +48,6 @@ const OrderList = props => {
               <div className='d-flex flex-column flex-xl-row justify-content-between flex-1 ml-lg-2 mr-xl-4 p-3'>
                 <div className='order-details'>
                   <div className='mb-1'>
-                    <span>{VI['Status']}</span>
-                    {order?.items ? (
-                      <span className='order-label order-status'>{` ${order?.items[0].status}`}</span>
-                    ) : (
-                      <span className='order-label order-status'>{` Unavailable`}</span>
-                    )}
-                  </div>
-                  <div className='mb-1'>
                     <span>{VI['Order ID']}</span>
                     <span className='order-label'>{` ${order.id}`}</span>
                   </div>
