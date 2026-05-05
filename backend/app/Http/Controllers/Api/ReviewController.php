@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -53,28 +54,37 @@ class ReviewController extends Controller
     {
         $user = $request->user();
         
-        // Check if already reviewed
-        $hasReviewed = $user->reviews()->where('product_id', $productId)->exists();
-        if ($hasReviewed) {
+        // Check if already reviewed (note: product review list only shows APPROVED reviews)
+        $existingReview = $user->reviews()->where('product_id', $productId)->orderBy('created_at', 'desc')->first();
+        if ($existingReview) {
+            if ((int)$existingReview->status === Review::STATUS_PENDING) {
+                return response()->json([
+                    'eligible' => false,
+                    'message' => 'Bạn đã gửi đánh giá cho sản phẩm này và đang chờ phê duyệt.'
+                ]);
+            }
+
+            // If rejected, allow user to submit again
+            if ((int)$existingReview->status === Review::STATUS_REJECTED) {
+                return response()->json([
+                    'eligible' => true,
+                    'message' => 'Đánh giá trước đó của bạn đã bị từ chối. Bạn có thể gửi lại.'
+                ]);
+            }
+
             return response()->json([
                 'eligible' => false,
                 'message' => 'Bạn đã đánh giá sản phẩm này rồi.'
             ]);
         }
 
-        // Check if purchased and completed: có order item chứa sản phẩm này với trạng thái Delivered/Shipped (hoặc order completed)
+        // Check if purchased and completed.
+        // OrderItem status may vary in casing/whitespace, so normalize in query.
+        $eligibleItemStatuses = ['delivered', 'shipped'];
         $hasPurchased = $user->orders()
-            ->where(function ($q) use ($productId) {
-                $q->whereHas('items', function ($query) use ($productId) {
-                    $query->where('product_id', $productId)
-                        ->whereIn('status', ['Delivered', 'Shipped']);
-                })
-                ->orWhere(function ($q2) use ($productId) {
-                    $q2->where('status', 'completed')
-                        ->whereHas('items', function ($query) use ($productId) {
-                            $query->where('product_id', $productId);
-                        });
-                });
+            ->whereHas('items', function ($query) use ($productId, $eligibleItemStatuses) {
+                $query->where('product_id', $productId)
+                    ->whereIn(DB::raw('LOWER(TRIM(status))'), $eligibleItemStatuses);
             })
             ->exists();
 
@@ -109,25 +119,29 @@ class ReviewController extends Controller
         $productId = $request->product_id;
 
         // Verify eligibility
-        $hasReviewed = $user->reviews()->where('product_id', $productId)->exists();
-        if ($hasReviewed) {
-            return response()->json([
-                'error' => 'Bạn đã đánh giá sản phẩm này rồi.'
-            ], 400);
+        $existingReview = $user->reviews()->where('product_id', $productId)->orderBy('created_at', 'desc')->first();
+        if ($existingReview) {
+            if ((int)$existingReview->status === Review::STATUS_PENDING) {
+                return response()->json([
+                    'error' => 'Bạn đã gửi đánh giá cho sản phẩm này và đang chờ phê duyệt.'
+                ], 400);
+            }
+
+            // If rejected, replace it with a new pending review
+            if ((int)$existingReview->status === Review::STATUS_REJECTED) {
+                $existingReview->delete();
+            } else {
+                return response()->json([
+                    'error' => 'Bạn đã đánh giá sản phẩm này rồi.'
+                ], 400);
+            }
         }
 
+        $eligibleItemStatuses = ['delivered', 'shipped'];
         $hasPurchased = $user->orders()
-            ->where(function ($q) use ($productId) {
-                $q->whereHas('items', function ($query) use ($productId) {
-                    $query->where('product_id', $productId)
-                        ->whereIn('status', ['Delivered', 'Shipped']);
-                })
-                ->orWhere(function ($q2) use ($productId) {
-                    $q2->where('status', 'completed')
-                        ->whereHas('items', function ($query) use ($productId) {
-                            $query->where('product_id', $productId);
-                        });
-                });
+            ->whereHas('items', function ($query) use ($productId, $eligibleItemStatuses) {
+                $query->where('product_id', $productId)
+                    ->whereIn(DB::raw('LOWER(TRIM(status))'), $eligibleItemStatuses);
             })
             ->exists();
 
