@@ -464,26 +464,28 @@ const productsFilterOrganizer = (n, v, s) => {
   switch (n) {
     case 'category':
       return {
-        name: s.name,
+        // switching to a category should be independent from keyword/brand filters
+        name: 'all',
         category: v,
         brand: 'all',
         min: s.min,
         max: s.max,
         rating: s.rating,
         order: s.order,
-        page: s.currentPage,
+        page: 1,
         limit: s.limit
       };
     case 'brand':
       return {
-        name: s.name,
+        // switching to a brand should be independent from keyword/category filters
+        name: 'all',
         category: 'all',
         brand: v,
         min: s.min,
         max: s.max,
         rating: s.rating,
         order: s.order,
-        page: s.currentPage,
+        page: 1,
         limit: s.limit
       };
     case 'sorting':
@@ -537,13 +539,14 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'name':
       return {
         name: v,
-        category: s.category,
-        brand: s.brand,
+        // name search should be independent from previous category/brand selections
+        category: 'all',
+        brand: 'all',
         min: s.min,
         max: s.max,
         rating: s.rating,
         order: s.order,
-        page: s.currentPage,
+        page: 1,
         limit: s.limit
       };
     default:
