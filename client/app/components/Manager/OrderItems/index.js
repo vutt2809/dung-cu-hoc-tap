@@ -55,7 +55,7 @@ const OrderItems = props => {
           Đánh giá sản phẩm
         </Link>
       );
-    } else if (item.status !== 'Cancelled') {
+    } else if (item.status !== CART_ITEM_STATUS.Cancelled) {
       if (!isAdmin) {
         return (
           <DropdownConfirm label='Hủy'>
@@ -132,7 +132,7 @@ const OrderItems = props => {
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
                       <p className='mb-1 mr-4'>
                         Trạng thái
-                        <span className='order-label order-status'>{` ${item.status}`}</span>
+                        <span className='order-label order-status'>{` ${viStatus[item.status] || item.status}`}</span>
                       </p>
                       <p className='mb-1 mr-4'>
                         Số lượng
@@ -148,18 +148,18 @@ const OrderItems = props => {
 
                 <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
-                    <p className='order-label order-status'>{`${item.status}`}</p>
                     <p>Trạng thái</p>
+                    <p className='order-label order-status'>{`${viStatus[item.status] || item.status}`}</p>
                   </div>
 
                   <div className='text-center'>
-                    <p className='order-label'>{` ${item.quantity}`}</p>
                     <p>Số lượng</p>
+                    <p className='order-label'>{` ${item.quantity}`}</p>
                   </div>
 
                   <div className='text-center'>
-                    <p className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</p>
                     <p>Thành tiền</p>
+                    <p className='order-label'>{` ${Number(item.total).toLocaleString()}₫`}</p>
                   </div>
                 </div>
               </div>
