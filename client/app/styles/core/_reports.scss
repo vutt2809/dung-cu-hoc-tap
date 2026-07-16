@@ -1,0 +1,514 @@
+// Reports and Statistics Dashboard Styling
+.reports-container {
+  padding: 10px 0;
+
+  // Filters Bar Styling
+  .filters-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    gap: 15px;
+
+    .range-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .btn-range {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+      }
+
+      &.active {
+        background: #3b82f6;
+        border-color: #2563eb;
+        color: #fff;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .custom-date-inputs {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      label {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+
+      input[type="date"] {
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        font-size: 13px;
+        color: #1e293b;
+        background: #fff;
+        height: auto;
+        
+        &:focus {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+          outline: none;
+        }
+      }
+    }
+  }
+
+  // KPI Grid & Cards
+  .kpi-grid {
+    margin-bottom: 8px;
+  }
+
+  .kpi-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .kpi-title {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 550;
+      letter-spacing: 0.1px;
+    }
+
+    .kpi-icon-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      
+      i {
+        font-size: 18px;
+      }
+    }
+
+    // Soft backgrounds for icons
+    .bg-soft-blue { background-color: #eff6ff; }
+    .bg-soft-purple { background-color: #faf5ff; }
+    .bg-soft-amber { background-color: #fffbeb; }
+    .bg-soft-indigo { background-color: #eef2ff; }
+    .bg-soft-teal { background-color: #f0fdfa; }
+
+    .text-blue { color: #3b82f6; }
+    .text-purple { color: #a855f7; }
+    .text-amber { color: #f59e0b; }
+    .text-indigo { color: #6366f1; }
+    .text-teal { color: #0d9488; }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .kpi-footer {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .kpi-period {
+      margin-left: 6px;
+    }
+  }
+
+  // Trend Badges
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 11px;
+
+    i {
+      font-size: 12px;
+    }
+
+    &.trend-up {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    &.trend-down {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    &.trend-neutral {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+  }
+
+  // Report Panel Template
+  .report-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    .panel-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid #f1f5f9;
+
+      .panel-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0;
+      }
+
+      .panel-subtitle {
+        font-size: 12px;
+        color: #94a3b8;
+        display: block;
+        margin-top: 4px;
+      }
+    }
+
+    .panel-body {
+      padding: 24px;
+    }
+  }
+
+  // Chart Container
+  .svg-chart-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+
+    .chart-placeholder {
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-style: italic;
+    }
+  }
+
+  // Tooltip
+  .chart-tooltip {
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid #334155;
+    min-width: 140px;
+
+    .tooltip-date {
+      font-weight: 600;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      color: #94a3b8;
+    }
+
+    .tooltip-value {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .revenue-dot { background-color: #3b82f6; }
+      .orders-dot { background-color: #a855f7; }
+
+      strong {
+        margin-left: auto;
+        color: #fff;
+        padding-left: 8px;
+      }
+    }
+  }
+
+  // Top Products Table
+  .top-products-table {
+    margin: 0;
+
+    th {
+      border-top: none;
+      border-bottom: 2px solid #f1f5f9;
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 12px 8px;
+    }
+
+    td {
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f5f9;
+      padding: 12px 8px;
+      color: #334155;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .product-info-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .product-rank {
+        font-size: 12px;
+        font-weight: 700;
+        color: #94a3b8;
+        width: 16px;
+        text-align: center;
+      }
+
+      .product-thumb {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid #e2e8f0;
+      }
+
+      .product-thumb-fallback {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #94a3b8;
+        border: 1px solid #e2e8f0;
+      }
+
+      .product-name {
+        font-weight: 500;
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+    }
+
+    .sold-progress-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 100px;
+
+      .sold-count {
+        font-size: 13px;
+      }
+    }
+  }
+
+  // Progress Bar styling
+  .mini-progress {
+    height: 6px;
+    border-radius: 3px;
+    background-color: #f1f5f9;
+    margin: 0;
+
+    .progress-bar {
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    
+    .bg-blue { background-color: #3b82f6; }
+    .bg-teal { background-color: #0d9488; }
+  }
+
+  // Category Sales List
+  .category-sales-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .category-sales-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .cat-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+
+      .cat-name {
+        font-weight: 600;
+        color: #334155;
+      }
+
+      .cat-val {
+        color: #64748b;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Status breakdown card
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .status-item-card {
+    border-radius: 12px;
+    padding: 12px;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .status-badge-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-stats {
+      display: flex;
+      flex-direction: column;
+
+      .status-count {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1f2937;
+        line-height: 1.2;
+      }
+
+      .status-rev {
+        font-size: 11px;
+        font-weight: 500;
+        color: #4b5563;
+      }
+    }
+
+    &.status-completed {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      .status-badge-title { color: #047857; }
+    }
+
+    &.status-pending {
+      background: #fffbeb;
+      border-color: #fde68a;
+      .status-badge-title { color: #b45309; }
+    }
+
+    &.status-processing {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      .status-badge-title { color: #1d4ed8; }
+    }
+
+    &.status-cancelled {
+      background: #fef2f2;
+      border-color: #fecaca;
+      .status-badge-title { color: #b91c1c; }
+    }
+
+    &.status-default {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+      .status-badge-title { color: #374151; }
+    }
+  }
+
+  .no-data-msg {
+    text-align: center;
+    color: #94a3b8;
+    padding: 20px 0;
+    font-style: italic;
+    font-size: 13px;
+  }
+}
+
+// Mobile adaptations
+@media (max-width: 768px) {
+  .reports-container {
+    .filters-bar {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .range-buttons {
+        justify-content: center;
+      }
+
+      .custom-date-inputs {
+        justify-content: center;
+      }
+    }
+
+    .status-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

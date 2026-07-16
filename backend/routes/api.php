@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // Admin routes
         Route::middleware('role:admin')->group(function () {
             Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
+            Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
         });
     });
 });

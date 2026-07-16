@@ -88,7 +88,15 @@ class ProductController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $products = $query->paginate(12);
+        // Pagination: allow FE to control page size via ?limit=...
+        // Keep a safe upper bound to avoid accidentally fetching too much data.
+        $perPage = (int) $request->get('limit', 12);
+        if ($perPage <= 0) {
+            $perPage = 12;
+        }
+        $perPage = min($perPage, 200);
+
+        $products = $query->paginate($perPage);
 
         // Add wishlist status for authenticated users
         if ($request->user()) {

@@ -77,13 +77,22 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function getRoleAttribute($value)
+    {
+        $val = strtoupper(trim($value));
+        if ($val === 'ADMIN' || $val === 'ROLE ADMIN') {
+            return 'ROLE ADMIN';
+        }
+        return 'ROLE MEMBER';
+    }
+
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->role === 'ROLE ADMIN';
     }
 
     public function isMember()
     {
-        return $this->role === 'member';
+        return $this->role === 'ROLE MEMBER';
     }
 }

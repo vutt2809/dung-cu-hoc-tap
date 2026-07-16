@@ -176,7 +176,10 @@ export const fetchProducts = () => {
     try {
       dispatch(setProductLoading(true));
 
-      const response = await axios.get(`${API_URL}/product`);
+      // Admin list: request a larger page size so we can show more products.
+      const response = await axios.get(`${API_URL}/product`, {
+        params: { limit: 200 }
+      });
 
       dispatch({
         type: FETCH_PRODUCTS,

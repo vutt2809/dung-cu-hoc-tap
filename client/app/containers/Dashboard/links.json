@@ -14,6 +14,11 @@
       ]
     },
     {
+      "to": "/reports",
+      "name": "Báo cáo thống kê",
+      "prefix": "/dashboard"
+    },
+    {
       "to": "/address",
       "name": "Địa chỉ",
       "prefix": "/dashboard"

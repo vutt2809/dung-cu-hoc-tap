@@ -287,6 +287,10 @@ class OrderController extends Controller
                 'shipping_address' => $request->shipping_address,
                 'shipping_note' => $request->shipping_note,
             ]),
+            'shipping_name' => $request->shipping_name,
+            'shipping_phone' => $request->shipping_phone,
+            'shipping_address' => $request->shipping_address,
+            'shipping_note' => $request->shipping_note,
         ]);
 
         // Lưu từng sản phẩm vào order_items

@@ -22,6 +22,7 @@ import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
 import Review from '../../../containers/Review';
 import Wishlist from '../../../containers/WishList';
+import Reports from '../../../containers/Reports';
 
 const Admin = props => {
   return (
@@ -43,6 +44,7 @@ const Admin = props => {
               <Route path='/dashboard/orders' component={Order} />
               <Route path='/dashboard/review' component={Review} />
               <Route path='/dashboard/wishlist' component={Wishlist} />
+              <Route path='/dashboard/reports' component={Reports} />
               <Route path='*' component={Page404} />
             </Switch>
           </div>

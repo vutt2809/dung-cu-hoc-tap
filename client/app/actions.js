@@ -29,6 +29,7 @@ import * as contact from './containers/Contact/actions';
 import * as order from './containers/Order/actions';
 import * as review from './containers/Review/actions';
 import * as wishlist from './containers/WishList/actions';
+import * as reports from './containers/Reports/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -55,7 +56,8 @@ export default function mapDispatchToProps(dispatch) {
       ...contact,
       ...order,
       ...review,
-      ...wishlist
+      ...wishlist,
+      ...reports
     },
     dispatch
   );
