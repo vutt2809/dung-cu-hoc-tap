@@ -49,7 +49,7 @@ export const contactUs = () => {
         return dispatch({ type: SET_CONTACT_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post(`${API_URL}/contact/add`, contact);
+      const response = await axios.post(`${API_URL}/contact`, contact);
 
       const successfulOptions = {
         title: 'Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm nhất.',

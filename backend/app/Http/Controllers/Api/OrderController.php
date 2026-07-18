@@ -209,14 +209,11 @@ class OrderController extends Controller
             ], 404);
         }
 
-        // Admin can update any order item, regular users can only update their own order items
+        // Only Admin can update order item status
         if ($request->user()->role !== 'ROLE ADMIN') {
-            $userOrder = $request->user()->orders()->where('id', $item->order_id)->first();
-            if (!$userOrder) {
-                return response()->json([
-                    'error' => 'Order item not found.'
-                ], 404);
-            }
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 403);
         }
 
         $item->status = $request->status;

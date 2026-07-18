@@ -36,7 +36,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 });
 
-// Public product routes (rate limit cao hơn vì là public search)
+// Public product routes (rate limit higher for public search)
 Route::middleware('throttle:product')->group(function () {
     Route::get('/product', [ProductController::class, 'index']);
     Route::get('/product/{slug}', [ProductController::class, 'show']);
@@ -53,6 +53,9 @@ Route::get('/brand/{id}', [BrandController::class, 'show']);
 // Public contact route
 Route::post('/contact', [ContactController::class, 'store']);
 
+// Public review route (guests can view reviews of a product)
+Route::get('/review/{slug}', [ReviewController::class, 'index']);
+
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     // Auth routes
@@ -61,11 +64,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
     });
 
-    // User routes
+    // User profile update routes
     Route::prefix('user')->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/search', [UserController::class, 'search']);
-        Route::get('/{id}', [UserController::class, 'show']);
         Route::put('/', [UserController::class, 'update']);
         Route::put('/password', [UserController::class, 'updatePassword']);
     });
@@ -89,7 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/', [CartController::class, 'clear']);
     });
 
-    // Order routes
+    // Order routes (for standard checkout and cancels)
     Route::prefix('order')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
@@ -97,7 +97,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [OrderController::class, 'myOrders']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::put('/{id}/cancel', [OrderController::class, 'cancel']);
-        Route::put('/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
     });
 
     // Wishlist routes
@@ -107,21 +106,24 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [WishlistController::class, 'destroy']);
     });
 
-    // Review routes
+    // Review routes (member side)
     Route::prefix('review')->group(function () {
-        Route::get('/list', [ReviewController::class, 'list']);
         Route::get('/me', [ReviewController::class, 'me']);
         Route::get('/check/{productId}', [ReviewController::class, 'checkEligibility']);
-        Route::get('/{slug}', [ReviewController::class, 'index']);
         Route::post('/', [ReviewController::class, 'store']);
         Route::put('/{id}', [ReviewController::class, 'update']);
         Route::delete('/{id}', [ReviewController::class, 'destroy']);
-        Route::put('/approve/{id}', [ReviewController::class, 'approve']);
-        Route::put('/reject/{id}', [ReviewController::class, 'reject']);
     });
 
-    // Admin routes
-    Route::middleware(['auth:sanctum'])->group(function () {
+    // Admin routes (requires role:admin)
+    Route::middleware('role:admin')->group(function () {
+        // User management
+        Route::prefix('user')->group(function () {
+            Route::get('/', [UserController::class, 'index']);
+            Route::get('/search', [UserController::class, 'search']);
+            Route::get('/{id}', [UserController::class, 'show']);
+        });
+
         // Product management
         Route::prefix('product')->group(function () {
             Route::post('/', [ProductController::class, 'store']);
@@ -147,11 +149,19 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/list/select', [BrandController::class, 'listForSelect']);
         });
 
-        // Admin routes
-        Route::middleware('role:admin')->group(function () {
-            Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
-            Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
+        // Review management
+        Route::prefix('review')->group(function () {
+            Route::get('/list', [ReviewController::class, 'list']);
+            Route::put('/approve/{id}', [ReviewController::class, 'approve']);
+            Route::put('/reject/{id}', [ReviewController::class, 'reject']);
         });
+
+        // Order management
+        Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
+        Route::put('/order/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
+
+        // Reports
+        Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
     });
 });
 

@@ -146,7 +146,7 @@ export const cancelOrder = () => {
     try {
       const order = getState().order.order;
 
-      await axios.delete(`${API_URL}/order/cancel/${order.id || order._id}`);
+      await axios.put(`${API_URL}/order/${order.id || order._id}/cancel`);
 
       dispatch(push(`/dashboard/orders`));
     } catch (error) {

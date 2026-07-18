@@ -14,7 +14,11 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with(['brand', 'category'])->active();
+        $user = auth('sanctum')->user();
+        $query = Product::with(['brand', 'category']);
+        if (!$user || $user->role !== 'ROLE ADMIN') {
+            $query->active();
+        }
 
         // Filter by brand
         if ($request->has('brand') && $request->brand != 'all') {
@@ -99,8 +103,8 @@ class ProductController extends Controller
         $products = $query->paginate($perPage);
 
         // Add wishlist status for authenticated users
-        if ($request->user()) {
-            $userWishlistIds = $request->user()->wishlist()->pluck('product_id')->toArray();
+        if ($user) {
+            $userWishlistIds = $user->wishlist()->pluck('product_id')->toArray();
             
             $products->getCollection()->transform(function ($product) use ($userWishlistIds) {
                 $product->isLiked = in_array($product->id, $userWishlistIds);

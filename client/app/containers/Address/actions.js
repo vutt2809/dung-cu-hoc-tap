@@ -197,7 +197,7 @@ export const updateAddress = () => {
 export const deleteAddress = id => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.delete(`${API_URL}/address/delete/${id}`);
+      const response = await axios.delete(`${API_URL}/address/${id}`);
 
       const successfulOptions = {
         title: `${response.data.message}`,

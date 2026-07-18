@@ -170,15 +170,18 @@ export const fetchProductsSelect = () => {
   };
 };
 
-// fetch products api
-export const fetchProducts = () => {
+export const fetchProducts = (search = '') => {
   return async (dispatch, getState) => {
     try {
       dispatch(setProductLoading(true));
 
-      // Admin list: request a larger page size so we can show more products.
+      const params = { limit: 200 };
+      if (search) {
+        params.search = search;
+      }
+
       const response = await axios.get(`${API_URL}/product`, {
-        params: { limit: 200 }
+        params
       });
 
       dispatch({

@@ -223,7 +223,7 @@ export const clearCart = () => {
     // --- Clear trên server ---
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`${API_URL}/cart/clear`, {}, {
+      await axios.delete(`${API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) {
@@ -269,7 +269,7 @@ export const syncCartToServer = () => {
 
     try {
       // Clear server cart first
-      await axios.post(`${API_URL}/cart/clear`, {}, {
+      await axios.delete(`${API_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
