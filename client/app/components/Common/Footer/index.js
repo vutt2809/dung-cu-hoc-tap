@@ -106,7 +106,7 @@ const Footer = () => {
             </div>
             <div className='block-content newsletter-section'>
               <p className='newsletter-desc'>
-                Đăng ký để nhận thông báo khuyến mãi và mã voucher giảm giá 10% sớm nhất.
+                Đăng ký để nhận thông báo về sản phẩm mới và tin tức hữu ích sớm nhất.
               </p>
               <Newsletter />
               <div className='payment-methods-wrap'>

@@ -13,13 +13,9 @@ import actions from '../../actions';
 import banners from './banners.json';
 import CarouselSlider from '../../components/Common/CarouselSlider';
 import { responsiveOneItemCarousel } from '../../components/Common/CarouselSlider/utils';
-import ProductList from '../../components/Store/ProductList';
 
 class Homepage extends React.PureComponent {
   componentDidMount() {
-    if (this.props.filterProducts) {
-      this.props.filterProducts();
-    }
     if (this.props.fetchStoreCategories) {
       this.props.fetchStoreCategories();
     }
@@ -29,7 +25,7 @@ class Homepage extends React.PureComponent {
   }
 
   render() {
-    const { products, categories, brands, updateWishlist, authenticated } = this.props;
+    const { categories, brands } = this.props;
 
     const categoryIcons = [
       'fa-book',
@@ -165,53 +161,7 @@ class Homepage extends React.PureComponent {
           </section>
         )}
 
-        {/* 4. Featured Products */}
-        <section className='featured-products-section'>
-          <div className='section-header'>
-            <h2 className='section-title'>
-              <i className='fa fa-star text-warning' /> Sản phẩm Nổi bật
-            </h2>
-            <p className='section-subtitle'>Tuyển chọn các dụng cụ học tập chất lượng cao dành cho học sinh, sinh viên</p>
-            <div className='title-accent-line' />
-          </div>
-
-          {products && products.length > 0 ? (
-            <div>
-              <ProductList
-                products={products.slice(0, 8)}
-                updateWishlist={updateWishlist}
-                authenticated={authenticated}
-              />
-              <div className='text-center mt-4 pt-2'>
-                <Link
-                  to='/shop'
-                  className='btn'
-                  style={{
-                    background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
-                    color: '#fff',
-                    fontWeight: 600,
-                    padding: '12px 32px',
-                    borderRadius: '50px',
-                    boxShadow: '0 4px 15px rgba(79, 70, 229, 0.35)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8
-                  }}
-                >
-                  <span>Xem tất cả sản phẩm</span>
-                  <i className='fa fa-arrow-right' />
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <div className='text-center py-4 text-muted'>
-              <i className='fa fa-spinner fa-spin fa-2x mb-2' />
-              <p>Đang tải danh sách sản phẩm...</p>
-            </div>
-          )}
-        </section>
-
-        {/* 5. Brands Showcase */}
+        {/* 4. Brands Showcase */}
         {brands && brands.length > 0 && (
           <section className='brands-showcase'>
             <div className='section-header'>
