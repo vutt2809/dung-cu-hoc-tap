@@ -19,7 +19,7 @@ import { setAuth, clearAuth } from '../Authentication/actions';
 import { FETCH_PROFILE } from '../Account/constants';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
-import { clearCart } from '../Cart/actions';
+import { clearCart, loadCartFromServer } from '../Cart/actions';
 import { clearAccount } from '../Account/actions';
 import { allFieldsValidation } from '../../utils/validation';
 import { API_URL } from '../../constants';
@@ -72,6 +72,7 @@ export const login = () => {
 
       dispatch({ type: FETCH_PROFILE, payload: userData });
       dispatch(setAuth());
+      dispatch(loadCartFromServer());
       dispatch(success(successfulOptions));
       dispatch({ type: LOGIN_RESET });
     } catch (error) {

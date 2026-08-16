@@ -269,6 +269,7 @@ class OrderController extends Controller
             'shipping_phone' => 'nullable|string|max:20',
             'shipping_address' => 'nullable|string',
             'shipping_note' => 'nullable|string',
+            'cart_items' => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
@@ -278,6 +279,27 @@ class OrderController extends Controller
         }
 
         $cart = $request->user()->cart()->with('product')->get();
+
+        if ($cart->isEmpty() && $request->has('cart_items') && is_array($request->cart_items) && count($request->cart_items) > 0) {
+            foreach ($request->cart_items as $item) {
+                $pId = $item['id'] ?? $item['product_id'] ?? $item['product'] ?? null;
+                $qty = isset($item['quantity']) ? (int)$item['quantity'] : 1;
+                $price = isset($item['price']) ? (float)$item['price'] : 0;
+                if ($pId) {
+                    Cart::updateOrCreate(
+                        [
+                            'user_id' => $request->user()->id,
+                            'product_id' => $pId,
+                        ],
+                        [
+                            'quantity' => $qty,
+                            'price' => $price,
+                        ]
+                    );
+                }
+            }
+            $cart = $request->user()->cart()->with('product')->get();
+        }
 
         if ($cart->isEmpty()) {
             return response()->json([

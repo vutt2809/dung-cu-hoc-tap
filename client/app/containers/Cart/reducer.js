@@ -23,13 +23,33 @@ const cartReducer = (state = initialState, action) => {
   let newState;
 
   switch (action.type) {
-    case ADD_TO_CART:
+    case ADD_TO_CART: {
+      const existingItemIndex = (state.cartItems || []).findIndex(
+        x => (x.id || x._id) === (action.payload.id || action.payload._id)
+      );
+
+      if (existingItemIndex > -1) {
+        const updatedCartItems = [...state.cartItems];
+        const existingItem = updatedCartItems[existingItemIndex];
+        const newQuantity = existingItem.quantity + action.payload.quantity;
+        updatedCartItems[existingItemIndex] = {
+          ...existingItem,
+          quantity: newQuantity,
+          totalPrice: parseFloat((newQuantity * existingItem.price).toFixed(2))
+        };
+        return {
+          ...state,
+          cartItems: updatedCartItems
+        };
+      }
+
       newState = {
         ...state,
         cartItems: [...state.cartItems, action.payload]
       };
 
       return newState;
+    }
     case REMOVE_FROM_CART:
       let itemIndex = (state.cartItems || []).findIndex(
         x => x.id == action.payload.id

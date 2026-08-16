@@ -19,6 +19,7 @@ import {
 import { setAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
+import { syncCartToServer } from '../Cart/actions';
 import { allFieldsValidation } from '../../utils/validation';
 import { API_URL } from '../../constants';
 
@@ -83,6 +84,7 @@ export const signUp = () => {
       setToken(response.data.token);
 
       dispatch(setAuth());
+      dispatch(syncCartToServer());
       dispatch(success(successfulOptions));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {

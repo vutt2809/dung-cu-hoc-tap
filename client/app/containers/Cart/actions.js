@@ -59,36 +59,43 @@ export const handleAddToCart = product => {
       payload: product
     });
 
-    const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
+    const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS)) || [];
+    const existingIndex = cartItems.findIndex(
+      item => (item.id || item._id) === (product.id || product._id)
+    );
     let newCartItems = [];
-    if (cartItems) {
-      newCartItems = [...cartItems, product];
+    if (existingIndex > -1) {
+      newCartItems = [...cartItems];
+      const existingItem = newCartItems[existingIndex];
+      const newQuantity = existingItem.quantity + product.quantity;
+      newCartItems[existingIndex] = {
+        ...existingItem,
+        quantity: newQuantity,
+        totalPrice: parseFloat((newQuantity * existingItem.price).toFixed(2))
+      };
     } else {
-      newCartItems.push(product);
+      newCartItems = [...cartItems, product];
     }
     localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
 
     dispatch(calculateCartTotal());
     dispatch(toggleCart());
 
-    // --- Đồng bộ lên server ---
+    // --- Đồng bộ lên server nếu đã đăng nhập ---
     const token = localStorage.getItem('token');
+    if (!token) return;
+
     const productId = product.id || product._id;
-    if (!productId) {
-      alert('Không tìm thấy id sản phẩm!');
-      return;
-    }
+    if (!productId) return;
+
     try {
       await axios.post(`${API_URL}/cart`, {
         product_id: productId,
         quantity: product.quantity,
         price: product.price,
         taxable: product.taxable
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
     } catch (err) {
-      alert(err.response?.data?.error || 'Lỗi đồng bộ giỏ hàng lên server');
       console.error('Lỗi đồng bộ giỏ hàng lên server:', err);
     }
   };
@@ -108,12 +115,12 @@ export const handleRemoveFromCart = product => {
     dispatch(calculateCartTotal());
     // dispatch(toggleCart());
 
-    // --- Xóa trên server ---
+    // --- Xóa trên server nếu đã đăng nhập ---
     const token = localStorage.getItem('token');
+    if (!token) return;
+
     try {
-      await axios.delete(`${API_URL}/cart/${product.id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.delete(`${API_URL}/cart/${product.id || product._id}`);
     } catch (err) {
       console.error('Lỗi xóa sản phẩm khỏi giỏ hàng server:', err);
     }
@@ -220,12 +227,12 @@ export const clearCart = () => {
       type: CLEAR_CART
     });
 
-    // --- Clear trên server ---
+    // --- Clear trên server nếu đã đăng nhập ---
     const token = localStorage.getItem('token');
+    if (!token) return;
+
     try {
-      await axios.delete(`${API_URL}/cart`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.delete(`${API_URL}/cart`);
     } catch (err) {
       console.error('Lỗi clear giỏ hàng server:', err);
     }
@@ -269,20 +276,19 @@ export const syncCartToServer = () => {
 
     try {
       // Clear server cart first
-      await axios.delete(`${API_URL}/cart`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.delete(`${API_URL}/cart`);
 
       // Add all items from localStorage to server
       for (const item of cartItems) {
-        await axios.post(`${API_URL}/cart`, {
-          product_id: item.id,
-          quantity: item.quantity,
-          price: item.price,
-          taxable: item.taxable
-        }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const pId = item.id || item._id;
+        if (pId) {
+          await axios.post(`${API_URL}/cart`, {
+            product_id: pId,
+            quantity: item.quantity,
+            price: item.price,
+            taxable: item.taxable || false
+          });
+        }
       }
     } catch (err) {
       console.error('Lỗi đồng bộ giỏ hàng lên server:', err);
@@ -297,15 +303,13 @@ export const loadCartFromServer = () => {
     if (!token) return;
 
     try {
-      const response = await axios.get(`${API_URL}/cart`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get(`${API_URL}/cart`);
 
-      const serverCartItems = response.data.cart;
+      const serverCartItems = response.data.cart || [];
       const localCartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]');
 
-      // If server has more items, use server data
-      if (serverCartItems.length > localCartItems.length) {
+      // If server has items, use server data
+      if (serverCartItems.length > 0) {
         const formattedItems = serverCartItems.map(item => ({
           id: item.product.id,
           name: item.product.name,
@@ -327,6 +331,18 @@ export const loadCartFromServer = () => {
           }
         });
         dispatch(calculateCartTotal());
+      } else if (localCartItems.length > 0) {
+        // If server is empty but local has items, keep local items and sync them to server
+        dispatch({
+          type: HANDLE_CART,
+          payload: {
+            cartItems: localCartItems,
+            cartTotal: localStorage.getItem(CART_TOTAL) || 0,
+            cartId: localStorage.getItem(CART_ID)
+          }
+        });
+        dispatch(calculateCartTotal());
+        await dispatch(syncCartToServer());
       }
     } catch (err) {
       console.error('Lỗi load giỏ hàng từ server:', err);

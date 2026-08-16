@@ -6,7 +6,7 @@ import Button from '../../components/Common/Button';
 import axios from 'axios';
 import { API_URL } from '../../constants';
 
-const Checkout = ({ cartItems, cartTotal, clearCart }) => {
+const Checkout = ({ cartItems, cartTotal, clearCart, syncCartToServer }) => {
   const history = useHistory();
   const [form, setForm] = useState({
     shipping_name: '',
@@ -34,15 +34,15 @@ const Checkout = ({ cartItems, cartTotal, clearCart }) => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchAddressesAndProfile = async () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
       try {
-        const addrRes = await axios.get(`${API_URL}/address`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (addrRes.data && addrRes.data.success) {
+        const addrRes = await axios.get(`${API_URL}/address`);
+        if (isMounted && addrRes.data && addrRes.data.success) {
           const addrList = addrRes.data.addresses || [];
           setAddresses(addrList);
           
@@ -68,10 +68,8 @@ const Checkout = ({ cartItems, cartTotal, clearCart }) => {
       }
 
       try {
-        const profileRes = await axios.get(`${API_URL}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (profileRes.data && profileRes.data.user) {
+        const profileRes = await axios.get(`${API_URL}/auth/me`);
+        if (isMounted && profileRes.data && profileRes.data.user) {
           const user = profileRes.data.user;
           const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ');
           setForm(prev => ({
@@ -86,6 +84,10 @@ const Checkout = ({ cartItems, cartTotal, clearCart }) => {
     };
 
     fetchAddressesAndProfile();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleSelectAddress = addr => {
@@ -112,27 +114,26 @@ const Checkout = ({ cartItems, cartTotal, clearCart }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (!cartItems || cartItems.length === 0) {
+      setError('Giỏ hàng của bạn đang trống. Vui lòng chọn sản phẩm trước khi đặt hàng!');
+      return;
+    }
     setError('');
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${API_URL}/order/add`,
-        {
-          ...form,
-          total: cartTotal
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      if (syncCartToServer) {
+        await syncCartToServer();
+      }
+
+      const response = await axios.post(`${API_URL}/order/add`, {
+        ...form,
+        total: cartTotal,
+        cart_items: cartItems
+      });
       clearCart();
       history.push(`/order/success/${response.data.order.id}`);
     } catch (err) {
       setError(err.response?.data?.error || 'Đặt hàng thất bại!');
-    } finally {
       setLoading(false);
     }
   };

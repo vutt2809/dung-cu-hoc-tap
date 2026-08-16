@@ -197,16 +197,16 @@ export const addOrder = () => {
       
       const cartId = localStorage.getItem('cart_id');
       const total = getState().cart.cartTotal;
+      const cartItems = getState().cart.cartItems;
 
-      if (cartId) {
-        const response = await axios.post(`${API_URL}/order/add`, {
-          cartId,
-          total
-        });
+      const response = await axios.post(`${API_URL}/order/add`, {
+        cartId,
+        total,
+        cart_items: cartItems
+      });
 
-        dispatch(push(`/order/success/${response.data.order.id || response.data.order._id}`));
-        dispatch(clearCart());
-      }
+      dispatch(push(`/order/success/${response.data.order.id || response.data.order._id}`));
+      dispatch(clearCart());
     } catch (error) {
       handleError(error, dispatch);
     }
