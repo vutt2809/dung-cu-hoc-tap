@@ -184,6 +184,13 @@ class OrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        $currentStatus = strtolower(trim($order->status ?? ''));
+        if ($currentStatus === 'cancelled') {
+            return response()->json([
+                'error' => 'Đơn hàng đã bị hủy, không thể thay đổi trạng thái.'
+            ], 400);
+        }
+
         $order->status = $request->status;
         $order->save();
 
@@ -213,6 +220,21 @@ class OrderController extends Controller
 
         $order = $item->order;
 
+        // Prevent modifying items in a cancelled order
+        if ($order && strtolower(trim($order->status ?? '')) === 'cancelled') {
+            return response()->json([
+                'error' => 'Đơn hàng đã bị hủy, không thể thay đổi trạng thái sản phẩm.'
+            ], 400);
+        }
+
+        // Prevent modifying an item that has already been cancelled
+        $itemCurrentStatus = strtolower(trim($item->status ?? ''));
+        if ($itemCurrentStatus === 'cancelled') {
+            return response()->json([
+                'error' => 'Sản phẩm này đã bị hủy, không thể thay đổi trạng thái.'
+            ], 400);
+        }
+
         if ($request->user()->role === 'ROLE ADMIN') {
             $item->status = $request->status;
         } else {
@@ -228,8 +250,7 @@ class OrderController extends Controller
                 ], 403);
             }
 
-            $currentStatus = strtolower(trim($item->status ?? ''));
-            if ($currentStatus === 'delivered' || $currentStatus === 'shipped') {
+            if ($itemCurrentStatus === 'delivered' || $itemCurrentStatus === 'shipped') {
                 return response()->json([
                     'error' => 'Cannot cancel an item that has already been shipped or delivered.'
                 ], 400);

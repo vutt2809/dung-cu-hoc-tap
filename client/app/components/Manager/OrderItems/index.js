@@ -53,6 +53,26 @@ const OrderItems = props => {
 
   const renderItemsAction = item => {
     const isAdmin = user.role === ROLES.Admin;
+    const isOrderCancelled =
+      order.status?.toLowerCase() === 'cancelled' ||
+      ((order.items || []).length > 0 &&
+        (order.items || []).every(
+          i => (i.status?.toLowerCase() || '') === 'cancelled'
+        ));
+
+    const isItemCancelled = (item.status?.toLowerCase() || '') === 'cancelled';
+
+    // If entire order is cancelled OR this specific item is cancelled, show badge only (no dropdown)
+    if (isOrderCancelled || isItemCancelled) {
+      return (
+        <span
+          className='custom-badge custom-badge-danger'
+          style={{ minWidth: 100, justifyContent: 'center' }}
+        >
+          <i className='fa fa-ban mr-1' /> {viStatus.Cancelled}
+        </span>
+      );
+    }
 
     if (isAdmin) {
       return (

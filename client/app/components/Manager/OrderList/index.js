@@ -59,6 +59,21 @@ const OrderList = props => {
                     <span>{VI['Total']}</span>
                     <span className='order-label'>{` ${formatCurrencyVN((order?.totalWithTax ? order?.totalWithTax : (order?.total || 0)))}₫`}</span>
                   </div>
+                  <div className='mt-2'>
+                    {order.status?.toLowerCase() === 'cancelled' ? (
+                      <span className='custom-badge custom-badge-danger'>
+                        <i className='fa fa-ban mr-1' /> Đã hủy
+                      </span>
+                    ) : order.status?.toLowerCase() === 'delivered' ? (
+                      <span className='custom-badge custom-badge-success'>
+                        <i className='fa fa-check mr-1' /> Đã giao hàng
+                      </span>
+                    ) : (
+                      <span className='custom-badge custom-badge-primary'>
+                        <i className='fa fa-clock-o mr-1' /> Đang xử lý
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
