@@ -17,11 +17,18 @@ const OrderMeta = props => {
   const { order, cancelOrder, onBack } = props;
 
   const renderMetaAction = () => {
-    const isNotDelivered =
-      (order.items || []).filter(i => i.status === CART_ITEM_STATUS.Delivered)
-        .length < 1;
+    const isCancelled =
+      order.status === 'cancelled' ||
+      order.status === 'Cancelled' ||
+      ((order.items || []).length > 0 &&
+        (order.items || []).every(i => i.status === CART_ITEM_STATUS.Cancelled));
 
-    if (isNotDelivered) {
+    const isDelivered =
+      order.status === 'delivered' ||
+      order.status === 'Delivered' ||
+      (order.items || []).some(i => i.status === CART_ITEM_STATUS.Delivered);
+
+    if (!isCancelled && !isDelivered) {
       return <Button size='sm' text='Hủy đơn hàng' onClick={cancelOrder} />;
     }
   };

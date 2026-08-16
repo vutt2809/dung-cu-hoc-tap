@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -161,6 +162,7 @@ class OrderController extends Controller
         }
 
         $order->update(['status' => 'cancelled']);
+        $order->items()->update(['status' => 'Cancelled']);
 
         return response()->json([
             'success' => true,
@@ -194,7 +196,7 @@ class OrderController extends Controller
     public function updateOrderItemStatus(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'required|string',
+            'status' => 'required|string|in:Processing,Shipped,Delivered,Cancelled,Not processed,Pending,processing,shipped,delivered,cancelled',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -209,19 +211,53 @@ class OrderController extends Controller
             ], 404);
         }
 
-        // Only Admin can update order item status
-        if ($request->user()->role !== 'ROLE ADMIN') {
-            return response()->json([
-                'error' => 'Unauthorized'
-            ], 403);
+        $order = $item->order;
+
+        if ($request->user()->role === 'ROLE ADMIN') {
+            $item->status = $request->status;
+        } else {
+            if (!$order || (int)$order->user_id !== (int)$request->user()->id) {
+                return response()->json([
+                    'error' => 'Unauthorized'
+                ], 403);
+            }
+
+            if ($request->status !== 'Cancelled') {
+                return response()->json([
+                    'error' => 'You can only cancel items.'
+                ], 403);
+            }
+
+            $currentStatus = strtolower(trim($item->status ?? ''));
+            if ($currentStatus === 'delivered' || $currentStatus === 'shipped') {
+                return response()->json([
+                    'error' => 'Cannot cancel an item that has already been shipped or delivered.'
+                ], 400);
+            }
+
+            $item->status = 'Cancelled';
         }
 
-        $item->status = $request->status;
         $item->save();
+
+        $orderCancelled = false;
+        if ($order) {
+            $hasActiveItems = $order->items()
+                ->whereNotIn(DB::raw('LOWER(TRIM(status))'), ['cancelled'])
+                ->exists();
+
+            if (!$hasActiveItems) {
+                $order->status = 'cancelled';
+                $order->save();
+                $orderCancelled = true;
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Chỉnh sửa trạng thái thành công',
-            'item' => $item
+            'item' => $item,
+            'orderCancelled' => $orderCancelled
         ]);
     }
 

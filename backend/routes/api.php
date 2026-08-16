@@ -53,9 +53,6 @@ Route::get('/brand/{id}', [BrandController::class, 'show']);
 // Public contact route
 Route::post('/contact', [ContactController::class, 'store']);
 
-// Public review route (guests can view reviews of a product)
-Route::get('/review/{slug}', [ReviewController::class, 'index']);
-
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     // Auth routes
@@ -97,6 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [OrderController::class, 'myOrders']);
         Route::get('/{id}', [OrderController::class, 'show']);
         Route::put('/{id}/cancel', [OrderController::class, 'cancel']);
+        Route::put('/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
     });
 
     // Wishlist routes
@@ -158,12 +156,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
         // Order management
         Route::put('/order/{id}/status', [OrderController::class, 'updateStatus']);
-        Route::put('/order/status/item/{id}', [OrderController::class, 'updateOrderItemStatus']);
 
         // Reports
         Route::get('/reports/statistics', [ReportController::class, 'getStatistics']);
     });
 });
+
+// Public review route (guests can view reviews of a product by slug)
+// Note: Placed after static routes so /review/list, /review/me, etc. take priority
+Route::get('/review/{slug}', [ReviewController::class, 'index']);
 
 // Catch-all route for undefined API endpoints
 Route::fallback(function () {

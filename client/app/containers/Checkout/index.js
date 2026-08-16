@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import actions from '../../actions';
 import Button from '../../components/Common/Button';
 import axios from 'axios';
 import { API_URL } from '../../constants';
@@ -273,8 +274,4 @@ const mapStateToProps = state => ({
   cartTotal: state.cart.cartTotal
 });
 
-const mapDispatchToProps = dispatch => ({
-  clearCart: () => dispatch({ type: 'CLEAR_CART' })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
+export default connect(mapStateToProps, actions)(Checkout);

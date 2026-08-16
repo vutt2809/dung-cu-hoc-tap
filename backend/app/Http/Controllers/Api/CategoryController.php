@@ -9,8 +9,29 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $user = auth('sanctum')->user();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query = Category::where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+
+            if (!$user || $user->role !== 'ROLE ADMIN') {
+                $query->where('is_active', true);
+            }
+
+            $categories = $query->with('children')->get();
+
+            return response()->json([
+                'success' => true,
+                'categories' => $categories
+            ]);
+        }
+
         $categories = Category::where('is_active', true)
                              ->with('children')
                              ->whereNull('parent_id')

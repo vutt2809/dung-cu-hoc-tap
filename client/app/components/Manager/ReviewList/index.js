@@ -17,7 +17,8 @@ const ReviewList = props => {
   const { reviews, approveReview, rejectReview, deleteReview, isMember } = props;
 
   const getStatusDisplay = (status) => {
-    switch (status) {
+    const s = Number(status);
+    switch (s) {
       case REVIEW_STATUS.APPROVED:
         return {
           text: 'Đã duyệt',
@@ -49,14 +50,18 @@ const ReviewList = props => {
     <div className='review-list'>
       {reviews.map((review, index) => {
         const statusInfo = getStatusDisplay(review.status);
+        const currentStatus = Number(review.status);
+        const userName = review.user
+          ? `${review.user.first_name || ''} ${review.user.last_name || ''}`.trim() || review.user.email
+          : 'Người dùng (Đã xóa)';
 
         return (
-          <div key={index} className='review-box'>
+          <div key={review.id || index} className='review-box'>
             <Row>
               <Col xs='12' md='6'>
                 <div className='review-meta'>
-                  {isMember && review.product && (
-                    <h5 className='mb-2 text-primary'>{review.product.name}</h5>
+                  {review.product && (
+                    <h5 className='mb-2 text-primary'>Sản phẩm: {review.product.name}</h5>
                   )}
                   <h4 className='mb-2'>{review.title}</h4>
                   <p className='mb-2'>{review.comment}</p>
@@ -65,8 +70,7 @@ const ReviewList = props => {
                       {[...Array(5)].map((_, i) => (
                         <i
                           key={i}
-                          className={`fa fa-star${i < review.rating ? ' active' : ''
-                            }`}
+                          className={`fa fa-star${i < review.rating ? ' active' : ''}`}
                         />
                       ))}
                     </span>
@@ -77,7 +81,9 @@ const ReviewList = props => {
                 <div className='review-actions'>
                   <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
                     <div className='d-flex flex-row mx-0'>
-                      <p className='mb-0'>{!isMember ? review.user.first_name : 'Cá nhân'}</p>
+                      <p className='mb-0 font-weight-bold'>
+                        {!isMember ? `Người đánh giá: ${userName}` : 'Cá nhân'}
+                      </p>
                     </div>
                   </div>
                   <label className='text-black'>{`Đánh giá được thêm vào ${formatDate(
@@ -94,10 +100,10 @@ const ReviewList = props => {
                   </div>
 
                   {/* Action Buttons */}
-                  {!isMember && (
-                    review.status === REVIEW_STATUS.PENDING ? (
-                      <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
-                        <div className='d-flex flex-row mx-0'>
+                  {!isMember ? (
+                    <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
+                      <div className='d-flex flex-row mx-0'>
+                        {currentStatus !== REVIEW_STATUS.APPROVED && (
                           <Button
                             className='text-uppercase mr-2'
                             variant='primary'
@@ -105,33 +111,25 @@ const ReviewList = props => {
                             text='Phê duyệt'
                             onClick={() => approveReview(review)}
                           />
+                        )}
+                        {currentStatus !== REVIEW_STATUS.REJECTED && (
                           <Button
-                            className='text-uppercase'
+                            className='text-uppercase mr-2'
                             variant='danger'
                             size='md'
                             text='Từ chối'
                             onClick={() => rejectReview(review)}
                           />
-                        </div>
-                        <Button
-                          className='mt-3 mt-lg-0'
-                          text='Xóa'
-                          icon={<TrashIcon width={15} />}
-                          onClick={() => deleteReview(review.id)}
-                        />
+                        )}
                       </div>
-                    ) : (
-                      <div className='d-flex flex-row align-items-center'>
-                        <Button
-                          className='mt-3 mt-lg-0'
-                          text='Xóa'
-                          icon={<TrashIcon width={15} />}
-                          onClick={() => deleteReview(review.id)}
-                        />
-                      </div>
-                    )
-                  )}
-                  {isMember && (
+                      <Button
+                        className='mt-3 mt-lg-0'
+                        text='Xóa'
+                        icon={<TrashIcon width={15} />}
+                        onClick={() => deleteReview(review.id)}
+                      />
+                    </div>
+                  ) : (
                     <div className='d-flex flex-row align-items-center'>
                       <Button
                         className='mt-3 mt-lg-0'

@@ -200,7 +200,11 @@ class ReviewController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $review = $request->user()->reviews()->find($id);
+        if ($request->user()->isAdmin()) {
+            $review = Review::find($id);
+        } else {
+            $review = $request->user()->reviews()->find($id);
+        }
 
         if (!$review) {
             return response()->json([

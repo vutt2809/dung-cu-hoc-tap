@@ -78,13 +78,10 @@ const reviewReducer = (state = initialState, action) => {
         productReviews: [...state.productReviews, action.payload]
       };
     case REMOVE_REVIEW:
-      const index = state.reviews.findIndex(r => r.id === action.payload);
       return {
         ...state,
-        reviews: [
-          ...state.reviews.slice(0, index),
-          ...state.reviews.slice(index + 1)
-        ]
+        reviews: state.reviews.filter(r => r.id !== action.payload),
+        userReviews: state.userReviews.filter(r => r.id !== action.payload)
       };
     case REVIEW_CHANGE:
       return {

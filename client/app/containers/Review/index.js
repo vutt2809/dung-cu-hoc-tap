@@ -18,37 +18,32 @@ import Pagination from '../../components/Common/Pagination';
 import { VI } from '../../constants';
 
 class Review extends React.PureComponent {
-  hasFetched = false;
-
-  fetchByRoleIfReady = () => {
-    const role = this.props.userRole ?? this.props.user?.role;
-    if (!role || this.hasFetched) return;
-
-    if (role === 'ROLE ADMIN') {
-      this.props.fetchReviews();
-    } else {
-      this.props.fetchUserReviews();
-    }
-
-    this.hasFetched = true;
-  };
-
   componentDidMount() {
-    this.fetchByRoleIfReady();
+    this.fetchData();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.userRole !== this.props.userRole) {
-      this.fetchByRoleIfReady();
+    if (
+      prevProps.userRole !== this.props.userRole ||
+      prevProps.user?.role !== this.props.user?.role
+    ) {
+      this.fetchData();
     }
   }
 
-  render() {
-    // Ensure fetch happens even if lifecycle updates are skipped
-    this.fetchByRoleIfReady();
+  fetchData = () => {
+    const role = this.props.userRole || this.props.user?.role;
+    if (role === 'ROLE ADMIN') {
+      this.props.fetchReviews();
+    } else if (role) {
+      this.props.fetchUserReviews();
+    }
+  };
 
+  render() {
     const {
       user,
+      userRole,
       reviews,
       userReviews,
       isLoading,
@@ -60,10 +55,11 @@ class Review extends React.PureComponent {
       deleteReview
     } = this.props;
 
-    const displayPagination = advancedFilters.totalPages > 1;
-    const isMember = user.role === 'ROLE MEMBER';
+    const currentRole = userRole || user?.role;
+    const isMember = currentRole === 'ROLE MEMBER';
     const data = isMember ? userReviews : reviews;
     const displayReviews = data && data.length > 0;
+    const displayPagination = advancedFilters.totalPages > 1;
 
     return (
       <div className='review-dashboard'>

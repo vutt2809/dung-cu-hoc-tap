@@ -54,44 +54,52 @@ const OrderItems = props => {
   const renderItemsAction = item => {
     const isAdmin = user.role === ROLES.Admin;
 
-    if (item.status === CART_ITEM_STATUS.Delivered) {
+    if (isAdmin) {
       return (
-        <Link
-          to={`/product/${item.product.slug}`}
-          className='btn-link text-center py-2 fs-12'
-          style={{ minWidth: 120 }}
+        <DropdownConfirm
+          label={getViStatusForDetail(item.status)}
+          className='admin'
         >
-          Đánh giá sản phẩm
-        </Link>
+          {renderPopoverContent(item)}
+        </DropdownConfirm>
       );
-    } else if (item.status !== CART_ITEM_STATUS.Cancelled) {
-      if (!isAdmin) {
+    }
+
+    if (item.status === CART_ITEM_STATUS.Delivered) {
+      if (item.product?.slug) {
         return (
-          <DropdownConfirm label='Hủy'>
-            <div className='d-flex flex-column align-items-center justify-content-center p-2'>
-              <p className='text-center mb-2'>{`Bạn có chắc chắn muốn hủy ${item.product?.name}?`}</p>
-              <Button
-                variant='danger'
-                id='CancelOrderItemPopover'
-                size='sm'
-                text='Xác nhận hủy'
-                role='menuitem'
-                className='cancel-order-btn'
-                onClick={() => updateOrderItemStatus(item.id, 'Cancelled')}
-              />
-            </div>
-          </DropdownConfirm>
-        );
-      } else {
-        return (
-          <DropdownConfirm
-            label={item.product && viStatus[item.status]}
-            className={isAdmin ? 'admin' : ''}
+          <Link
+            to={`/product/${item.product.slug}`}
+            className='btn-link text-center py-2 fs-12'
+            style={{ minWidth: 120 }}
           >
-            {renderPopoverContent(item)}
-          </DropdownConfirm>
+            Đánh giá sản phẩm
+          </Link>
         );
       }
+      return null;
+    }
+
+    if (
+      item.status !== CART_ITEM_STATUS.Cancelled &&
+      item.status !== CART_ITEM_STATUS.Delivered
+    ) {
+      return (
+        <DropdownConfirm label='Hủy'>
+          <div className='d-flex flex-column align-items-center justify-content-center p-2'>
+            <p className='text-center mb-2'>{`Bạn có chắc chắn muốn hủy ${item.product_name || item.product?.name || 'sản phẩm này'}?`}</p>
+            <Button
+              variant='danger'
+              id='CancelOrderItemPopover'
+              size='sm'
+              text='Xác nhận hủy'
+              role='menuitem'
+              className='cancel-order-btn'
+              onClick={() => updateOrderItemStatus(item.id, 'Cancelled')}
+            />
+          </div>
+        </DropdownConfirm>
+      );
     }
   };
 
@@ -135,7 +143,16 @@ const OrderItems = props => {
                           </div>
                         </>
                       ) : (
-                        <h4>Không có sản phẩm</h4>
+                        <>
+                          <h4 className='d-block item-name one-line-ellipsis'>
+                            {item.product_name || 'Không có sản phẩm'}
+                          </h4>
+                          <div className='d-flex align-items-center justify-content-between'>
+                            <span className='price'>
+                              {Number(item.price).toLocaleString()}₫
+                            </span>
+                          </div>
+                        </>
                       )}
                     </div>
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
@@ -172,11 +189,9 @@ const OrderItems = props => {
                   </div>
                 </div>
               </div>
-              {item.product && (
-                <div className='text-right mt-2 mt-md-0'>
-                  {renderItemsAction(item)}
-                </div>
-              )}
+              <div className='text-right mt-2 mt-md-0'>
+                {renderItemsAction(item)}
+              </div>
             </div>
           </Col>
         ))}

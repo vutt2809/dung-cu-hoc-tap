@@ -77,11 +77,13 @@ export const fetchStoreCategories = () => {
 };
 
 // fetch categories api
-export const fetchCategories = () => {
+export const fetchCategories = (search = '') => {
   return async (dispatch, getState) => {
     try {
       dispatch({ type: SET_CATEGORIES_LOADING, payload: true });
-      const response = await axios.get(`${API_URL}/category`);
+      const response = await axios.get(`${API_URL}/category`, {
+        params: { search }
+      });
 
       dispatch({
         type: FETCH_CATEGORIES,
