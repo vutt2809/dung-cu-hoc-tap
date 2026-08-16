@@ -1,24 +1,46 @@
 .custom-badge {
-  padding: 8px 10px;
-  //   border-radius: $border-radius-default;
-  font-weight: $font-weight-normal;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.3px;
 }
 
 .custom-badge-primary {
-  background-color: $primary-bg;
-  color: $white;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  border: 1px solid #c7d2fe;
 }
 
 .custom-badge-secondary {
-  background-color: $secondary-bg;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
 }
 
-.custom-badge-dark {
-  background-color: $dark-bg;
-  color: $white;
+.custom-badge-success {
+  background-color: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.custom-badge-warning {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
 }
 
 .custom-badge-danger {
-  background-color: $danger-bg;
-  color: $white;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
 }
+
+.custom-badge-dark {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+

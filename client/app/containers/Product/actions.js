@@ -125,6 +125,8 @@ export const filterProducts = (n, v) => {
   };
 };
 
+export const fetchStoreProducts = filterProducts;
+
 // fetch store product api
 export const fetchStoreProduct = slug => {
   return async (dispatch, getState) => {

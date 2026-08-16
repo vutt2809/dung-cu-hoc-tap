@@ -31,7 +31,12 @@ import { VI } from '../../constants/vi';
 
 import Button from '../../components/Common/Button';
 import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon, UserIcon } from '../../components/Common/Icon';
+import {
+  BarsIcon,
+  UserIcon,
+  StoreLogoIcon,
+  SearchIcon
+} from '../../components/Common/Icon';
 import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
@@ -79,27 +84,22 @@ class Navigation extends React.PureComponent {
 
     return (
       <Link to={`/product/${suggestion.slug}`}>
-        <div className='d-flex'>
+        <div className='d-flex align-items-center p-2'>
           <img
-            className='item-image'
+            className='item-image rounded mr-2'
+            style={{ width: 44, height: 44, objectFit: 'contain' }}
             src={`${suggestion.imageUrl
                 ? suggestion.imageUrl
                 : '/images/placeholder-image.png'
               }`}
           />
           <div>
-            <Container>
-              <Row>
-                <Col>
-                  <span className='name'>{BoldName(suggestion, query)}</span>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <span className='price'>${suggestion.price}</span>
-                </Col>
-              </Row>
-            </Container>
+            <div className='font-weight-bold' style={{ fontSize: 13, color: '#1e293b' }}>
+              {BoldName(suggestion, query)}
+            </div>
+            <div className='text-danger font-weight-bold' style={{ fontSize: 12 }}>
+              {Number(suggestion.price).toLocaleString()}₫
+            </div>
           </div>
         </div>
       </Link>
@@ -128,7 +128,7 @@ class Navigation extends React.PureComponent {
     } = this.props;
 
     const inputProps = {
-      placeholder: VI['Search Products'],
+      placeholder: 'Tìm kiếm dụng cụ học tập, bút, sách, balo...',
       value: searchValue,
       onChange: (_, { newValue }) => {
         onSearch(newValue);
@@ -139,22 +139,36 @@ class Navigation extends React.PureComponent {
       <header className='header fixed-mobile-header'>
         <div className='header-info'>
           <Container>
-            <Row>
-              <Col md='4' className='text-center d-none d-md-block'>
-                <i className='fa fa-truck' />
-                <span>{VI['Free Shipping']}</span>
+            <Row className='align-items-center justify-content-between'>
+              <Col md='3' className='text-center d-none d-md-block'>
+                <span className='info-item'>
+                  <span className='info-icon green'><i className='fa fa-truck' /></span>
+                  <span>Miễn phí vận chuyển từ 200k</span>
+                </span>
               </Col>
-              <Col md='4' className='text-center d-none d-md-block'>
-                <i className='fa fa-credit-card' />
-                <span>{VI['Payment Methods']}</span>
+              <Col md='3' className='text-center d-none d-md-block'>
+                <span className='info-item'>
+                  <span className='info-icon blue'><i className='fa fa-check-circle' /></span>
+                  <span>100% Hàng chính hãng</span>
+                </span>
               </Col>
-              <Col md='4' className='text-center d-none d-md-block'>
-                <i className='fa fa-phone' />
-                <span>{VI['Call us']} 0123456789</span>
+              <Col md='3' className='text-center d-none d-md-block'>
+                <span className='info-item'>
+                  <span className='info-icon orange'><i className='fa fa-refresh' /></span>
+                  <span>Đổi trả dễ dàng trong 7 ngày</span>
+                </span>
+              </Col>
+              <Col md='3' className='text-center d-none d-md-block'>
+                <span className='info-item'>
+                  <span className='info-icon'><i className='fa fa-phone' /></span>
+                  <span>Hotline: <strong>0123 456 789</strong></span>
+                </span>
               </Col>
               <Col xs='12' className='text-center d-block d-md-none'>
-                <i className='fa fa-phone' />
-                <span> {VI['Need advice? Call us']} 0123456789</span>
+                <span className='info-item'>
+                  <span className='info-icon'><i className='fa fa-phone' /></span>
+                  <span>Hotline tư vấn: <strong>0123 456 789</strong></span>
+                </span>
               </Col>
             </Row>
           </Container>
@@ -173,14 +187,20 @@ class Navigation extends React.PureComponent {
                   <Button
                     borderless
                     variant='empty'
-                    className='d-none d-md-block'
+                    className='d-none d-md-block mr-2'
                     ariaLabel='open the menu'
                     icon={<BarsIcon />}
                     onClick={() => this.toggleMenu()}
                   />
                 )}
-                <Link to='/'>
-                  <h1 className='logo'>{VI['MERN Store']}</h1>
+                <Link to='/' className='brand-link-wrapper'>
+                  <div className='brand-icon-box'>
+                    <StoreLogoIcon width={36} height={36} />
+                  </div>
+                  <div className='brand-text-box'>
+                    <span className='brand-title'>DỤNG CỤ HỌC TẬP</span>
+                    <span className='brand-tagline'>STORE & STATIONERY</span>
+                  </div>
                 </Link>
               </div>
             </Col>
@@ -191,17 +211,22 @@ class Navigation extends React.PureComponent {
               lg={{ size: 5, order: 2 }}
               className='pt-2 pt-lg-0'
             >
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={this.getSuggestionValue}
-                renderSuggestion={this.renderSuggestion}
-                inputProps={inputProps}
-                onSuggestionSelected={(_, item) => {
-                  history.push(`/product/${item.suggestion.slug}`);
-                }}
-              />
+              <div className='search-box-wrapper'>
+                <span className='search-icon-prefix'>
+                  <SearchIcon width={18} height={18} />
+                </span>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                  onSuggestionSelected={(_, item) => {
+                    history.push(`/product/${item.suggestion.slug}`);
+                  }}
+                />
+              </div>
             </Col>
             <Col
               xs={{ size: 12, order: 2 }}
@@ -226,7 +251,6 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 2 }}
               md={{ size: 9, order: 1 }}
               lg={{ size: 4, order: 3 }}
-            // className='px-0'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
@@ -243,8 +267,9 @@ class Navigation extends React.PureComponent {
                       isOpen={isBrandOpen}
                     >
                       <DropdownToggle nav>
+                        <i className='fa fa-bookmark text-primary mr-1'></i>
                         {VI['Brands']}
-                        <span className='fa fa-chevron-down dropdown-caret'></span>
+                        <span className='fa fa-chevron-down dropdown-caret ml-1'></span>
                       </DropdownToggle>
                       <DropdownMenu right className='nav-brand-dropdown'>
                         <div className='mini-brand'>
@@ -258,32 +283,47 @@ class Navigation extends React.PureComponent {
                   )}
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
-                        <UserIcon style={{ marginRight: 6, verticalAlign: 'middle' }} width={20} height={20} />
-                        <span className='d-none d-md-inline'>{user.first_name ? user.first_name : ''}</span>
-                        <span className='fa fa-chevron-down dropdown-caret'></span>
+                      <DropdownToggle nav className='user-dropdown-btn'>
+                        <UserIcon width={18} height={18} />
+                        <span className='d-none d-md-inline ml-1 font-weight-medium'>
+                          {user.first_name ? user.first_name : 'Tài khoản'}
+                        </span>
+                        <span className='fa fa-chevron-down dropdown-caret ml-1'></span>
                       </DropdownToggle>
-                      <DropdownMenu right>
-                        <DropdownItem
-                          onClick={() => history.push('/dashboard')}
-                        >
+                      <DropdownMenu right className='user-dropdown-menu shadow'>
+                        <DropdownItem onClick={() => history.push('/dashboard')}>
+                          <i className='fa fa-th-large text-primary mr-2'></i>
                           {VI['Dashboard']}
                         </DropdownItem>
-                        <DropdownItem onClick={signOut}>{VI['Sign Out']}</DropdownItem>
+                        <DropdownItem onClick={() => history.push('/dashboard/orders')}>
+                          <i className='fa fa-shopping-bag text-success mr-2'></i>
+                          Đơn hàng
+                        </DropdownItem>
+                        <DropdownItem onClick={() => history.push('/dashboard/wishlist')}>
+                          <i className='fa fa-heart text-danger mr-2'></i>
+                          Yêu thích
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={signOut}>
+                          <i className='fa fa-sign-out text-secondary mr-2'></i>
+                          {VI['Sign Out']}
+                        </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
-                        <UserIcon style={{ marginRight: 6, verticalAlign: 'middle' }} width={20} height={20} />
-                        <span className='d-none d-md-inline'></span>
-                        <span className='fa fa-chevron-down dropdown-caret'></span>
+                      <DropdownToggle nav className='user-dropdown-btn'>
+                        <UserIcon width={18} height={18} />
+                        <span className='d-none d-md-inline ml-1'>Tài khoản</span>
+                        <span className='fa fa-chevron-down dropdown-caret ml-1'></span>
                       </DropdownToggle>
-                      <DropdownMenu right>
+                      <DropdownMenu right className='user-dropdown-menu shadow'>
                         <DropdownItem onClick={() => history.push('/login')}>
+                          <i className='fa fa-sign-in text-primary mr-2'></i>
                           {VI['Login']}
                         </DropdownItem>
                         <DropdownItem onClick={() => history.push('/register')}>
+                          <i className='fa fa-user-plus text-success mr-2'></i>
                           {VI['Sign Up']}
                         </DropdownItem>
                       </DropdownMenu>

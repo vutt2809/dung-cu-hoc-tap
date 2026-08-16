@@ -86,7 +86,9 @@ const ProductFilter = props => {
   return (
     <div className='product-filter'>
       <Card className='mb-4'>
-        <CardHeader tag='h3'>Giá</CardHeader>
+        <CardHeader tag='h3'>
+          <i className='fa fa-tag text-primary mr-2' /> Khoảng giá
+        </CardHeader>
         <CardBody>
           <div className='mx-2 mb-3'>
             <RangeSlider
@@ -102,7 +104,9 @@ const ProductFilter = props => {
         </CardBody>
       </Card>
       <Card>
-        <CardHeader tag='h3'>Đánh giá</CardHeader>
+        <CardHeader tag='h3'>
+          <i className='fa fa-star text-warning mr-2' /> Đánh giá sao
+        </CardHeader>
         <CardBody>
           <div className='mx-2 mb-4'>
             <RangeSlider

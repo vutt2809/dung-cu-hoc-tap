@@ -3,12 +3,16 @@
     {
       "to": "",
       "name": "Thông tin tài khoản",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-user-circle",
+      "color": "#4f46e5"
     },
     {
       "to": "/security",
       "name": "Bảo mật tài khoản",
       "prefix": "/dashboard",
+      "icon": "fa-shield",
+      "color": "#0284c7",
       "provider": [
         "Email"
       ]
@@ -16,82 +20,112 @@
     {
       "to": "/reports",
       "name": "Báo cáo thống kê",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-bar-chart",
+      "color": "#10b981"
     },
     {
       "to": "/address",
       "name": "Địa chỉ",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-map-marker",
+      "color": "#f59e0b"
     },
     {
       "to": "/product",
-      "name": "Sản phẩm",
-      "prefix": "/dashboard"
+      "name": "Quản lý Sản phẩm",
+      "prefix": "/dashboard",
+      "icon": "fa-cubes",
+      "color": "#6366f1"
     },
     {
       "to": "/category",
-      "name": "Danh mục",
-      "prefix": "/dashboard"
+      "name": "Quản lý Danh mục",
+      "prefix": "/dashboard",
+      "icon": "fa-tags",
+      "color": "#8b5cf6"
     },
     {
       "to": "/brand",
-      "name": "Thương hiệu",
-      "prefix": "/dashboard"
+      "name": "Quản lý Thương hiệu",
+      "prefix": "/dashboard",
+      "icon": "fa-bookmark",
+      "color": "#ec4899"
     },
     {
       "to": "/users",
-      "name": "Người dùng",
-      "prefix": "/dashboard"
+      "name": "Quản lý Người dùng",
+      "prefix": "/dashboard",
+      "icon": "fa-users",
+      "color": "#3b82f6"
     },
     {
       "to": "/orders",
-      "name": "Đơn hàng",
-      "prefix": "/dashboard"
+      "name": "Quản lý Đơn hàng",
+      "prefix": "/dashboard",
+      "icon": "fa-shopping-bag",
+      "color": "#10b981"
     },
     {
       "to": "/review",
-      "name": "Đánh giá",
-      "prefix": "/dashboard"
+      "name": "Quản lý Đánh giá",
+      "prefix": "/dashboard",
+      "icon": "fa-star",
+      "color": "#f59e0b"
     },
     {
       "to": "/wishlist",
       "name": "Danh sách yêu thích",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-heart",
+      "color": "#ef4444"
     }
   ],
   "ROLE MEMBER": [
     {
       "to": "",
       "name": "Thông tin tài khoản",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-user-circle",
+      "color": "#4f46e5"
     },
     {
       "to": "/security",
       "name": "Bảo mật tài khoản",
       "prefix": "/dashboard",
+      "icon": "fa-shield",
+      "color": "#0284c7",
       "provider": [
         "Email"
       ]
     },
     {
       "to": "/address",
-      "name": "Địa chỉ",
-      "prefix": "/dashboard"
+      "name": "Địa chỉ giao hàng",
+      "prefix": "/dashboard",
+      "icon": "fa-map-marker",
+      "color": "#f59e0b"
     },
     {
       "to": "/orders",
-      "name": "Đơn hàng",
-      "prefix": "/dashboard"
+      "name": "Đơn hàng của tôi",
+      "prefix": "/dashboard",
+      "icon": "fa-shopping-bag",
+      "color": "#10b981"
     },
     {
       "to": "/review",
       "name": "Đánh giá của tôi",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-star",
+      "color": "#f59e0b"
     },
     {
       "to": "/wishlist",
       "name": "Danh sách yêu thích",
-      "prefix": "/dashboard"
+      "prefix": "/dashboard",
+      "icon": "fa-heart",
+      "color": "#ef4444"
     }
   ]
 }

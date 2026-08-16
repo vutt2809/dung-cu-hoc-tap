@@ -3,10 +3,19 @@
     @include flex();
     justify-content: space-between;
     align-items: center;
-    border-bottom: $border-primary;
-    padding-bottom: 16px;
+    border-bottom: 1.5px solid #f1f5f9;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
 
-    h2 {
+    .subpage-title,
+    h2,
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.3px;
       margin: 0;
     }
 

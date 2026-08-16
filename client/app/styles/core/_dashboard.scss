@@ -1,91 +1,166 @@
+.admin,
+.dashboard {
+  padding: 24px 0 40px 0;
+}
+
 .panel-body {
-  // padding: 10px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  min-height: 520px;
 
   @include media-breakpoint-down(sm) {
     margin-top: 20px;
+    padding: 20px 16px;
   }
 }
 
 .panel-sidebar {
-  .panel-title,
-  .menu-panel {
-    margin: 0;
-    padding: 10px 0px;
-    text-align: center;
-    border: $border-primary;
-    border-bottom: none;
-  }
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  padding: 16px;
 
-  .menu-panel {
-    &.collapse {
-      border-bottom: $border-primary;
+  // User Profile Header Card
+  .user-sidebar-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 12px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
 
-      &:hover {
-        background-color: $theme-gray;
+    .user-avatar-wrap {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+    }
+
+    .user-sidebar-info {
+      overflow: hidden;
+
+      .user-name-display {
+        font-size: 14.5px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 2px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .user-email-display {
+        font-size: 12px;
+        color: #94a3b8;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
-  }
-
-  .panel-title {
-    @include media-breakpoint-down(sm) {
-      display: none;
-    }
-  }
-
-  .navbar {
-    padding: 0px;
   }
 
   .menu-panel {
     display: none;
     width: 100%;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #0f172a;
+    font-weight: 600;
+
     @include media-breakpoint-down(sm) {
       display: block;
       cursor: pointer;
     }
+  }
 
-    &:hover {
-      background-color: transparent;
-    }
-
-    .btn-text {
-      font-size: $font-size-heading-xsmall !important;
-      font-weight: $font-weight-normal;
-    }
+  .navbar {
+    padding: 0;
   }
 
   .panel-links {
     width: 100%;
-    text-align: center;
-    margin-bottom: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
     li {
-      border-top: $border-primary;
-      border-right: $border-primary;
-      border-left: $border-primary;
-
-      &:hover {
-        a {
-          color: $font-custom-color !important;
-        }
-      }
-
-      &:last-child {
-        border-bottom: $border-primary;
-      }
+      border: none;
+      margin: 0;
 
       a {
-        display: block;
-        padding: 10px 0px;
-        text-transform: capitalize;
-        color: $font-custom-color !important;
-        font-weight: $font-weight-normal;
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 10px;
+        color: #334155 !important;
+        font-size: 13.5px;
+        font-weight: 500;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+
+        .link-icon-wrap {
+          width: 28px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 15px;
+          margin-right: 10px;
+        }
+
+        .link-name {
+          flex-grow: 1;
+        }
+
+        .link-caret {
+          font-size: 13px;
+          color: #94a3b8;
+          opacity: 0;
+          transition: all 0.2s ease;
+        }
+
+        &:hover {
+          background-color: #f8fafc;
+          color: #4f46e5 !important;
+          transform: translateX(3px);
+
+          .link-caret {
+            opacity: 1;
+            transform: translateX(2px);
+          }
+        }
 
         &.active-link {
-          font-weight: $font-weight-medium;
-          background-color: $white;
+          background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+          color: #4f46e5 !important;
+          font-weight: 600;
+          box-shadow: inset 3px 0 0 #4f46e5;
+
+          .link-caret {
+            opacity: 1;
+            color: #4f46e5;
+          }
         }
       }
     }
   }
 }
+
