@@ -17,9 +17,13 @@ class OrderController extends Controller
     {
         // Admin can see all orders, regular users can only see their own orders
         if ($request->user()->role === 'ROLE ADMIN') {
-            $orders = Order::with('user')->orderBy('created_at', 'desc')->get();
+            $orders = Order::with(['user', 'items.product'])->orderBy('created_at', 'desc')->get();
         } else {
-            $orders = $request->user()->orders()->orderBy('created_at', 'desc')->get();
+            $orders = $request->user()->orders()->with('items.product')->orderBy('created_at', 'desc')->get();
+        }
+
+        foreach ($orders as $order) {
+            self::syncOrderStatus($order);
         }
 
         return response()->json([
@@ -119,6 +123,53 @@ class OrderController extends Controller
         ], 201);
     }
 
+    public static function syncOrderStatus(Order $order)
+    {
+        $items = $order->items()->get();
+        $totalItems = $items->count();
+
+        if ($totalItems === 0) {
+            return $order->status;
+        }
+
+        $cancelledCount = 0;
+        $deliveredCount = 0;
+        $shippedCount = 0;
+        $processingCount = 0;
+
+        foreach ($items as $it) {
+            $st = strtolower(trim($it->status ?? ''));
+            if ($st === 'cancelled') {
+                $cancelledCount++;
+            } elseif ($st === 'delivered') {
+                $deliveredCount++;
+            } elseif ($st === 'shipped') {
+                $shippedCount++;
+            } else {
+                $processingCount++;
+            }
+        }
+
+        $activeCount = $totalItems - $cancelledCount;
+
+        if ($cancelledCount === $totalItems) {
+            $newStatus = 'cancelled';
+        } elseif ($activeCount > 0 && $deliveredCount === $activeCount) {
+            $newStatus = 'Delivered';
+        } elseif ($shippedCount > 0 || $deliveredCount > 0) {
+            $newStatus = 'Shipped';
+        } else {
+            $newStatus = 'Processing';
+        }
+
+        if ($order->status !== $newStatus) {
+            $order->status = $newStatus;
+            $order->save();
+        }
+
+        return $newStatus;
+    }
+
     public function show(Request $request, $id)
     {
         // Admin can view any order, regular users can only view their own orders
@@ -133,6 +184,8 @@ class OrderController extends Controller
                 'error' => 'Order not found.'
             ], 404);
         }
+
+        self::syncOrderStatus($order);
 
         return response()->json([
             'success' => true,
@@ -155,7 +208,7 @@ class OrderController extends Controller
             ], 404);
         }
 
-        if ($order->status !== 'pending') {
+        if ($order->status !== 'pending' && $order->status !== 'Processing') {
             return response()->json([
                 'error' => 'Order cannot be cancelled.'
             ], 400);
@@ -173,7 +226,11 @@ class OrderController extends Controller
 
     public function myOrders(Request $request)
     {
-        $orders = $request->user()->orders()->orderBy('created_at', 'desc')->get();
+        $orders = $request->user()->orders()->with('items.product')->orderBy('created_at', 'desc')->get();
+
+        foreach ($orders as $order) {
+            self::syncOrderStatus($order);
+        }
 
         return response()->json([
             'success' => true,
@@ -263,21 +320,15 @@ class OrderController extends Controller
 
         $orderCancelled = false;
         if ($order) {
-            $hasActiveItems = $order->items()
-                ->whereNotIn(DB::raw('LOWER(TRIM(status))'), ['cancelled'])
-                ->exists();
-
-            if (!$hasActiveItems) {
-                $order->status = 'cancelled';
-                $order->save();
-                $orderCancelled = true;
-            }
+            $newStatus = self::syncOrderStatus($order);
+            $orderCancelled = strtolower(trim($newStatus)) === 'cancelled';
         }
 
         return response()->json([
             'success' => true,
             'message' => 'Chỉnh sửa trạng thái thành công',
             'item' => $item,
+            'order' => $order,
             'orderCancelled' => $orderCancelled
         ]);
     }

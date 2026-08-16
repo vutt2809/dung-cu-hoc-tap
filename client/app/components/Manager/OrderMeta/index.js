@@ -8,29 +8,20 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import { CART_ITEM_STATUS } from '../../../constants';
-import { formatDateVN } from '../../../utils/format';
+import { formatDateVN, getOrderStatusInfo } from '../../../utils/format';
 import Button from '../../Common/Button';
 import { ArrowBackIcon } from '../../Common/Icon';
 
 const OrderMeta = props => {
   const { order, cancelOrder, onBack } = props;
 
-  const isCancelled =
-    order.status?.toLowerCase() === 'cancelled' ||
-    ((order.items || []).length > 0 &&
-      (order.items || []).every(
-        i => (i.status?.toLowerCase() || '') === 'cancelled'
-      ));
-
-  const isDelivered =
-    order.status?.toLowerCase() === 'delivered' ||
-    (order.items || []).some(
-      i => (i.status?.toLowerCase() || '') === 'delivered'
-    );
+  const statusInfo = getOrderStatusInfo(order);
+  const isCancelled = statusInfo.key === 'Cancelled';
+  const isDelivered = statusInfo.key === 'Delivered';
+  const isShipped = statusInfo.key === 'Shipped';
 
   const renderMetaAction = () => {
-    if (!isCancelled && !isDelivered) {
+    if (!isCancelled && !isDelivered && !isShipped) {
       return <Button size='sm' text='Hủy đơn hàng' onClick={cancelOrder} />;
     }
     return null;
@@ -51,40 +42,30 @@ const OrderMeta = props => {
 
       <Row>
         <Col xs='12' md='8'>
-          <Row>
+          <Row className='align-items-center mb-2'>
             <Col xs='4'>
-              <p className='one-line-ellipsis'>Mã đơn hàng</p>
+              <p className='one-line-ellipsis mb-0'>Mã đơn hàng</p>
             </Col>
             <Col xs='8'>
               <span className='order-label one-line-ellipsis'>{` ${order.order_number || order.id || order._id}`}</span>
             </Col>
           </Row>
-          <Row>
+          <Row className='align-items-center mb-2'>
             <Col xs='4'>
-              <p className='one-line-ellipsis'>Ngày đặt hàng</p>
+              <p className='one-line-ellipsis mb-0'>Ngày đặt hàng</p>
             </Col>
             <Col xs='8'>
               <span className='order-label one-line-ellipsis'>{` ${formatDateVN(order.created || order.created_at)}`}</span>
             </Col>
           </Row>
-          <Row>
+          <Row className='align-items-center mb-2'>
             <Col xs='4'>
-              <p className='one-line-ellipsis'>Trạng thái</p>
+              <p className='one-line-ellipsis mb-0'>Trạng thái</p>
             </Col>
             <Col xs='8'>
-              {isCancelled ? (
-                <span className='custom-badge custom-badge-danger'>
-                  <i className='fa fa-ban mr-1' /> Đã hủy
-                </span>
-              ) : isDelivered ? (
-                <span className='custom-badge custom-badge-success'>
-                  <i className='fa fa-check mr-1' /> Đã giao hàng
-                </span>
-              ) : (
-                <span className='custom-badge custom-badge-primary'>
-                  <i className='fa fa-clock-o mr-1' /> Đang xử lý
-                </span>
-              )}
+              <span className={`custom-badge ${statusInfo.className}`}>
+                <i className={`fa ${statusInfo.icon} mr-1`} /> {statusInfo.label}
+              </span>
             </Col>
           </Row>
         </Col>
